@@ -1,0 +1,103 @@
+/**
+
+ */
+.element-input {
+  width: 100%;
+}
+
+/**
+
+ */
+app-CFacturas {
+  width: inherit;
+  height: auto;
+}
+
+/**
+
+ */
+#maindiv {
+  display: flex;
+  flex-direction: row;
+  flex-basis: auto;
+  align-content: space-between;
+  justify-content: space-between;
+  margin: 15px;
+  width: 100%;
+}
+
+/**
+
+ */
+#PDF {
+  width: 100%;
+}
+
+/**
+
+ */
+#centraldiv {
+  width: 35%;
+  position: relative;
+  left: 3%;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0;
+}
+
+/**
+Formato del encabezado donde se encuentra el titulo de la pagina
+ */
+#title {
+  align-content: center;
+  alignment: center;
+  font-size: larger;
+  text-align: center;
+  display: inline;
+  margin-bottom: auto;
+  background-color: #5CD4F4;
+  font-weight: bold;
+}
+
+/**
+Formato de los figura de los botones de la pagina
+*/
+#Buttons {
+  display: flex;
+  margin: 5%;
+  flex-direction: row;
+  align-content: flex-end;
+  justify-content: space-evenly;
+
+}
+
+/**
+Define las caracteristicas que tendran los botones
+ */
+#Buttons > button {
+  width: 30%;
+  font-size: larger;
+}
+
+p {
+  font-size: 20px;
+  alignment: center;
+}
+
+button {
+  border-radius: 4px;
+  gap: 1px;
+  background-color: #8DC7FB;
+  border-color: #08335A;
+  border-style: dot-dash;
+}
+
+div {
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
+}

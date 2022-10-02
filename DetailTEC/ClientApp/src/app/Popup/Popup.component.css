@@ -1,0 +1,21 @@
+/**
+Cacteristicas de la ventana de aviso
+ */
+#popup {
+  background: #ece5a4;
+  position: absolute;
+  left: 30%;
+  top: 30%;
+
+}
+
+/**
+Formato de los botones de la ventana
+ */
+button {
+  border-radius: 4px;
+  gap: 1px;
+  background-color: #8DC7FB;
+  border-color: #08335A;
+  border-style: dot-dash;
+}

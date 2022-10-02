@@ -1,0 +1,151 @@
+{
+  "Citas": [
+    {
+      "Number": 1,
+      "Cliente": "Isriom",
+      "Placa_del_Vehiculo": 123465,
+      "Sucursal": "SJ",
+      "Servicio_solicitado": "Limpieza de Dientes"
+    },
+    {
+      "Number": 6627441,
+      "Cliente": "Isriom",
+      "Placa_del_Vehiculo": 987,
+      "Sucursal": "SanJose",
+      "Servicio_solicitado": "Limpieza"
+    },
+    {
+      "Number": 8527769,
+      "Cliente": "Linconplaza",
+      "Placa_del_Vehiculo": 9878,
+      "Sucursal": "SanJose",
+      "Servicio_solicitado": "Limpieza 2"
+    },
+    {
+      "Number": 11242606,
+      "Cliente": "Linconplaza",
+      "Placa_del_Vehiculo": 9878,
+      "Sucursal": "SJ",
+      "Servicio_solicitado": "Limpieza 3 la venganza"
+    },
+    {
+      "Number": 5938788,
+      "Cliente": "Linconplaza",
+      "Placa_del_Vehiculo": 123,
+      "Sucursal": "123",
+      "Servicio_solicitado": "123"
+    },
+    {
+      "Number": 8461979,
+      "Cliente": "Linconplaza",
+      "Placa_del_Vehiculo": 1231,
+      "Sucursal": "1",
+      "Servicio_solicitado": "12"
+    },
+    {
+      "Number": 8016171,
+      "Cliente": "Linconplaza",
+      "Placa_del_Vehiculo": 1511421,
+      "Sucursal": "Cartago",
+      "Servicio_solicitado": "Limpieza"
+    }
+  ],
+  "Trabajadores": [
+    {
+      "Nombre": "",
+      "Apellidos": "",
+      "Numero_Cedula": null,
+      "Fecha_Ingreso": "",
+      "Fecha_Nacimiento": "",
+      "Edad": null,
+      "Password": "",
+      "Rol": ""
+    },
+    {
+      "Nombre": "Isaac",
+      "Apellidos": "Barrios Campos",
+      "Numero_Cedula": 60765929,
+      "Fecha_Ingreso": "2020",
+      "Fecha_Nacimiento": "2001",
+      "Edad": 21,
+      "Password": "Tiket",
+      "Rol": "Manager"
+    }
+  ],
+  "Clientes": [
+    {
+      "Nombre_Completo": "Isriom",
+      "Cedula": null,
+      "Correo_electronico": "",
+      "Direccion_1": "",
+      "Direccion_2": "",
+      "Telefono_1": null,
+      "Telefono_2": null,
+      "Usuario": "Isriom",
+      "Password": "8670838"
+    },
+    {
+      "Nombre_Completo": "Rachel Pereira",
+      "Cedula": 87412575,
+      "Correo_electronico": "rachelcd@gmail.com",
+      "Direccion_1": "Lourdes",
+      "Direccion_2": "Cartago ",
+      "Telefono_1": 88888888,
+      "Telefono_2": 89878987,
+      "Usuario": "rey",
+      "Password": "147258"
+    },
+    {
+      "Nombre_Completo": "Abraham Lincon",
+      "Cedula": 1151618,
+      "Correo_electronico": "ventas5@edisalibros.com",
+      "Direccion_1": "1 km Sur de la Bas\u00EDlica de los \u00C1ngeles.",
+      "Direccion_2": "1 km Sur de la Bas\u00EDlica de los \u00C1ngeles.",
+      "Telefono_1": 20411854,
+      "Telefono_2": 20181364,
+      "Usuario": "Linconplaza",
+      "Password": "buenas"
+    },
+    {
+      "Nombre_Completo": "1",
+      "Cedula": 1,
+      "Correo_electronico": "1",
+      "Direccion_1": "1",
+      "Direccion_2": "1",
+      "Telefono_1": 1,
+      "Telefono_2": 1,
+      "Usuario": "1",
+      "Password": "1"
+    }
+  ],
+  "Facturas": [
+    {
+      "Cliente": "Isriom",
+      "Numero_de_Factura": 1
+    },
+    {
+      "Cliente": "Isriom",
+      "Numero_de_Factura": 6627441
+    },
+    {
+      "Cliente": "Linconplaza",
+      "Numero_de_Factura": 8527769
+    },
+    {
+      "Cliente": "Linconplaza",
+      "Numero_de_Factura": 11242606
+    },
+    {
+      "Cliente": "Linconplaza",
+      "Numero_de_Factura": 5938788
+    },
+    {
+      "Cliente": "Linconplaza",
+      "Numero_de_Factura": 8461979
+    },
+    {
+      "Cliente": "Linconplaza",
+      "Numero_de_Factura": 8016171
+    }
+  ]
+}
