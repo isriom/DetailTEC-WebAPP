@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Popup} from "../Popup/Popup.component";
 import {FormControl, FormGroup} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 /**
  * Componentes utilizados para el funcionamiento de la pagina
@@ -40,8 +41,9 @@ export class HomeComponent implements OnInit {
    * Constructor de la clase
    * @param http variable para la manipulacion del get y post
    * @param baseUrl variable para manejar la direccion de la pagina
+   * @param snackBar
    */
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, public snackBar: MatSnackBar) {
     this.http = http;
     this.baseurl = baseUrl;
     if (this.token === undefined) {
@@ -56,6 +58,7 @@ export class HomeComponent implements OnInit {
    * @constructor metodo relacionado
    */
   async Sig_In() {
+
     const answer = {
       'Usuario': this.login.controls.user.value,
       'Contraseña': this.login.controls.pass.value,
@@ -88,15 +91,17 @@ export class HomeComponent implements OnInit {
    * Metodo donde se desarrolla la accion de cerrar sesion en la pagina
    */
   async logout() {
+
     let res = await this.http.put("https://localhost:7274/logout", JSON.stringify({}), {
       headers: this.httpOptions.headers,
       withCredentials: true,
       observe: "response"
     })
     res.subscribe(result => {
+      this.snackBar.open("Log out sucefully", "close");
       console.log(result);
       sessionStorage.clear();
-      window.location.reload()
+      // window.location.reload()
     }, error => console.error(error));
   }
 

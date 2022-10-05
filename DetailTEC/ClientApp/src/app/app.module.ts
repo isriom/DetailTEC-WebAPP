@@ -13,7 +13,10 @@ import {CFacturasComponent} from "./CFacturas/c-facturas.component";
 import {GClientesComponent} from "./GClientes/GClientes.component";
 import {RCitasComponent} from "./RCitas/Rcitas.component";
 import {Popup} from "./Popup/Popup.component";
-
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
  */
@@ -36,6 +39,9 @@ import {Popup} from "./Popup/Popup.component";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatTableModule,
 
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
@@ -45,7 +51,9 @@ import {Popup} from "./Popup/Popup.component";
       {path: 'CFactura', data: {title: "Consulta Facturas"}, component: CFacturasComponent},
       {path: 'RCitas', data: {title: "Citas"}, component: RCitasComponent},
       {path: 'GClientes', data: {title: "Gestion de Clientes"}, component: GClientesComponent}
-    ])
+    ]),
+    MatTableModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,10 +15,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.0.3",
+    "@angular/cdk": "^14.2.3",
     "@angular/common": "^14.0.3",
     "@angular/compiler": "^14.0.3",
     "@angular/core": "^14.0.3",
     "@angular/forms": "^14.0.3",
+    "@angular/material": "^14.2.3",
     "@angular/platform-browser": "^14.0.3",
     "@angular/platform-browser-dynamic": "^14.0.3",
     "@angular/platform-server": "^14.0.3",
@@ -39,6 +41,7 @@
     "@types/jasmine": "~4.0.3",
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^18.0.0",
+    "angular-cli-ghpages": "^1.0.3",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.1",
@@ -49,6 +52,5 @@
   },
   "overrides": {
     "autoprefixer": "10.4.5"
-  },
-  "optionalDependencies": {}
+  }
 }
