@@ -5,10 +5,8 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  build:
-
+  copy:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - run: ls -R
@@ -20,9 +18,15 @@ jobs:
         git remote add origin https://github.com/isriom/DetailTEC-WebAPP
         git fetch
         git checkout -b WebD          
+    - run: |        
         git add .
         git commit -m "generated"
         git push --set-upstream origin WebD
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: actions/checkout@v3
       with:
         ref: WebD
