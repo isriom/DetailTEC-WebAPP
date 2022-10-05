@@ -18,6 +18,7 @@ jobs:
         git remote add origin https://${{secrets.ACCESS_TOKEN}}@github.com/isriom/DetailTEC-WebAPP.git
         git fetch
         git checkout -b WebD 
+        git pull
         git add .
         git commit -m "generated"
         git push --set-upstream origin WebD
