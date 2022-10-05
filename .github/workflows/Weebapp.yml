@@ -39,5 +39,8 @@ jobs:
         deploy_branch: gh-pages # The branch the action should deploy to.
         angular_project_dir: ./ # The folder where your project is supposed to be.
         angular_dist_build_folder: dist
+    - run: |
+        git checkout main
+        git branch -D local_branch_name
 
 
