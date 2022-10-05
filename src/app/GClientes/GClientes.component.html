@@ -1,0 +1,14 @@
+
+<div class="portfolio-item mx-auto" id="centraldiv">
+  <div id="title">Gestion de Clientes VC</div>
+  <div *ngFor="let element of respuesta|keyvalue" class="form-floating mb-3">
+    <p class="text-decoration-underline" font-size="16">{{element.key}}</p>
+    <input class="form-control-lg mx-auto element-input" id="{{element.key}}" placeholder="Espacio requerido"
+           value="{{element.value}}">
+  </div>
+  <div id="Buttons">
+    <button (click)="Add_Button()" class="form-floating" id="add">ADD</button>
+    <button (click)="Delete_Button()" id="delete">Delete</button>
+
+  </div>
+</div>

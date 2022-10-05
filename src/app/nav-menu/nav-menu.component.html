@@ -1,0 +1,95 @@
+<header xmlns="http://www.w3.org/1999/html">
+  <nav
+    class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="navbar" style="margin: 0">
+      <a [routerLink]="['/']" class="navbar-brand text-center">DetailTEC </a>
+
+    </div>
+    <div class="container" style="margin: 0">
+      <a class="navbar-brand" [routerLink]="['/']" href="favicon.png"></a>
+      <button
+        (click)="toggle()"
+        [attr.aria-expanded]="isExpanded"
+        aria-label="Toggle navigation"
+        class="navbar-toggler"
+        data-target=".navbar-collapse"
+        data-toggle="collapse"
+        type="button"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div *ngIf="token==='True'" [ngClass]="{ show: isExpanded }"
+           class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+      >
+        <div *ngIf="rol=== 'Trabajador';else elseBlock ">
+          <ul class="navbar-nav flex-grow">
+            <li
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActive]="['link-active']"
+              class="nav-item"
+            >
+              <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
+            </li>
+
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/Citas']" class="nav-link text-dark"
+              >Citas</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/trabajadores']" class="nav-link text-dark"
+              >Trabajadores</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/Clientes']" class="nav-link text-dark"
+              >Clientes</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/CFactura']" class="nav-link text-dark"
+              >Consulta_Facturas</a>
+            </li>
+            <li class="nav-item">
+              <button (click)="logout()" class="text-dark">LogOut</button>
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #elseBlock>
+
+          <ul class="navbar-nav flex-grow">
+            <li
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActive]="['link-active']"
+              class="nav-item"
+            >
+              <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/RCitas']" class="nav-link text-dark"
+              >Registro_Citas</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/CFactura']" class="nav-link text-dark"
+              >Consulta_Facturas</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['/GClientes']" class="nav-link text-dark"
+              >Registro_Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <button (click)="logout()" class="btn btn-link" type="button">LogOut</button>
+            </li>
+          </ul>
+
+        </ng-template>
+      </div>
+
+    </div>
+  </nav>
+</header>

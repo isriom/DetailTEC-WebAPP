@@ -1,0 +1,28 @@
+/**
+Formato de la barra del menu
+ */
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/**
+Tamano de la letra
+ */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/**
+Caracteristicas del la caja de componentes
+ */
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
