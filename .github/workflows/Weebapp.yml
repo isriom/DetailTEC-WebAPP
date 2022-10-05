@@ -15,7 +15,7 @@ jobs:
         git init
         git config user.name isriom
         git config user.email isriom@estudiantec.cr
-        git remote add origin https://github.com/isriom/DetailTEC-WebAPP
+        git remote add origin https://${secrets.ACCESS_TOKEN}@github.com/isriom/DetailTEC-WebAPP.git
         git fetch
         git checkout -b WebD 
         git add .
