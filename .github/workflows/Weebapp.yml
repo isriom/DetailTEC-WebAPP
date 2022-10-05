@@ -22,6 +22,6 @@ jobs:
         deploy_branch: gh-pages # The branch the action should deploy to.
         angular_project_dir: ./DetailTEC/ClientApp/ # The folder where your project is supposed to be.
         angular_dist_build_folder: ./DetailTEC/ClientApp
-    - run: ls
+    - run: ls DetailTEC
     - name: check
-      run: ls
+      run: ls DetailTEC/ClientApp
