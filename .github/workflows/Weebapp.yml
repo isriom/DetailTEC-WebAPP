@@ -41,6 +41,6 @@ jobs:
         angular_dist_build_folder: dist
     - run: |
         git checkout main
-        git branch -D local_branch_name
+        git branch -D WebD
 
 
