@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: ls -R
     - run: | 
-        cd DetailTEC/ClientApp/DetailTEC/ClientApp
+        cd DetailTEC/ClientApp
         git init
         git remote add origin https://github.com/isriom/DetailTEC-WebAPP
         git fetch
