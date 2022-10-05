@@ -17,9 +17,9 @@ jobs:
         git config user.email github-actions@github.com
         git remote add origin https://github.com/isriom/DetailTEC-WebAPP
         git fetch
-        git checkout -b WebD          
+        git checkout -b WebD 
+        git add .         
     - run: |        
-        git add .
         git commit -m "generated"
         git push --set-upstream origin WebD
   build:
