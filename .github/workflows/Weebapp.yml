@@ -14,18 +14,17 @@ jobs:
     - run: ls -R
     - run: | 
         cd DetailTEC/ClientApp
-        git init
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git remote add origin https://github.com/isriom/DetailTEC-WebAPP
-        git fetch
-        git checkout -b WebD          
-        git add .
-        git commit -m "generated"
-        git push
     - uses: actions/checkout@v3
       with:
         ref: WebD
+    - run: |
+        date > generated.txt
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -m "generated"
+        git push
+    - run: ls -R
     - name: All things angular
       uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
       with:
