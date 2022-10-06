@@ -14,7 +14,7 @@ jobs:
         sudo apt update
         sudo apt-get install -y nodejs
         nodejs -v
-        sudo apt install npm@latest -g
+        sudo apt install -g npm@latest
         sudo npm install -g @angular/cli
         sudo npm install -g @angular/material
         sudo npm install -g @angular/core
