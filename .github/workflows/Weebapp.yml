@@ -1,46 +1,25 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ WebD ]
+    branches: [ main ]
   pull_request:
-    branches: [ WebD ]
+    branches: [ main ]
 jobs:
   copy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - run: ls -R
-    - run: | 
-        cd DetailTEC/ClientApp
-        git init
-        git config user.name isriom
-        git config user.email isriom@estudiantec.cr
-        git remote add origin https://${{secrets.ACCESS_TOKEN}}@github.com/isriom/DetailTEC-WebAPP.git
-        git fetch
-        git checkout -b WebD 
-        git add .
-        git commit -m "generated"
-        git push --set-upstream origin WebD
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: WebD
-    - run: ls -R
-    - name: All things angular
-      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
-      with:
-        github_access_token: ${{ secrets.ACCESS_TOKEN }} # see the Configuration section for how you can create secrets
-        build_configuration: production # The build environment for the app. please look configurations in your angular.json
-        base_href: DetailTEC-WebAPP   # make sure this corresponds to https://<your_username>.github.io/<base_href>/
-        deploy_branch: gh-pages # The branch the action should deploy to.
-        angular_project_dir: ./ # The folder where your project is supposed to be.
-        angular_dist_build_folder: dist
     - run: |
-        git checkout main
-        git branch -D WebD
+        sudo apt update
+        sudo apt-get install -y nodejs
+        nodejs -v
+        sudo apt install npm@latest -g
+        sudo npm install -g @angular/cli
+        sudo npm install -g @angular/material
+        sudo npm install -g @angular/core
+        sudo npm install -g @angular/compiler
+        sudo npm install -g @angular/cdk
+        sudo npm install -g @angular/platform-browser-dynamic
 
 
