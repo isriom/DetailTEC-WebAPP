@@ -1,9 +1,9 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ main ]
+    branches: [ WebD ]
   pull_request:
-    branches: [ main ]
+    branches: [ WebD ]
 jobs:
   copy:
     runs-on: ubuntu-latest
