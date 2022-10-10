@@ -5,10 +5,10 @@
  */
 public class Data
 {
- /**
+    /**
      * Clase Padre para manejar los datos de la cita
      */
- public class Cita
+    public class Cita
     {
         /**
          * Metodo constructor de la clase
@@ -55,15 +55,15 @@ public class Data
         }
     }
 
- /**
+    /**
      * Clase padre que maneja la estructura de los datos que se guardan de los trabajadores
      */
- public class GTrabajadores
+    public class GTrabajadores
     {
-     /**
+        /**
          * Metodo constructor de la clase
          */
-     public GTrabajadores()
+        public GTrabajadores()
         {
             Nombre = "";
             Apellidos = "";
@@ -121,10 +121,10 @@ public class Data
      */
     public class G_clientes
     {
-     /**
+        /**
          * Metodo constructor de la clase
          */
-     public G_clientes()
+        public G_clientes()
         {
             Nombre_Completo = "";
             Correo_electronico = "";
@@ -182,10 +182,10 @@ public class Data
      */
     public class G_ClientesVC
     {
-     /**
+        /**
          * Metodo constructor de la clase
          */
-     public G_ClientesVC()
+        public G_ClientesVC()
         {
             Nombre_Completo = "";
             Correo_electronico = "";
@@ -266,22 +266,24 @@ public class Data
             Cliente = cliente;
             Numero_de_Factura = No;
         }
+
         /**
          * Metodo get y set para el manejo de datos del cliente
          */
         public string? Cliente { get; set; }
+
         /**
-         * Metodo get y set para el manejo de numero de factura 
+         * Metodo get y set para el manejo de numero de factura
          */
         public double? Numero_de_Factura { get; set; }
     }
-    
+
     /**
      * Clase que manipula informacion del login
      */
     public class LoginUser
     {
-       /**
+        /**
         * Constructor
         */
         public LoginUser()
@@ -289,18 +291,21 @@ public class Data
             Usuario = "";
             Contraseña = "";
         }
+
         /**
-         * Metodo  para obtener la info 
+         * Metodo  para obtener la info
          */
         public LoginUser(string? contraseña = null, string usuario = null)
         {
             Usuario = usuario;
             Contraseña = contraseña;
         }
+
         /**
          * Metodo get y set para manejo del Usuario
          */
         public string Usuario { get; set; }
+
         /**
          * Metodo get y set para manejo del Constrasena
          */

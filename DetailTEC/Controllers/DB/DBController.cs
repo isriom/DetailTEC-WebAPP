@@ -68,7 +68,7 @@ public class DBController
     public List<cliente> Clientes { get; set; }
 
     /**
-     * Metodo de definicion y las funciones get y set para la manipulacion de los datos de la 
+     * Metodo de definicion y las funciones get y set para la manipulacion de los datos de la
      */
     public List<Factura> Facturas { get; set; }
 
@@ -79,9 +79,7 @@ public class DBController
     {
         foreach (var cliente in DB.Clientes)
             if (cliente.Usuario == name)
-            {
                 return cliente;
-            }
 
         return new Data.G_ClientesVC();
     }
@@ -126,7 +124,7 @@ public class DBController
     }
 
     /**
-     * Metodo para agregar la factura y la cita al la base de datos al mismo tiempo cuando se genera la factura 
+     * Metodo para agregar la factura y la cita al la base de datos al mismo tiempo cuando se genera la factura
      */
     public static void RegistrarCitayFactura(Data.Cita cita, double NO)
     {
@@ -179,17 +177,16 @@ public class DBController
         foreach (var cliente in DB.Clientes)
             if (cliente.Usuario == C.Usuario)
             {
-                cliente.Correo_electronico=C.Correo_electronico;
-                cliente.Direccion_1=C.Direccion_1;
-                cliente.Direccion_2=C.Direccion_2;
-                cliente.Telefono_1=C.Telefono_1;
-                cliente.Telefono_2=C.Telefono_2;
-                cliente.Password=C.Password;
-                cliente.Nombre_Completo=C.Nombre_Completo;
+                cliente.Correo_electronico = C.Correo_electronico;
+                cliente.Direccion_1 = C.Direccion_1;
+                cliente.Direccion_2 = C.Direccion_2;
+                cliente.Telefono_1 = C.Telefono_1;
+                cliente.Telefono_2 = C.Telefono_2;
+                cliente.Password = C.Password;
+                cliente.Nombre_Completo = C.Nombre_Completo;
                 save();
                 return;
             }
-
     }
 
     /**
@@ -203,7 +200,7 @@ public class DBController
     }
 
     /**
-     * Metodo para poder actualizar el archivo json cuando se agregan nuevos datos 
+     * Metodo para poder actualizar el archivo json cuando se agregan nuevos datos
      */
     public static void save()
     {
@@ -217,7 +214,7 @@ public class DBController
     }
 
     /**
-     * Metodo donde se crea el archivo json en la carpeta de DB del proyecto 
+     * Metodo donde se crea el archivo json en la carpeta de DB del proyecto
      */
     public static void init()
     {
@@ -247,7 +244,7 @@ public class DBController
         }
 
         /**
-         * Metodo donde se define la estructura de la cita  y los datos que se toman 
+         * Metodo donde se define la estructura de la cita  y los datos que se toman
          */
         public cita(Data.Cita cita, double No)
         {
@@ -259,7 +256,7 @@ public class DBController
         }
 
         /**
-         * Metodo de get y set para manejar el numero de la factura 
+         * Metodo de get y set para manejar el numero de la factura
          */
         public double Number { get; set; }
     }
@@ -270,14 +267,14 @@ public class DBController
     public class trabajador : Data.GTrabajadores
     {
         /**
-         * Metodo de constructor 
+         * Metodo de constructor
          */
         public trabajador()
         {
         }
 
         /**
-         * Metodo donde se define la estructura del trabajador que sea va a agregar a la base de datos 
+         * Metodo donde se define la estructura del trabajador que sea va a agregar a la base de datos
          */
         public trabajador(Data.GTrabajadores trabajador)
         {
@@ -293,7 +290,7 @@ public class DBController
     }
 
     /**
-     * Clase donde se la estructura del cliente en general para la base de datos 
+     * Clase donde se la estructura del cliente en general para la base de datos
      */
     public class cliente : Data.G_ClientesVC
     {
@@ -329,7 +326,7 @@ public class DBController
         }
 
         /**
-         * Metodo donde se registran los datos del cliente desde la vista del Cliente 
+         * Metodo donde se registran los datos del cliente desde la vista del Cliente
          */
         public cliente(Data.G_ClientesVC cliente)
         {
@@ -346,7 +343,7 @@ public class DBController
     }
 
     /**
-     * Clase donde se maneja la estructura de la factura 
+     * Clase donde se maneja la estructura de la factura
      */
     public class Factura : Data.Consulta_factura
     {
@@ -358,7 +355,7 @@ public class DBController
         }
 
         /**
-         * Metodo de donde se registran lso datos del API para ingregarlos a la base de datos 
+         * Metodo de donde se registran lso datos del API para ingregarlos a la base de datos
          */
         public Factura(Data.Consulta_factura factura)
         {

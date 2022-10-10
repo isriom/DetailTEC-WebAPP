@@ -51,7 +51,7 @@ public class LoginController : Controller
     }
 
     /**
-     * Metodo que realiza la autenticacion del usuario 
+     * Metodo que realiza la autenticacion del usuario
      */
     private static Task<string> AuthenticateUser(string id, string password)
     {
@@ -69,7 +69,7 @@ public class LoginController : Controller
     }
 
     /**
-     * Metodo que determina la accion al presionar el boton de Log Out 
+     * Metodo que determina la accion al presionar el boton de Log Out
      */
     [AllowAnonymous]
     [HttpPut]

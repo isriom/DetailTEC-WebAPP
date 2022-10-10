@@ -11,7 +11,6 @@ namespace DetailTEC.Controllers;
 [ApiController]
 [Authorize]
 [Authorize(Roles = "Trabajador")]
-
 /*
  * Clase Controladora del componente de los Clientes para el trabajador
  */

@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
       'Contraseña': this.login.controls.pass.value,
     };
     console.log(answer);
-    const res = this.http.put<string>("https://localhost:7274/login/Signin", answer, {
+    const res = this.http.put<string>("https://localhost:7274/api/Signin", answer, {
       headers: this.httpOptions.headers,
       withCredentials: true,
     });

@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DetailTEC.Controllers;
+
 /**
  * Permisos del api para el tema de autorizaciones
  */
 [ApiController]
 [Authorize]
 [Authorize(Roles = "Trabajador")]
-
 /*
  * Clase Controladora del componente de las Citas para el trabajador
  */
@@ -22,7 +22,7 @@ public class CitasController : Controller
      */
     private Data.Cita prueba;
 
-    
+
     /**
      * Metodo que define una accion resultante
      */

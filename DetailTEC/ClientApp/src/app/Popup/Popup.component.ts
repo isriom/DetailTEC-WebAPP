@@ -48,8 +48,8 @@ export class Popup implements OnInit {
    * @param params
    */
 
-  static open(TITLE: string, TEXT: string, ACTIONTEXT: string, FUNC?: Function,params?:object[]) {
-    Popup.pop.setactionF(FUNC,params);
+  static open(TITLE: string, TEXT: string, ACTIONTEXT: string, FUNC?: Function, params?: object[]) {
+    Popup.pop.setactionF(FUNC, params);
     Popup.pop.Title = TITLE;
     Popup.pop.Text = TEXT;
     Popup.pop.actionText = ACTIONTEXT;

@@ -1,0 +1,95 @@
+<div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
+  <h2 class="p-2 ">
+    trabajador cedula#{{ worker.cedula }}
+  </h2>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="update()" [formGroup]="trabajador">
+    <p class="form-text form-label">Nombre</p>
+    <input
+      class="form-control"
+      formControlName="Nombre"
+      id="Contraseña"
+      placeholder="{{ worker.nombre }}"
+      required
+      type="text"
+      value="{{worker.nombre}}"
+    />
+    <p class="form-text form-label">Apellidos</p>
+    <input
+      class="form-control"
+      formControlName="Apellidos"
+      id="Apellidos"
+      placeholder="{{ worker.apellidos }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Fecha de ingreso</p>
+    <input
+      class="form-control"
+      formControlName="Fecha_de_ingreso"
+      id="Fecha de ingreso"
+      placeholder="{{ worker.fecha_de_ingreso }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Fecha de nacimiento</p>
+    <input
+      class="form-control"
+      formControlName="Fecha_de_nacimiento"
+      id="Fecha de nacimiento"
+      placeholder="{{ worker.fecha_de_nacimiento }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Edad</p>
+    <input
+      class="form-control"
+      formControlName="edad"
+      id="edad"
+      placeholder="{{ worker.edad }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Contraseña</p>
+    <input
+      class="form-control"
+      formControlName="password"
+      id="password"
+      placeholder="{{ worker.password }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Rol</p>
+    <input
+      class="form-control"
+      formControlName="rol"
+      id="rol"
+      placeholder="{{ worker.rol }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Pago</p>
+    <input
+      class="form-control"
+      formControlName="pago"
+      id="pago"
+      placeholder="{{ worker.pago }}"
+      required
+      type="text"
+      value=""
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button [disabled]="!trabajador.valid" class="btn btn-outline-secondary btn-success text-dark" type="submit">Update
+  </button>
+  <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
+
+</div>

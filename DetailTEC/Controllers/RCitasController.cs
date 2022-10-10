@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DetailTEC.Controllers;
+
 /**
  * Permisos del api para el tema de autorizaciones
  */
 [ApiController]
 [Authorize]
 [Authorize(Roles = "Cliente")]
-
 /*
  * Clase Controladora del componente de las Citas para la vista del Cliente
  */
@@ -72,10 +72,7 @@ public class RCitasController : Controller
     public ActionResult Insert(Data.Cita cita)
     {
         Console.Out.Write("Creando el pdf");
-        if (cita.Cliente!=User.Identity.Name)
-        {
-            return Unauthorized();
-        }
+        if (cita.Cliente != User.Identity.Name) return Unauthorized();
         var numeroF = PdfHandler.FacturaCita(cita);
         DBController.RegistrarCitayFactura(cita, Convert.ToDouble(numeroF));
         return CreatedAtAction(nameof(Insert), numeroF);

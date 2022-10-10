@@ -13,10 +13,12 @@ import {CFacturasComponent} from "./CFacturas/c-facturas.component";
 import {GClientesComponent} from "./GClientes/GClientes.component";
 import {RCitasComponent} from "./RCitas/Rcitas.component";
 import {Popup} from "./Popup/Popup.component";
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
+import {EditarTrabajadorComponent} from "./trabajadores/EditarTrabajador/EditarTrabajador.component";
+
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
  */
@@ -33,6 +35,7 @@ import {MatButtonModule} from "@angular/material/button";
     RCitasComponent,
     Popup,
     SafePipe,
+    EditarTrabajadorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

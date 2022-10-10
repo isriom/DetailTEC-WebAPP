@@ -67,10 +67,7 @@ public class GClientesController : Controller
     {
         ejemplo = DBController.GetdUser(User.Identity.Name);
 
-        if (User.Identity.Name != cliente.Usuario || ejemplo.Cedula != cliente.Cedula)
-        {
-            return Unauthorized();
-        }
+        if (User.Identity.Name != cliente.Usuario || ejemplo.Cedula != cliente.Cedula) return Unauthorized();
 
         Console.Out.Write("Cliente Registrado");
         DBController.RegistrarCC(cliente);

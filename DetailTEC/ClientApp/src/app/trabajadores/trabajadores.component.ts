@@ -1,22 +1,120 @@
 import {Component, Inject} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from "@angular/router";
-import {MatTableDataSource} from "@angular/material/table";
 import {Popup} from "../Popup/Popup.component";
+import {EditarTrabajadorComponent} from "./EditarTrabajador/EditarTrabajador.component";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {FormGroup} from "@angular/forms";
 
 /*
 Representacion de los datos del trabajador
  */
-export interface workerElement {
-  "nombre": string;
-  apellidos: string;
-  cedula: number;
-  fecha_de_ingreso: string;
-  fecha_de_nacimiento: string;
-  edad: number;
-  password: string;
-  rol: string;
-  pago: string;
+export class workerElement {
+  constructor(nombre: string, apellidos: string, cedula: number, fecha_de_ingreso: string, fecha_de_nacimiento: string, edad: number, password: string, rol: string, pago: string) {
+    this._nombre = nombre;
+    this._apellidos = apellidos;
+    this._cedula = cedula;
+    this._fecha_de_ingreso = fecha_de_ingreso;
+    this._fecha_de_nacimiento = fecha_de_nacimiento;
+    this._edad = edad;
+    this._password = password;
+    this._rol = rol;
+    this._pago = pago;
+  }
+
+  private _nombre: string;
+
+  get nombre(): string {
+    return this._nombre;
+  }
+
+  set nombre(value: string) {
+    this._nombre = value;
+  }
+
+  private _apellidos: string;
+
+  get apellidos(): string {
+    return this._apellidos;
+  }
+
+  set apellidos(value: string) {
+    this._apellidos = value;
+  }
+
+  private _cedula: number;
+
+  get cedula(): number {
+    return this._cedula;
+  }
+
+  set cedula(value: number) {
+    this._cedula = value;
+  }
+
+  private _fecha_de_ingreso: string;
+
+  get fecha_de_ingreso(): string {
+    return this._fecha_de_ingreso;
+  }
+
+  set fecha_de_ingreso(value: string) {
+    this._fecha_de_ingreso = value;
+  }
+
+  private _fecha_de_nacimiento: string;
+
+  get fecha_de_nacimiento(): string {
+    return this._fecha_de_nacimiento;
+  }
+
+  set fecha_de_nacimiento(value: string) {
+    this._fecha_de_nacimiento = value;
+  }
+
+  private _edad: number;
+
+  get edad(): number {
+    return this._edad;
+  }
+
+  set edad(value: number) {
+    this._edad = value;
+  }
+
+  private _password: string;
+
+  get password(): string {
+    return this._password;
+  }
+
+  set password(value: string) {
+    this._password = value;
+  }
+
+  private _rol: string;
+
+  get rol(): string {
+    return this._rol;
+  }
+
+  set rol(value: string) {
+    this._rol = value;
+  }
+
+  private _pago: string;
+
+  get pago(): string {
+    return this._pago;
+  }
+
+  set pago(value: string) {
+    this._pago = value;
+  }
+
+  clone() {
+    return new workerElement(this.nombre, this.apellidos, this.cedula, this.fecha_de_ingreso, this.fecha_de_nacimiento, this.edad, this.password, this.rol, this.pago);
+  }
 }
 
 /**
@@ -33,6 +131,7 @@ export interface workerElement {
  * Clase donde se desarrolla las funcionalidades de la Gestion de los Trabajadores en la Vista Taller
  */
 export class trabajadoresComponent {
+
   //Variables utilizadas
   token = sessionStorage.getItem("tokenKey");
   respuesta = {};
@@ -56,24 +155,29 @@ export class trabajadoresComponent {
     "password",
     "rol",
     "pago", "eliminar", "modificar"]
-  Workers: workerElement[] = [{
-    nombre: "isriom",
-    apellidos: "barrios",
-    cedula: 1,
-    fecha_de_ingreso: new Date().toDateString(),
-    fecha_de_nacimiento: new Date().toDateString(),
-    edad: 11,
-    password: "contraseña",
-    pago: "semanal",
-    rol: "limpiador"
-  }];
+  Workers: workerElement[] = [new workerElement(
+    "isriom",
+    "barrios",
+    1,
+    new Date().toDateString(),
+    new Date().toDateString(),
+    11,
+    "contraseña",
+    "limpiador", "semanal",)
+  ];
+  actualEditor: NgbModalRef | undefined;
+  trabajador = new FormGroup({});
+
 
   /**
    * Constructor de la clase
    * @param http variable para la manipulacion del get y post
    * @param baseUrl variable para manejar la direccion de la pagina
+   * @param _modal modal to show edit
    */
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL')
+    baseUrl: string, private _modal: NgbModal
+  ) {
     this.http = http;
     this.baseurl = baseUrl;
     this.get_Workers();
@@ -99,7 +203,7 @@ export class trabajadoresComponent {
    * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al Trabajador
    * @constructor metodo relacionado
    */
-  async Add_Button() {
+  async Add() {
     const answer = {
       Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
       Apellidos: (<HTMLInputElement>document.getElementById("Apellidos")).value,
@@ -113,7 +217,7 @@ export class trabajadoresComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7143/trabajadores/post", JSON.stringify(answer), {
+    let res = await this.http.post("https://localhost:7143/api/trabajadores/post", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -130,15 +234,33 @@ export class trabajadoresComponent {
    * Metodo para definir la funcionalidad del boton de DELETE
    * @constructor metodo relacionado
    */
-  async Delete_Button(id: number) {
-    Popup.open("Eliminar trabajador","Desea Eliminar este trabajador?","Sí", this.delete_Worker,[{id}])
-  }
-  async delete_Worker(id:number ){
-    console.log("trabajador eliminado: "+(<Number>id))
+  async Delete_Button(id: number
+  ) {
+    Popup.open("Eliminar trabajador", "Desea Eliminar este trabajador?", "Sí", this.delete_Worker, [{id}])
   }
 
-  async modify_Button(id: number) {
+  async delete_Worker(id: number
+  ) {
+    console.log("trabajador eliminado: " + (<Number>id))
+  }
 
+  async modify_Button(id: number
+  ) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    for (let worker of this.Workers) {
+      if (id === worker.cedula) {
+        this.actualEditor = this._modal.open(EditarTrabajadorComponent)
+        this.actualEditor.componentInstance.padre = this
+        this.actualEditor.componentInstance.worker = worker.clone()
+        console.log(this.actualEditor)
+      }
+    }
+  }
+
+  async modify(id: number
+  ) {
     let res = await this.http.post("https://localhost:7143/trabajadores/post", JSON.stringify(id), {
         headers: this.httpOptions.headers.set("Content-Type", "application/id"),
         withCredentials: true,
@@ -150,5 +272,9 @@ export class trabajadoresComponent {
 
     }, error => console.error(error));
     console.log(res)
+  }
+
+  clean() {
+
   }
 }
