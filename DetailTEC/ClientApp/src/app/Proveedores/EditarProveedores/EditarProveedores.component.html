@@ -1,77 +1,57 @@
 <div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
   <h2 class="p-2 ">
-    Sucursal {{ sucursal.nombre }}
+    Proveedor {{ proveedor.nombre }}
   </h2>
 </div>
 <div class="modal-body">
-  <form (ngSubmit)="update()" [formGroup]="Sucursal">
+  <form (ngSubmit)="update()" [formGroup]="Proveedor">
 
-    <p class="form-text form-label">Provincia</p>
+    <p class="form-text form-label">nombre</p>
     <input
       class="form-control"
-      formControlName="Provincia"
-      id="Provincia"
-      placeholder="{{ sucursal.provincia }}"
+      formControlName="nombre"
+      id="nombre"
+      placeholder="{{ proveedor.nombre }}"
       required
       type="text"
       value=""
     />
-    <p class="form-text form-label">Distrito</p>
+    <p class="form-text form-label">Cedula juridica</p>
     <input
       class="form-control"
-      formControlName="Distrito"
-      id="Distrito"
-      placeholder="{{ sucursal.distrito }}"
+      formControlName="juridica"
+      id="juridica"
+      placeholder="{{ proveedor.juridica }}"
       required
       type="text"
       value=""
     />
-    <p class="form-text form-label">Canton</p>
+    <p class="form-text form-label">Direccion</p>
     <input
       class="form-control"
-      formControlName="Canton"
-      id="Canton"
-      placeholder="{{ sucursal.canton }}"
+      formControlName="direccion"
+      id="direccion"
+      placeholder="{{ proveedor.direccion }}"
       required
       type="text"
       value=""
     />
-    <p class="form-text form-label">Telefono</p>
+    <p class="form-text form-label">Contacto</p>
     <input
       class="form-control"
-      formControlName="Telefono"
-      id="Telefono"
-      placeholder="{{ sucursal.telefono }}"
+      formControlName="contacto"
+      id="contacto"
+      placeholder="{{ proveedor.contacto }}"
       required
       type="text"
       value=""
     />
-    <p class="form-text form-label">Fecha_de_Apertura</p>
+    <p class="form-text form-label">Correo</p>
     <input
       class="form-control"
-      formControlName="Fecha_de_Apertura"
-      id="Fecha_de_Apertura"
-      placeholder="{{ sucursal.fecha_de_apertura }}"
-      required
-      type="text"
-      value=""
-    />
-    <p class="form-text form-label">Fecha_gerente</p>
-    <input
-      class="form-control"
-      formControlName="Fecha_gerente"
-      id="Fecha_gerente"
-      placeholder="{{ sucursal.fecha_gerente }}"
-      required
-      type="text"
-      value=""
-    />
-    <p class="form-text form-label">Gerente</p>
-    <input
-      class="form-control"
-      formControlName="Gerente"
-      id="Gerente"
-      placeholder="{{ sucursal.gerente }}"
+      formControlName="correo"
+      id="correo"
+      placeholder="{{ proveedor.correo }}"
       required
       type="text"
       value=""
@@ -79,7 +59,8 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button [disabled]="!Sucursal.valid" (click)="update()" class="btn btn-outline-secondary btn-success text-dark" type="submit">Update
+  <button [disabled]="!Proveedor.valid" (click)="update()" class="btn btn-outline-secondary btn-success text-dark"
+          type="submit">Update
   </button>
   <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
 
