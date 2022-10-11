@@ -1,0 +1,100 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de proveedores</p>
+  <table [dataSource]="proveedores" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="AProveedor">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let proveedor" mat-cell> {{proveedor.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AProveedor"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="juridica">
+      <th *matHeaderCellDef mat-header-cell>Cedula Juridica</th>
+      <td *matCellDef="let proveedor" mat-cell>{{proveedor.juridica}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AProveedor"
+        id="AJuridica"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="direccion">
+      <th *matHeaderCellDef mat-header-cell>Direccion</th>
+      <td *matCellDef="let proveedor" mat-cell>{{proveedor.direccion}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="AProveedor"
+        id="ADireccion"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="contacto">
+      <th *matHeaderCellDef mat-header-cell>Contacto</th>
+      <td *matCellDef="let proveedor" mat-cell>{{proveedor.contacto}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AProveedor"
+        id="Acontacto"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="correo">
+      <th *matHeaderCellDef mat-header-cell>Telefono</th>
+      <td *matCellDef="let proveedor" mat-cell>{{proveedor.correo}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AProveedor"
+        id="ACorreo"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let proveedor" mat-cell>
+        <button (click)="Delete_Button(proveedor.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="AProveedor">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let proveedor" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(proveedor.nombre)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="AProveedor">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let proveedor; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

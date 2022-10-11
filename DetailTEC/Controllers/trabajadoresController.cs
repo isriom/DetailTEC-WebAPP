@@ -14,41 +14,19 @@ namespace DetailTEC.Controllers;
 /*
  * Clase Controladora del componente de los Trabajadores desde la vista del Trabajador
  */
-public class trabajadoresController : Controller
+public class TrabajadoresController : Controller
 {
     //Variable de estrutura
+
     private Data.GTrabajadores ejemplo;
-
-
-    /**
-     * Metodo que define una accion resultante
-     */
-    [HttpGet]
-    [Route("[controller]/{data}")]
-    public ActionResult Register(string? data)
-    {
-        var jsonstring = JsonSerializer.Serialize(ejemplo);
-        return Content(jsonstring);
-    }
-
-    /**
-     * Metodo que define una accion resultante
-     */
-    [HttpGet]
-    [Route("[controller]/{id:int}")]
-    public ActionResult Consult(int? id)
-    {
-        var jsonstring = JsonSerializer.Serialize(ejemplo);
-        return Content(jsonstring);
-    }
 
 
     /**
      * Metodo que define una accion resultante que define y comprueba la estructura que se debe ingresar siendo una platilla
      */
     [HttpGet]
-    [Route("[controller]/plantilla")]
-    public ActionResult template()
+    [Route("api/[controller]")]
+    public ActionResult trabajadores()
     {
         ejemplo = new Data.GTrabajadores();
         ejemplo.Nombre = "Arnoldo";
@@ -70,7 +48,7 @@ public class trabajadoresController : Controller
      * Metodo donde se define la logica de la accion que realiza el boton de Add para poder registrar el trabajador
      */
     [HttpPost]
-    [Route("[controller]/post")]
+    [Route("api/[controller]/post")]
     public ActionResult Insert(Data.GTrabajadores trabajador)
     {
         Console.Out.Write("Prueba");
@@ -80,5 +58,20 @@ public class trabajadoresController : Controller
         Console.Out.Write("jsonstring:\n");
         Console.Out.Write(jsonstring);
         return CreatedAtAction(nameof(Insert), new Data.GTrabajadores());
+    }
+
+    /**
+     * Metodo donde se define la logica de la accion que realiza el boton de Add para poder registrar el trabajador
+     */
+    [HttpDelete]
+    [Route("api/[controller]/delete")]
+    public ActionResult Delete(int id)
+    {
+        Console.Out.Write("Eliminar Trabajador");
+
+        //Codigo de eliminar trabajador aqui
+
+        var jsonstring = JsonSerializer.Serialize("Trabajador ced " + id + " eliminado");
+        return Accepted(id);
     }
 }

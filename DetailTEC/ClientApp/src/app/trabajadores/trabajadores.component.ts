@@ -188,7 +188,7 @@ export class trabajadoresComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Workers() {
-    var res = this.http.get<string>("https://localhost:7143/trabajadores/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/trabajadores/plantilla", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
@@ -205,19 +205,19 @@ export class trabajadoresComponent {
    */
   async Add() {
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      Apellidos: (<HTMLInputElement>document.getElementById("Apellidos")).value,
-      Numero_Cedula: (<HTMLInputElement>document.getElementById("Numero_Cedula")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      Edad: (<HTMLInputElement>document.getElementById("Edad")).value,
-      Password: (<HTMLInputElement>document.getElementById("Password")).value,
-      Rol: (<HTMLInputElement>document.getElementById("Rol")).value
+      Nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      Apellidos: (<HTMLInputElement>document.getElementById("AApellidos")).value,
+      Numero_Cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
+      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("AFecha_de_ingreso")).value,
+      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("AFecha_Nacimiento")).value,
+      Edad: (<HTMLInputElement>document.getElementById("AEdad")).value,
+      Password: (<HTMLInputElement>document.getElementById("APassword")).value,
+      Rol: (<HTMLInputElement>document.getElementById("ARol")).value
     };
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7143/api/trabajadores/post", JSON.stringify(answer), {
+    let res = await this.http.post("https://localhost:7274/api/trabajadores/post", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -236,12 +236,24 @@ export class trabajadoresComponent {
    */
   async Delete_Button(id: number
   ) {
-    Popup.open("Eliminar trabajador", "Desea Eliminar este trabajador?", "Sí", this.delete_Worker, [{id}])
+    Popup.open("Eliminar trabajador", "Desea Eliminar este trabajador?", "Sí",
+      (worker_id: number = id, context: trabajadoresComponent = this) => context.delete_Worker(id), [{id}])
   }
 
   async delete_Worker(id: number
   ) {
     console.log("trabajador eliminado: " + (<Number>id))
+    let res = await this.http.delete("https://localhost:7274/api/trabajadores/delete", {
+        headers: this.httpOptions.headers,
+        withCredentials: true, body: id
+      }
+    )
+    res.subscribe(result => {
+      this.respuesta = result;
+      console.log(this.respuesta);
+
+    }, error => console.error(error));
+    console.log(res)
   }
 
   async modify_Button(id: number
@@ -257,21 +269,6 @@ export class trabajadoresComponent {
         console.log(this.actualEditor)
       }
     }
-  }
-
-  async modify(id: number
-  ) {
-    let res = await this.http.post("https://localhost:7143/trabajadores/post", JSON.stringify(id), {
-        headers: this.httpOptions.headers.set("Content-Type", "application/id"),
-        withCredentials: true,
-      }
-    )
-    res.subscribe(result => {
-      this.respuesta = result;
-      console.log(this.respuesta);
-
-    }, error => console.error(error));
-    console.log(res)
   }
 
   clean() {

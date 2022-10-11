@@ -1,0 +1,136 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Sucursales</p>
+  <table [dataSource]="Sucursales" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="ASucursal">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let sucursal" mat-cell> {{sucursal.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="provincia">
+      <th *matHeaderCellDef mat-header-cell>Provincia</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.provincia}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="AProvincia"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="canton">
+      <th *matHeaderCellDef mat-header-cell>Canton</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.canton}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="ASucursal"
+        id="ACanton"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="distrito">
+      <th *matHeaderCellDef mat-header-cell>Distrito</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.distrito}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="ADistrito"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="telefono">
+      <th *matHeaderCellDef mat-header-cell>Telefono</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.telefono}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="ATelefono"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="fecha_de_apertura">
+      <th *matHeaderCellDef mat-header-cell>Fecha_de_Apertura</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.fecha_de_apertura}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="AFecha_de_apertura"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="gerente">
+      <th *matHeaderCellDef mat-header-cell>Gerente</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.gerente}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="AGerente"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="fecha_gerente">
+      <th *matHeaderCellDef mat-header-cell>Fecha_gerente</th>
+      <td *matCellDef="let sucursal" mat-cell>{{sucursal.fecha_gerente}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ASucursal"
+        id="AFecha_gerente"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let sucursal" mat-cell>
+        <button (click)="Delete_Button(sucursal.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ASucursal">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let sucursal" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(sucursal.nombre)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ASucursal">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let sucursal; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

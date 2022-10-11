@@ -1,23 +1,23 @@
 ﻿import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GClientesComponent} from "./GClientes.component";
+import {trabajadoresComponent} from "./trabajadores.component";
 
 /**
  * Metodo para realizar la configuracion del angular
  */
-describe('GClientesComponent', () => {
-  let component: GClientesComponent;
-  let fixture: ComponentFixture<GClientesComponent>;
+describe('trabadoresComponent', () => {
+  let component: trabajadoresComponent;
+  let fixture: ComponentFixture<trabajadoresComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GClientesComponent]
+      declarations: [trabajadoresComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GClientesComponent);
+    fixture = TestBed.createComponent(trabajadoresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

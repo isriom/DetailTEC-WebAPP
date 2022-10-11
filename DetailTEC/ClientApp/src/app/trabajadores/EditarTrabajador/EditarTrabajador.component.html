@@ -88,7 +88,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button [disabled]="!trabajador.valid" class="btn btn-outline-secondary btn-success text-dark" type="submit">Update
+  <button [disabled]="!trabajador.valid"  (click)="update()" class="btn btn-outline-secondary btn-success text-dark" type="submit">Update
   </button>
   <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
 

@@ -19,7 +19,7 @@ public class LoginController : Controller
      */
     [AllowAnonymous]
     [HttpPut]
-    [Route("/login/Signin")]
+    [Route("/api/Signin")]
     public async Task<ActionResult> Login(Data.LoginUser data)
     {
         var rol = await AuthenticateUser(data.Usuario, data.Contraseña);
