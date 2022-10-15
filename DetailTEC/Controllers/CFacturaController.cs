@@ -68,21 +68,19 @@ public class CFacturasController : Controller
     public ActionResult Insert(Data.Consulta_factura data)
     {
         var file = "";
+
         if (User.IsInRole("Trabajador"))
         {
             file = "./Facturas/F" + data.Numero_de_Factura + ".pdf";
             Console.Out.Write("Trabajador");
         }
-        else
-        {
-            if (DBController.IsOwner(User.Identity.Name, data.Numero_de_Factura))
-            {
-                file = "./Facturas/F" + data.Numero_de_Factura + ".pdf";
-                Console.Out.Write("Clientes");
-                Console.Out.Write(User.Identity.Name);
-            }
-        }
 
+        // if (DBController.IsOwner(User.Identity.Name, data.Numero_de_Factura))
+        // {
+        //     file = "./Facturas/F" + data.Numero_de_Factura + ".pdf";
+        //     Console.Out.Write("Clientes");
+        //     Console.Out.Write(User.Identity.Name);
+        // }
         if (file == "") return NotFound();
 
         Response.ContentType = "application/pdfapplication/pdf";

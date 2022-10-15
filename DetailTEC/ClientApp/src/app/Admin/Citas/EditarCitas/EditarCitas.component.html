@@ -1,0 +1,47 @@
+<div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
+  <h2 class="p-2 ">
+    Cita {{ cita.nombre }}
+  </h2>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="update()" [formGroup]="Cita">
+
+    <p class="form-text form-label">Fecha</p>
+    <input
+      class="form-control"
+      formControlName="Fecha"
+      id="Fecha"
+      placeholder="{{ cita.fecha }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Tipo</p>
+    <input
+      class="form-control"
+      formControlName="Tipo"
+      id="Tipo"
+      placeholder="{{ cita.tipo }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Sucursal</p>
+    <input
+      class="form-control"
+      formControlName="Sucursal"
+      id="Sucursal"
+      placeholder="{{ cita.sucursal }}"
+      required
+      type="text"
+      value=""
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="update()" [disabled]="!Cita.valid" class="btn btn-outline-secondary btn-success text-dark"
+          type="submit">Update
+  </button>
+  <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
+
+</div>

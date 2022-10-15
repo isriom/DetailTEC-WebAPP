@@ -1,0 +1,126 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Citas</p>
+  <table [dataSource]="Citas" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="ACita">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre cliente</th>
+      <td *matCellDef="let cita" mat-cell> {{cita.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="placa">
+      <th *matHeaderCellDef mat-header-cell>Placa</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.placa}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="APlaca"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="fecha">
+      <th *matHeaderCellDef mat-header-cell>Fecha</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.fecha}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="ACita"
+        id="AFecha"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="cedula">
+      <th *matHeaderCellDef mat-header-cell>Cedula</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.cedula}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="ACedula"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="tipo">
+      <th *matHeaderCellDef mat-header-cell>Tipo</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.tipo}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="ATipo"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="sucursal">
+      <th *matHeaderCellDef mat-header-cell>Sucursal</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.sucursal}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="ASucursal"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="puntos">
+      <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
+      <td *matCellDef="let cita" mat-cell><input class="form-check-input" type="Checkbox" [checked]="cita.puntos"
+                                                 disabled></td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="form-check-input d-table-cell "
+        form="ACita"
+        id="APuntos"
+        required
+        type="checkbox"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let cita" mat-cell>
+        <button (click)="Delete_Button(cita.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ACita">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let cita" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(cita)" class="btn btn-warning bg-white"
+                data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ACita">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let cita; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

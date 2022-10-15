@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 //Load Database from FILE
-DBController.load();
 
 var builder = WebApplication.CreateBuilder(args);
 // Add cookie Authenticationas a default politic

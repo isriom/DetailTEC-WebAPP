@@ -1,0 +1,87 @@
+<div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
+  <h2 class="p-2 ">
+    Sucursal {{ sucursal.nombre }}
+  </h2>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="update()" [formGroup]="Sucursal">
+
+    <p class="form-text form-label">Provincia</p>
+    <input
+      class="form-control"
+      formControlName="Provincia"
+      id="Provincia"
+      placeholder="{{ sucursal.provincia }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Distrito</p>
+    <input
+      class="form-control"
+      formControlName="Distrito"
+      id="Distrito"
+      placeholder="{{ sucursal.distrito }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Canton</p>
+    <input
+      class="form-control"
+      formControlName="Canton"
+      id="Canton"
+      placeholder="{{ sucursal.canton }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Telefono</p>
+    <input
+      class="form-control"
+      formControlName="Telefono"
+      id="Telefono"
+      placeholder="{{ sucursal.telefono }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Fecha_de_Apertura</p>
+    <input
+      class="form-control"
+      formControlName="Fecha_de_Apertura"
+      id="Fecha_de_Apertura"
+      placeholder="{{ sucursal.fecha_de_apertura }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Fecha_gerente</p>
+    <input
+      class="form-control"
+      formControlName="Fecha_gerente"
+      id="Fecha_gerente"
+      placeholder="{{ sucursal.fecha_gerente }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Gerente</p>
+    <input
+      class="form-control"
+      formControlName="Gerente"
+      id="Gerente"
+      placeholder="{{ sucursal.gerente }}"
+      required
+      type="text"
+      value=""
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="update()" [disabled]="!Sucursal.valid" class="btn btn-outline-secondary btn-success text-dark"
+          type="submit">Update
+  </button>
+  <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
+
+</div>
