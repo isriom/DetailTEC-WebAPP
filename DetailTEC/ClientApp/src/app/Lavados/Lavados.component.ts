@@ -2,23 +2,34 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {Popup} from "../Popup/Popup.component";
-import {EditarSucursalesComponent} from "./EditarSucursale/EditarSucursales.component";
+import {EditarLavadosComponent} from "./EditarLavados/EditarLavados.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 
 /*
 Representacion de los datos del Sucursal
  */
-export class sucursalElement {
-  constructor(nombre: string, provincia: string, canton: string, distrito: string, telefono: number, fecha_de_apertura: string, gerente: string, fecha_gerente: string) {
+export class lavadoElement {
+  private _lavador: string;
+
+  constructor(nombre: string, costo: string, precio: string, duracion: string, productos: number, lavador: string, pulidor: string, puntuacion_coste: string, fecha_puntuacion_coste: string) {
     this._nombre = nombre;
-    this._provincia = provincia;
-    this._canton = canton;
-    this._distrito = distrito;
-    this._telefono = telefono;
-    this._fecha_de_apertura = fecha_de_apertura;
-    this._gerente = gerente;
-    this._fecha_gerente = fecha_gerente;
+    this._costo = costo;
+    this._precio = precio;
+    this._duracion = duracion;
+    this._productos = productos;
+    this._lavador = lavador;
+    this._pulidor = pulidor;
+    this._puntuacion_coste = puntuacion_coste;
+    this._puntuacion_ganancia = fecha_puntuacion_coste;
+  }
+
+  get lavador(): string {
+    return this._lavador;
+  }
+
+  set lavador(value: string) {
+    this._lavador = value;
   }
 
   private _nombre: string;
@@ -31,79 +42,79 @@ export class sucursalElement {
     this._nombre = value;
   }
 
-  private _provincia: string;
+  private _costo: string;
 
-  get provincia(): string {
-    return this._provincia;
+  get costo(): string {
+    return this._costo;
   }
 
-  set provincia(value: string) {
-    this._provincia = value;
+  set costo(value: string) {
+    this._costo = value;
   }
 
-  private _canton: string;
+  private _precio: string;
 
-  get canton(): string {
-    return this._canton;
+  get precio(): string {
+    return this._precio;
   }
 
-  set canton(value: string) {
-    this._canton = value;
+  set precio(value: string) {
+    this._precio = value;
   }
 
-  private _distrito: string;
+  private _duracion: string;
 
-  get distrito(): string {
-    return this._distrito;
+  get duracion(): string {
+    return this._duracion;
   }
 
-  set distrito(value: string) {
-    this._distrito = value;
+  set duracion(value: string) {
+    this._duracion = value;
   }
 
-  private _telefono: number;
+  private _productos: number;
 
-  get telefono(): number {
-    return this._telefono;
+  get productos(): number {
+    return this._productos;
   }
 
-  set telefono(value: number) {
-    this._telefono = value;
+  set productos(value: number) {
+    this._productos = value;
   }
 
-  private _fecha_de_apertura: string;
+  private _pulidor: string;
 
-  get fecha_de_apertura(): string {
-    return this._fecha_de_apertura;
+  get pulidor(): string {
+    return this._pulidor;
   }
 
-  set fecha_de_apertura(value: string) {
-    this._fecha_de_apertura = value;
+  set pulidor(value: string) {
+    this._pulidor = value;
   }
 
-  private _gerente: string;
+  private _puntuacion_coste: string;
 
-  get gerente(): string {
-    return this._gerente;
+  get puntuacion_coste(): string {
+    return this._puntuacion_coste;
   }
 
-  set gerente(value: string) {
-    this._gerente = value;
+  set puntuacion_coste(value: string) {
+    this._puntuacion_coste = value;
   }
 
-  private _fecha_gerente: string;
+  private _puntuacion_ganancia: string;
 
-  get fecha_gerente(): string {
-    return this._fecha_gerente;
+  get puntuacion_ganancia(): string {
+    return this._puntuacion_ganancia;
   }
 
-  set fecha_gerente(value: string) {
-    this._fecha_gerente = value;
+  set puntuacion_ganancia(value: string) {
+    this._puntuacion_ganancia = value;
   }
 
 
   clone() {
-    return new sucursalElement(this.nombre, this.provincia, this.canton, this.distrito, this.telefono, this.fecha_de_apertura, this.gerente, this.fecha_gerente);
+    return new lavadoElement(this.nombre, this.costo, this.precio, this.duracion, this.productos,this.lavador, this.pulidor, this.puntuacion_coste, this.puntuacion_ganancia);
   }
 }
 
@@ -111,16 +122,16 @@ export class sucursalElement {
  * Componentes utilizados para el funcionamiento de la pagina
  */
 @Component({
-  selector: 'app-Sucursales',
-  templateUrl: './Sucursales.component.html',
-  styleUrls: ['./Sucursales.component.css']
+  selector: 'app-Lavados',
+  templateUrl: './Lavados.component.html',
+  styleUrls: ['./Lavados.component.css']
 })
 
 
 /**
- * Clase donde se desarfecha_gerentela las funcionalidades de la Gestion de los Sucursales en la Vista Taller
+ * Clase donde se desarfecha_puntuacion_costela las funcionalidades de la Gestion de los Lavados en la Vista Taller
  */
-export class SucursalesComponent {
+export class LavadosComponent {
 
   //Variables utilizadas
   token = sessionStorage.getItem("tokenKey");
@@ -137,20 +148,22 @@ export class SucursalesComponent {
   elseBlock: any;
   displayedColumns: string[] = [
     "nombre",
-    "provincia",
-    "canton",
-    "distrito",
-    "telefono",
-    "fecha_de_apertura",
-    "gerente",
-    "fecha_gerente", "eliminar", "modificar"]
-  Sucursales: sucursalElement[] = [new sucursalElement(
+    "costo",
+    "precio",
+    "duracion",
+    "productos",
+    "lavador",
+    "pulidor",
+    "puntuacion_coste",
+    "puntuacion_ganancia", "eliminar", "modificar"]
+  Lavados: lavadoElement[] = [new lavadoElement(
     "SJ",
     "San Jose",
     "Lindora",
     "servatilla",
     11153,
     new Date().toDateString(),
+    "semanal",
     "semanal",
     new Date().toDateString(),)
   ];
@@ -169,20 +182,20 @@ export class SucursalesComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_Sucursales();
+    this.get_Lavados();
   }
 
   /**
    * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
    * @constructor metodo donde se hace la llamada
    */
-  get_Sucursales() {
-    var res = this.http.get<string>("https://localhost:7274/api/Sucursales/plantilla", {
+  get_Lavados() {
+    var res = this.http.get<string>("https://localhost:7274/api/Lavados/plantilla", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Sucursales = JSON.parse(result);
+      this.Lavados = JSON.parse(result);
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -195,18 +208,18 @@ export class SucursalesComponent {
   async Add() {
     const answer = {
       Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      provincia: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_canton: (<HTMLInputElement>document.getElementById("Numero_canton")).value,
+      costo: (<HTMLInputElement>document.getElementById("marca")).value,
+      Numero_precio: (<HTMLInputElement>document.getElementById("Numero_precio")).value,
       Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
       Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      fecha_de_apertura: (<HTMLInputElement>document.getElementById("fecha_de_apertura")).value,
-      gerente: (<HTMLInputElement>document.getElementById("gerente")).value,
-      fecha_gerente: (<HTMLInputElement>document.getElementById("fecha_gerente")).value
+      _pulidor: (<HTMLInputElement>document.getElementById("_pulidor")).value,
+      puntuacion_coste: (<HTMLInputElement>document.getElementById("puntuacion_coste")).value,
+      fecha_puntuacion_coste: (<HTMLInputElement>document.getElementById("fecha_puntuacion_coste")).value
     };
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Sucursales/post", JSON.stringify(answer), {
+    let res = await this.http.post("https://localhost:7274/api/Lavados/post", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -226,13 +239,13 @@ export class SucursalesComponent {
   async Delete_Button(id: number
   ) {
     Popup.open("Eliminar Sucursal", "Desea Eliminar este Sucursal?", "Sí",
-      (worker_id: number = id, context: SucursalesComponent = this) => context.delete_Worker(id), [{id}])
+      (worker_id: number = id, context: LavadosComponent = this) => context.delete_Worker(id), [{id}])
   }
 
   async delete_Worker(id: number
   ) {
     console.log("Sucursal eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/Sucursales/delete", {
+    let res = await this.http.delete("https://localhost:7274/api/Lavados/delete", {
         headers: this.httpOptions.headers,
         withCredentials: true, body: id
       }
@@ -250,11 +263,11 @@ export class SucursalesComponent {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
-    for (let sucursal of this.Sucursales) {
-      if (id === sucursal.nombre) {
-        this.actualEditor = this._modal.open(EditarSucursalesComponent)
+    for (let lavado of this.Lavados) {
+      if (id === lavado.nombre) {
+        this.actualEditor = this._modal.open(EditarLavadosComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.sucursal = (sucursal.clone())
+        this.actualEditor.componentInstance.lavado = (lavado.clone())
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

@@ -1,0 +1,137 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Clientes</p>
+  <table [dataSource]="Clientes" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="ACliente">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let cliente" mat-cell> {{cliente.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="apellido_1">
+      <th *matHeaderCellDef mat-header-cell>Apellido_1</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.apellido_1}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="AApellido_1"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="apellido_2">
+      <th *matHeaderCellDef mat-header-cell>Apellido_2</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.apellido_2}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="ACliente"
+        id="AApellido_2"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="cedula">
+      <th *matHeaderCellDef mat-header-cell>Cedula</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.cedula}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="ACedula"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="usuario">
+      <th *matHeaderCellDef mat-header-cell>Usuario</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.usuario}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="AUsuario"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="password">
+      <th *matHeaderCellDef mat-header-cell>Password</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.password}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="APassword"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="correo">
+      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.correo}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="ACorreo"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="puntos">
+      <th *matHeaderCellDef mat-header-cell>Puntos</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.puntos}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACliente"
+        id="APuntos"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let cliente" mat-cell>
+        <button (click)="Delete_Button(cliente.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ACliente">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let cliente" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(cliente.cedula)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ACliente">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let cliente; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

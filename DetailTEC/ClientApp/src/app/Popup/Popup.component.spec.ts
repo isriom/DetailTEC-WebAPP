@@ -2,24 +2,24 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 
 // @ts-ignore
-import {CFacturasComponent} from "./c-facturas.component";
+import {Popup} from "./Popup.component";
 
 /**
  * Metodo de configuracion para Angular
  */
-describe('CFacturasComponent', () => {
-  let component: CFacturasComponent;
-  let fixture: ComponentFixture<CFacturasComponent>;
+describe('Popup', () => {
+  let component: Popup;
+  let fixture: ComponentFixture<Popup>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CFacturasComponent]
+      declarations: [Popup]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CFacturasComponent);
+    fixture = TestBed.createComponent(Popup);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

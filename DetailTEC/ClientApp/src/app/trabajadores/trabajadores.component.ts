@@ -130,7 +130,7 @@ export class workerElement {
 /**
  * Clase donde se desarrolla las funcionalidades de la Gestion de los Trabajadores en la Vista Taller
  */
-export class trabajadoresComponent {
+export class TrabajadoresComponent {
 
   //Variables utilizadas
   token = sessionStorage.getItem("tokenKey");
@@ -237,7 +237,7 @@ export class trabajadoresComponent {
   async Delete_Button(id: number
   ) {
     Popup.open("Eliminar trabajador", "Desea Eliminar este trabajador?", "Sí",
-      (worker_id: number = id, context: trabajadoresComponent = this) => context.delete_Worker(id), [{id}])
+      (worker_id: number = id, context: TrabajadoresComponent = this) => context.delete_Worker(id), [{id}])
   }
 
   async delete_Worker(id: number

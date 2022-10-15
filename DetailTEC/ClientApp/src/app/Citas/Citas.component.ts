@@ -2,25 +2,25 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {Popup} from "../Popup/Popup.component";
-import {EditarSucursalesComponent} from "./EditarSucursale/EditarSucursales.component";
+import {EditarCitasComponent} from "./EditarCitas/EditarCitas.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 
 /*
 Representacion de los datos del Sucursal
  */
-export class sucursalElement {
-  constructor(nombre: string, provincia: string, canton: string, distrito: string, telefono: number, fecha_de_apertura: string, gerente: string, fecha_gerente: string) {
+export class citaElement {
+  constructor(nombre: string, placa: string, fecha: string, cedula: string, tipo: number, sucursal: string, puntos: string) {
     this._nombre = nombre;
-    this._provincia = provincia;
-    this._canton = canton;
-    this._distrito = distrito;
-    this._telefono = telefono;
-    this._fecha_de_apertura = fecha_de_apertura;
-    this._gerente = gerente;
-    this._fecha_gerente = fecha_gerente;
+    this._placa = placa;
+    this._fecha = fecha;
+    this._cedula = cedula;
+    this._tipo = tipo;
+    this._sucursal = sucursal;
+    this._puntos = puntos;
   }
 
+  //nombre cliente
   private _nombre: string;
 
   get nombre(): string {
@@ -31,79 +31,69 @@ export class sucursalElement {
     this._nombre = value;
   }
 
-  private _provincia: string;
+  private _placa: string;
 
-  get provincia(): string {
-    return this._provincia;
+  get placa(): string {
+    return this._placa;
   }
 
-  set provincia(value: string) {
-    this._provincia = value;
+  set placa(value: string) {
+    this._placa = value;
   }
 
-  private _canton: string;
+  private _fecha: string;
 
-  get canton(): string {
-    return this._canton;
+  get fecha(): string {
+    return this._fecha;
   }
 
-  set canton(value: string) {
-    this._canton = value;
+  set fecha(value: string) {
+    this._fecha = value;
   }
 
-  private _distrito: string;
+  private _cedula: string;
 
-  get distrito(): string {
-    return this._distrito;
+  get cedula(): string {
+    return this._cedula;
   }
 
-  set distrito(value: string) {
-    this._distrito = value;
+  set cedula(value: string) {
+    this._cedula = value;
   }
 
-  private _telefono: number;
+  //tipo de lavado
+  private _tipo: number;
 
-  get telefono(): number {
-    return this._telefono;
+  get tipo(): number {
+    return this._tipo;
   }
 
-  set telefono(value: number) {
-    this._telefono = value;
+  set tipo(value: number) {
+    this._tipo = value;
   }
 
-  private _fecha_de_apertura: string;
+  private _sucursal: string;
 
-  get fecha_de_apertura(): string {
-    return this._fecha_de_apertura;
+  get sucursal(): string {
+    return this._sucursal;
   }
 
-  set fecha_de_apertura(value: string) {
-    this._fecha_de_apertura = value;
+  set sucursal(value: string) {
+    this._sucursal = value;
   }
 
-  private _gerente: string;
+  private _puntos: string;
 
-  get gerente(): string {
-    return this._gerente;
+  get puntos(): string {
+    return this._puntos;
   }
 
-  set gerente(value: string) {
-    this._gerente = value;
+  set puntos(value: string) {
+    this._puntos = value;
   }
-
-  private _fecha_gerente: string;
-
-  get fecha_gerente(): string {
-    return this._fecha_gerente;
-  }
-
-  set fecha_gerente(value: string) {
-    this._fecha_gerente = value;
-  }
-
 
   clone() {
-    return new sucursalElement(this.nombre, this.provincia, this.canton, this.distrito, this.telefono, this.fecha_de_apertura, this.gerente, this.fecha_gerente);
+    return new citaElement(this.nombre, this.placa, this.fecha, this.cedula, this.tipo, this.sucursal, this.puntos);
   }
 }
 
@@ -111,16 +101,16 @@ export class sucursalElement {
  * Componentes utilizados para el funcionamiento de la pagina
  */
 @Component({
-  selector: 'app-Sucursales',
-  templateUrl: './Sucursales.component.html',
-  styleUrls: ['./Sucursales.component.css']
+  selector: 'app-Citas',
+  templateUrl: './Citas.component.html',
+  styleUrls: ['./Citas.component.css']
 })
 
 
 /**
- * Clase donde se desarfecha_gerentela las funcionalidades de la Gestion de los Sucursales en la Vista Taller
+ * Clase donde se desarfecha_puntosla las funcionalidades de la Gestion de los Citas en la Vista Taller
  */
-export class SucursalesComponent {
+export class CitasComponent {
 
   //Variables utilizadas
   token = sessionStorage.getItem("tokenKey");
@@ -137,22 +127,20 @@ export class SucursalesComponent {
   elseBlock: any;
   displayedColumns: string[] = [
     "nombre",
-    "provincia",
-    "canton",
-    "distrito",
-    "telefono",
-    "fecha_de_apertura",
-    "gerente",
-    "fecha_gerente", "eliminar", "modificar"]
-  Sucursales: sucursalElement[] = [new sucursalElement(
+    "placa",
+    "fecha",
+    "cedula",
+    "tipo",
+    "sucursal",
+    "puntos", "eliminar", "modificar"]
+  Citas: citaElement[] = [new citaElement(
     "SJ",
     "San Jose",
     "Lindora",
     "servatilla",
     11153,
     new Date().toDateString(),
-    "semanal",
-    new Date().toDateString(),)
+    "semanal",)
   ];
   actualEditor: NgbModalRef | undefined;
   Sucursal = new FormGroup({});
@@ -169,20 +157,20 @@ export class SucursalesComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_Sucursales();
+    this.get_Citas();
   }
 
   /**
    * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
    * @constructor metodo donde se hace la llamada
    */
-  get_Sucursales() {
-    var res = this.http.get<string>("https://localhost:7274/api/Sucursales/plantilla", {
+  get_Citas() {
+    var res = this.http.get<string>("https://localhost:7274/api/Citas/plantilla", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Sucursales = JSON.parse(result);
+      this.Citas = JSON.parse(result);
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -195,18 +183,18 @@ export class SucursalesComponent {
   async Add() {
     const answer = {
       Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      provincia: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_canton: (<HTMLInputElement>document.getElementById("Numero_canton")).value,
+      placa: (<HTMLInputElement>document.getElementById("marca")).value,
+      Numero_fecha: (<HTMLInputElement>document.getElementById("Numero_fecha")).value,
       Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
       Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      fecha_de_apertura: (<HTMLInputElement>document.getElementById("fecha_de_apertura")).value,
-      gerente: (<HTMLInputElement>document.getElementById("gerente")).value,
-      fecha_gerente: (<HTMLInputElement>document.getElementById("fecha_gerente")).value
+      sucursal: (<HTMLInputElement>document.getElementById("sucursal")).value,
+      puntos: (<HTMLInputElement>document.getElementById("puntos")).value,
+      fecha_puntos: (<HTMLInputElement>document.getElementById("fecha_puntos")).value
     };
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Sucursales/post", JSON.stringify(answer), {
+    let res = await this.http.post("https://localhost:7274/api/Citas/post", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -226,13 +214,13 @@ export class SucursalesComponent {
   async Delete_Button(id: number
   ) {
     Popup.open("Eliminar Sucursal", "Desea Eliminar este Sucursal?", "Sí",
-      (worker_id: number = id, context: SucursalesComponent = this) => context.delete_Worker(id), [{id}])
+      (worker_id: number = id, context: CitasComponent = this) => context.delete_Worker(id), [{id}])
   }
 
   async delete_Worker(id: number
   ) {
     console.log("Sucursal eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/Sucursales/delete", {
+    let res = await this.http.delete("https://localhost:7274/api/Citas/delete", {
         headers: this.httpOptions.headers,
         withCredentials: true, body: id
       }
@@ -245,16 +233,16 @@ export class SucursalesComponent {
     console.log(res)
   }
 
-  async modify_Button(id: string
-  ) {
+  async modify_Button(fecha: String
+    , sucursal: String, placa: String) {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
-    for (let sucursal of this.Sucursales) {
-      if (id === sucursal.nombre) {
-        this.actualEditor = this._modal.open(EditarSucursalesComponent)
+    for (let cita of this.Citas) {
+      if (fecha === cita.fecha&&sucursal === cita.sucursal&&placa === cita.placa) {
+        this.actualEditor = this._modal.open(EditarCitasComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.sucursal = (sucursal.clone())
+        this.actualEditor.componentInstance.cita = (cita.clone())
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

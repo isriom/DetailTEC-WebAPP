@@ -6,7 +6,7 @@ import {RouterModule} from '@angular/router';
 import {AppComponent, SafePipe} from './app.component';
 import {NavMenuComponent} from './nav-menu/nav-menu.component';
 import {HomeComponent} from './home/home.component';
-import {trabajadoresComponent} from "./trabajadores/trabajadores.component";
+import {TrabajadoresComponent} from "./trabajadores/trabajadores.component";
 import {Popup} from "./Popup/Popup.component";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -17,6 +17,15 @@ import {SucursalesComponent} from "./Sucursales/Sucursales.component";
 import {EditarSucursalesComponent} from "./Sucursales/EditarSucursale/EditarSucursales.component";
 import {ProveedoresComponent} from "./Proveedores/Proveedores.component";
 import {EditarProveedoresComponent} from "./Proveedores/EditarProveedores/EditarProveedores.component";
+import {InsumoComponent} from "./Insumos/Insumos.component";
+import {EditarInsumosComponent} from "./Insumos/EditarInsumos/EditarInsumos.component";
+import {LavadosComponent} from "./Lavados/Lavados.component";
+import {EditarLavadosComponent} from "./Lavados/EditarLavados/EditarLavados.component";
+import {ClientesComponent} from "./Clientes/Clientes.component";
+import {EditarClientesComponent} from "./Clientes/EditarClientes/EditarClientes.component";
+import {CitasComponent} from "./Citas/Citas.component";
+import {EditarCitasComponent} from "./Citas/EditarCitas/EditarCitas.component";
+
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
  */
@@ -25,14 +34,22 @@ import {EditarProveedoresComponent} from "./Proveedores/EditarProveedores/Editar
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    trabajadoresComponent,
+    TrabajadoresComponent,
     SucursalesComponent,
     ProveedoresComponent,
+    InsumoComponent,
+    LavadosComponent,
+    ClientesComponent,
+    CitasComponent,
     Popup,
     SafePipe,
     EditarTrabajadorComponent,
     EditarSucursalesComponent,
-    EditarProveedoresComponent
+    EditarProveedoresComponent,
+    EditarInsumosComponent,
+    EditarLavadosComponent,
+    EditarClientesComponent,
+    EditarCitasComponent,
 
 
   ],
@@ -45,11 +62,18 @@ import {EditarProveedoresComponent} from "./Proveedores/EditarProveedores/Editar
     BrowserAnimationsModule,
     MatTableModule,
 
-    RouterModule.forRoot([
-      {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'Trabajadores', data: {title: "Gestion Trabajadores"}, component: trabajadoresComponent},
-      {path: 'Sucursales', data: {title: "Gestion Sucursales"}, component: SucursalesComponent},
-      {path: 'Proveedores', data: {title: "Gestion Proveedores"}, component: ProveedoresComponent},
+    RouterModule.forRoot([{path: '', component: HomeComponent, pathMatch: 'full'},
+
+      {
+        path: "admin", children: [
+          {path: 'Trabajadores', data: {title: "Gestion Trabajadores"}, component: TrabajadoresComponent},
+          {path: 'Sucursales', data: {title: "Gestion Sucursales"}, component: SucursalesComponent},
+          {path: 'Proveedores', data: {title: "Gestion Proveedores"}, component: ProveedoresComponent},
+          {path: 'Insumos', data: {title: "Gestion Insumo"}, component: InsumoComponent},
+          {path: 'Lavados', data: {title: "Gestion Lavados"}, component: LavadosComponent},
+          {path: 'Clientes', data: {title: "Gestion Cliente"}, component: ClientesComponent},
+          {path: 'Citas', data: {title: "Gestion Citas"}, component: CitasComponent},]
+      },
     ]),
     MatTableModule,
     MatButtonModule

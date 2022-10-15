@@ -1,23 +1,23 @@
 ﻿import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {trabajadoresComponent} from "./trabajadores.component";
+import {ProveedoresComponent} from "./Proveedores.component";
 
 /**
  * Metodo para realizar la configuracion del angular
  */
 describe('trabadoresComponent', () => {
-  let component: trabajadoresComponent;
-  let fixture: ComponentFixture<trabajadoresComponent>;
+  let component: ProveedoresComponent;
+  let fixture: ComponentFixture<ProveedoresComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [trabajadoresComponent]
+      declarations: [ProveedoresComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(trabajadoresComponent);
+    fixture = TestBed.createComponent(ProveedoresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

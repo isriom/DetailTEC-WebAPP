@@ -3,7 +3,7 @@
     class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="navbar" style="margin: 0">
-      <a [routerLink]="['/']" class="navbar-brand text-center">DetailTEC </a>
+      <a  [routerLink]="['{{this.rol}}']" class="navbar-brand text-center">DetailTEC </a>
 
     </div>
     <div class="container" style="margin: 0">
@@ -33,33 +33,44 @@
             </li>
 
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/Sucursales']" class="nav-link text-dark"
+              <a [routerLink]="['admin/Insumos']" class="nav-link text-dark"
+              >Insumos</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['admin/Lavados']" class="nav-link text-dark"
+              >Lavados</a
+              >
+            </li>
+
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['admin/Sucursales']" class="nav-link text-dark"
               >Sucursales</a
               >
             </li>
 
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/Citas']" class="nav-link text-dark"
+              <a [routerLink]="['admin/Citas']" class="nav-link text-dark"
               >Citas</a
               >
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/Trabajadores']" class="nav-link text-dark"
+              <a [routerLink]="['admin/Trabajadores']" class="nav-link text-dark"
               >Trabajadores</a
               >
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/Proveedores']" class="nav-link text-dark"
+              <a [routerLink]="['admin/Proveedores']" class="nav-link text-dark"
               >Proveedores</a
               >
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/Clientes']" class="nav-link text-dark"
+              <a [routerLink]="['admin/Clientes']" class="nav-link text-dark"
               >Clientes</a
               >
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/CFactura']" class="nav-link text-dark"
+              <a [routerLink]="['admin/CFactura']" class="nav-link text-dark"
               >Consulta_Facturas</a>
             </li>
             <li class="nav-item">
@@ -76,10 +87,10 @@
               [routerLinkActive]="['link-active']"
               class="nav-item"
             >
-              <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
+              <a [routerLink]="['cliente/']" class="nav-link text-dark">Home</a>
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
-              <a [routerLink]="['/RCitas']" class="nav-link text-dark"
+              <a [routerLink]="['cliente/RCitas']" class="nav-link text-dark"
               >Registro_Citas</a
               >
             </li>

@@ -1,0 +1,148 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Lavados</p>
+  <table [dataSource]="Lavados" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="ALavado">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let lavado" mat-cell> {{lavado.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="costo">
+      <th *matHeaderCellDef mat-header-cell>Costo</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.costo}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="ACosto"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="precio">
+      <th *matHeaderCellDef mat-header-cell>Precio</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.precio}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="ALavado"
+        id="APrecio"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="duracion">
+      <th *matHeaderCellDef mat-header-cell>Duracion</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.duracion}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="ADuracion"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="productos">
+      <th *matHeaderCellDef mat-header-cell>Productos</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.productos}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="AProductos"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="lavador">
+      <th *matHeaderCellDef mat-header-cell>Lavador</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.lavador}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="AFecha_de_apertura"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="pulidor">
+      <th *matHeaderCellDef mat-header-cell>Pulidor</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.pulidor}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="APulidor"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="puntuacion_coste">
+      <th *matHeaderCellDef mat-header-cell>Puntuacion_coste</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.puntuacion_coste}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="APuntuacion_coste"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="puntuacion_ganancia">
+      <th *matHeaderCellDef mat-header-cell>Puntuacion_ganacia</th>
+      <td *matCellDef="let lavado" mat-cell>{{lavado.puntuacion_ganancia}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ALavado"
+        id="APuntuacion_ganacia"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let lavado" mat-cell>
+        <button (click)="Delete_Button(lavado.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ALavado">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let lavado" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(lavado.nombre)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="ALavado">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let lavado; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

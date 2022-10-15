@@ -1,0 +1,96 @@
+<div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
+  <h2 class="p-2 ">
+    Lavado {{ lavado.nombre }}
+  </h2>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="update()" [formGroup]="Lavado">
+
+    <p class="form-text form-label">Costo</p>
+    <input
+      class="form-control"
+      formControlName="Costo"
+      id="Costo"
+      placeholder="{{ lavado.costo }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Precio</p>
+    <input
+      class="form-control"
+      formControlName="Precio"
+      id="Precio"
+      placeholder="{{ lavado.precio }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Duracion</p>
+    <input
+      class="form-control"
+      formControlName="Duracion"
+      id="Duracion"
+      placeholder="{{ lavado.duracion }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Productos</p>
+    <input
+      class="form-control"
+      formControlName="Productos"
+      id="Productos"
+      placeholder="{{ lavado.productos }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Lavador</p>
+    <input
+      class="form-control"
+      formControlName="Lavador"
+      id="Lavador"
+      placeholder="{{ lavado.lavador }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Pulidor</p>
+    <input
+      class="form-control"
+      formControlName="Pulidor"
+      id="Pulidor"
+      placeholder="{{ lavado.pulidor }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Puntuacion_Coste</p>
+    <input
+      class="form-control"
+      formControlName="Puntuacion_Coste"
+      id="Puntuacion_Coste"
+      placeholder="{{ lavado.puntuacion_coste }}"
+      required
+      type="text"
+      value=""
+    />
+    <p class="form-text form-label">Puntuacion_Ganancia</p>
+    <input
+      class="form-control"
+      formControlName="Puntuacion_Ganancia"
+      id="Puntuacion_Ganancia"
+      placeholder="{{ lavado.puntuacion_ganancia }}"
+      required
+      type="text"
+      value=""
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button [disabled]="!Lavado.valid" (click)="update()" class="btn btn-outline-secondary btn-success text-dark" type="submit">Update
+  </button>
+  <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
+
+</div>

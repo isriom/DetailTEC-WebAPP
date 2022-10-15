@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {trabajadoresComponent, workerElement} from "../trabajadores.component";
+import {TrabajadoresComponent, workerElement} from "../trabajadores.component";
 import {FormControl, FormGroup} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -15,13 +15,13 @@ export class EditarTrabajadorComponent implements OnInit {
 
   }
 
-  private _padre: trabajadoresComponent | undefined;
+  private _padre: TrabajadoresComponent | undefined;
 
-  get padre(): trabajadoresComponent {
-    return <trabajadoresComponent>this._padre;
+  get padre(): TrabajadoresComponent {
+    return <TrabajadoresComponent>this._padre;
   }
 
-  set padre(value: trabajadoresComponent) {
+  set padre(value: TrabajadoresComponent) {
     this._padre = value;
   }
 

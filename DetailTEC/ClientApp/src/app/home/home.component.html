@@ -4,16 +4,27 @@
         class="form-signin" style="display: flex;flex-direction: column; width: 25%">
     <h1 class="text-center">Login</h1>
     <input class="form-control" formControlName="user" id="Usuario" placeholder="Usuario" required
-           type="password" value="">
+           type="text" value="">
+
+
     <input class="form-control" formControlName="pass" id="Contraseña" placeholder="Contraseña"
-           required value="">
+           required value="" type="password">
 
     <button class="btn btn-lg btn-primary" type="submit" [disabled]="!login.valid" id="Sig_in">Iniciar Sesion</button>
   </form>
 
 </ng-template>
 <ng-template #elseBlock class="p-3 justify-content-center">
-  <p class="text-capitalize form-text text-decoration-underline " font-size="16">Usuario</p>
-  <p class="text-capitalize form-text text-dark" font-size="16" id="NAME">{{user}}</p>
-  <button (click)="logout()" class="form-floating" id="Log-Out">SIGN OUT</button>
+  <div *ngIf="user!=='admin';then userBlock else adminBlock "></div>
+
+  <ng-template #adminBlock class="p-3 justify-content-center">
+    <p class="text-capitalize form-text text-decoration-underline " font-size="16">Usuario</p>
+    <p class="text-capitalize form-text text-dark" font-size="16" id="NAME">{{user}}</p>
+    <button (click)="logout()" class="form-floating btn btn-warning" id="Log-Out">SIGN OUT</button>
+  </ng-template>
+
+  <ng-template #userBlock class="p-3 justify-content-center">
+
+    <button (click)="logout()" class="form-floating btn btn-warning">SIGN OUT</button>
+  </ng-template>
 </ng-template>

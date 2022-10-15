@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
     })
   };
   login = new FormGroup({
-      user: new FormControl(),
-      pass: new FormControl(),
+    pass: new FormControl(),
+    user: new FormControl(),
     }
   );
 
