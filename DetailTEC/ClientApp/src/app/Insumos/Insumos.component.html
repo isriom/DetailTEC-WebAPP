@@ -1,0 +1,88 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Insumos</p>
+  <table [dataSource]="Insumos" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="AInsumo">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let insumo" mat-cell> {{insumo.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AInsumo"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="marca">
+      <th *matHeaderCellDef mat-header-cell>Marca</th>
+      <td *matCellDef="let insumo" mat-cell>{{insumo.marca}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AInsumo"
+        id="AMarca"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="costo">
+      <th *matHeaderCellDef mat-header-cell>Costo</th>
+      <td *matCellDef="let insumo" mat-cell>{{insumo.costo}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="AInsumo"
+        id="ACosto"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="proveedores">
+      <th *matHeaderCellDef mat-header-cell>Proveedores</th>
+      <td *matCellDef="let insumo" mat-cell>{{insumo.proveedores}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AInsumo"
+        id="AProveedores"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let insumo" mat-cell>
+        <button (click)="Delete_Button(insumo.nombre)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="clean()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="AInsumo">
+        Clean
+      </button>
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let insumo" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(insumo.nombre)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="AInsumo">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let insumo; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>
