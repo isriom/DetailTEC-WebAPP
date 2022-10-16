@@ -1,8 +1,12 @@
 ﻿namespace DetailTEC.Controllers.admin;
 
+public abstract class Element
+{
+}
+
 public class AdminData
 {
-    public class CitaElement
+    public class CitaElement : Element
     {
         public CitaElement(string nombre, int placa, string fecha, int cedula, string tipo, string sucursal,
             bool puntos)
@@ -29,9 +33,9 @@ public class AdminData
         public bool puntos { get; set; }
     }
 
-    public class ClienteElement
+    public class ClienteElement : Element
     {
-        public ClienteElement(string nombre, string cedula, string apellido1, string apellido2, string usuario,
+        public ClienteElement(string nombre, int cedula, string apellido1, string apellido2, string usuario,
             string password, string correo, int puntos)
         {
             this.nombre = nombre;
@@ -49,7 +53,7 @@ public class AdminData
         }
 
         public string nombre { get; set; }
-        public string cedula { get; set; }
+        public int cedula { get; set; }
         public string apellido_1 { get; set; }
         public string apellido_2 { get; set; }
         public string usuario { get; set; }
@@ -58,7 +62,7 @@ public class AdminData
         public int puntos { get; set; }
     }
 
-    public class InsumoElement
+    public class InsumoElement : Element
     {
         public InsumoElement(string nombre, string marca, int costo, string proveedores)
         {
@@ -78,10 +82,10 @@ public class AdminData
         public string proveedores { get; set; }
     }
 
-    public class LavadoElement
+    public class LavadoElement : Element
     {
-        public LavadoElement(string nombre, string costo, string precio, string duracion, int productos, string lavador,
-            string pulidor, string puntuacionCoste, string fechaPuntuacionCoste)
+        public LavadoElement(string nombre, int costo, int precio, int duracion, string productos, bool lavador,
+            bool pulidor, int puntuacionCoste, int puntuacionGanancia)
         {
             this.nombre = nombre;
             this.costo = costo;
@@ -91,7 +95,7 @@ public class AdminData
             this.lavador = lavador;
             this.pulidor = pulidor;
             puntuacion_coste = puntuacionCoste;
-            fecha_puntuacion_coste = fechaPuntuacionCoste;
+            puntuacion_ganancia = puntuacionGanancia;
         }
 
         public LavadoElement()
@@ -99,17 +103,20 @@ public class AdminData
         }
 
         public string nombre { get; set; }
-        public string costo { get; set; }
-        public string precio { get; set; }
-        public string duracion { get; set; }
-        public int productos { get; set; }
-        public string lavador { get; set; }
-        public string pulidor { get; set; }
-        public string puntuacion_coste { get; set; }
-        public string fecha_puntuacion_coste { get; set; }
+        public int costo { get; set; }
+
+        public int precio { get; set; }
+
+        //minutes
+        public int duracion { get; set; }
+        public string productos { get; set; }
+        public bool lavador { get; set; }
+        public bool pulidor { get; set; }
+        public int puntuacion_coste { get; set; }
+        public int puntuacion_ganancia { get; set; }
     }
 
-    public class ProveedorElement
+    public class ProveedorElement : Element
     {
         public ProveedorElement(string nombre, string juridica, string direccion, int contacto, string correo)
         {
@@ -131,10 +138,10 @@ public class AdminData
         public string correo { get; set; }
     }
 
-    public class SucursalElement
+    public class SucursalElement : Element
     {
         public SucursalElement(string nombre, string provincia, string canton, string distrito, int telefono,
-            string fechaDeApertura, string gerente, string fechaGerente)
+            string fechaDeApertura, int gerente, string fechaGerente)
         {
             this.nombre = nombre;
             this.provincia = provincia;
@@ -156,14 +163,14 @@ public class AdminData
         public string distrito { get; set; }
         public int telefono { get; set; }
         public string fecha_de_apertura { get; set; }
-        public string gerente { get; set; }
+        public int gerente { get; set; }
         public string fecha_gerente { get; set; }
     }
 
-    public class TrabajadorElement
+    public class TrabajadorElement : Element
     {
         public TrabajadorElement(string nombre, string apellidos, int cedula, string fechaDeIngreso,
-            string fechaDeNacimiento, int edad, string password, string rol, int pago)
+            string fechaDeNacimiento, int edad, string password, string rol, string pago)
         {
             this.nombre = nombre;
             this.apellidos = apellidos;
@@ -188,6 +195,6 @@ public class AdminData
         public int edad { get; set; }
         public string password { get; set; }
         public string rol { get; set; }
-        public int pago { get; set; }
+        public string pago { get; set; }
     }
 }

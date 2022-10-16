@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del Sucursal
  */
 export class lavadoElement {
-  constructor(nombre: string, costo: string, precio: string, duracion: string, productos: number, lavador: string, pulidor: string, puntuacion_coste: string, fecha_puntuacion_coste: string) {
+  constructor(nombre: string, costo: number, precio: number, duracion: number, productos: string, lavador: boolean, pulidor: boolean, puntuacion_coste: number, puntuacion_ganancia: string) {
     this._nombre = nombre;
     this._costo = costo;
     this._precio = precio;
@@ -19,16 +19,16 @@ export class lavadoElement {
     this._lavador = lavador;
     this._pulidor = pulidor;
     this._puntuacion_coste = puntuacion_coste;
-    this._puntuacion_ganancia = fecha_puntuacion_coste;
+    this._puntuacion_ganancia = puntuacion_ganancia;
   }
 
-  private _lavador: string;
+  private _lavador: boolean;
 
-  get lavador(): string {
+  get lavador(): boolean {
     return this._lavador;
   }
 
-  set lavador(value: string) {
+  set lavador(value: boolean) {
     this._lavador = value;
   }
 
@@ -42,63 +42,63 @@ export class lavadoElement {
     this._nombre = value;
   }
 
-  private _costo: string;
+  private _costo: number;
 
-  get costo(): string {
+  get costo(): number {
     return this._costo;
   }
 
-  set costo(value: string) {
+  set costo(value: number) {
     this._costo = value;
   }
 
-  private _precio: string;
+  private _precio: number;
 
-  get precio(): string {
+  get precio(): number {
     return this._precio;
   }
 
-  set precio(value: string) {
+  set precio(value: number) {
     this._precio = value;
   }
 
-  private _duracion: string;
+  private _duracion: number;
 
-  get duracion(): string {
+  get duracion(): number {
     return this._duracion;
   }
 
-  set duracion(value: string) {
+  set duracion(value: number) {
     this._duracion = value;
   }
 
-  private _productos: number;
+  private _productos: string;
 
-  get productos(): number {
+  get productos(): string {
     return this._productos;
   }
 
-  set productos(value: number) {
+  set productos(value: string) {
     this._productos = value;
   }
 
-  private _pulidor: string;
+  private _pulidor: boolean;
 
-  get pulidor(): string {
+  get pulidor(): boolean {
     return this._pulidor;
   }
 
-  set pulidor(value: string) {
+  set pulidor(value: boolean) {
     this._pulidor = value;
   }
 
-  private _puntuacion_coste: string;
+  private _puntuacion_coste: number;
 
-  get puntuacion_coste(): string {
+  get puntuacion_coste(): number {
     return this._puntuacion_coste;
   }
 
-  set puntuacion_coste(value: string) {
+  set puntuacion_coste(value: number) {
     this._puntuacion_coste = value;
   }
 
@@ -156,17 +156,7 @@ export class LavadosComponent {
     "pulidor",
     "puntuacion_coste",
     "puntuacion_ganancia", "eliminar", "modificar"]
-  Lavados: lavadoElement[] = [new lavadoElement(
-    "SJ",
-    "San Jose",
-    "Lindora",
-    "servatilla",
-    11153,
-    new Date().toDateString(),
-    "semanal",
-    "semanal",
-    new Date().toDateString(),)
-  ];
+  Lavados: lavadoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Sucursal = new FormGroup({});
 
@@ -190,12 +180,12 @@ export class LavadosComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Lavados() {
-    var res = this.http.get<string>("https://localhost:7274/api/Lavados/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Lavados/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Lavados = JSON.parse(result);
+      this.Lavados = <lavadoElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -219,7 +209,7 @@ export class LavadosComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Lavados/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Lavados/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -245,7 +235,7 @@ export class LavadosComponent {
   async delete_Worker(id: number
   ) {
     console.log("Sucursal eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/Lavados/delete", {
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Lavados/delete", {
         headers: this.httpOptions.headers,
         withCredentials: true, body: id
       }

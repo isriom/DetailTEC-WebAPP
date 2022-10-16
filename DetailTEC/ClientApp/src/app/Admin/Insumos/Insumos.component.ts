@@ -96,12 +96,7 @@ export class InsumoComponent {
     "marca",
     "costo",
     "proveedores", "eliminar", "modificar"]
-  Insumos: insumoElement[] = [new insumoElement(
-    "LLanta",
-    "SUSUKY",
-    1500,
-    "GOLLO")
-  ];
+  Insumos: insumoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   insumo = new FormGroup({});
 
@@ -125,12 +120,12 @@ export class InsumoComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Insumos() {
-    var res = this.http.get<string>("https://localhost:7274/api/Insumos/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Insumos/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Insumos = JSON.parse(result);
+      this.Insumos = <insumoElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -150,7 +145,7 @@ export class InsumoComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Insumos/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Insumos/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }

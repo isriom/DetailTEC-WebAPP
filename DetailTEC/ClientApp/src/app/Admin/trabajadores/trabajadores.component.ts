@@ -155,16 +155,7 @@ export class TrabajadoresComponent {
     "password",
     "rol",
     "pago", "eliminar", "modificar"]
-  Workers: workerElement[] = [new workerElement(
-    "isriom",
-    "barrios",
-    1,
-    new Date().toDateString(),
-    new Date().toDateString(),
-    11,
-    "contraseña",
-    "limpiador", "semanal",)
-  ];
+  Workers: workerElement[] = [];
   actualEditor: NgbModalRef | undefined;
   trabajador = new FormGroup({});
 
@@ -188,12 +179,12 @@ export class TrabajadoresComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Workers() {
-    var res = this.http.get<string>("https://localhost:7274/api/trabajadores/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Trabajadores/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Workers = JSON.parse(result);
+      this.Workers = <workerElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -217,7 +208,7 @@ export class TrabajadoresComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/trabajadores/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Trabajadores/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }

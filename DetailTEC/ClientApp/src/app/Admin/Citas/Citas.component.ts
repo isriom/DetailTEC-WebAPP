@@ -64,7 +64,7 @@ export class citaElement {
 
 
 /**
- * Clase donde se desarfecha_puntosla las funcionalidades de la Gestion de los Citas en la Vista Taller
+ * Clase donde se despliega las funcionalidades de la Gestion de los Citas en la Vista Taller
  */
 export class CitasComponent {
 
@@ -113,7 +113,7 @@ export class CitasComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Citas() {
-    var res = this.http.get<string>("https://localhost:7274/api/Citas/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Citas/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
@@ -142,7 +142,7 @@ export class CitasComponent {
     };
     console.log(this.respuesta);
     console.log(data);
-    let res = await this.http.put("https://localhost:7274/api/Citas/add", JSON.stringify(data), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Citas/add", JSON.stringify(data), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }

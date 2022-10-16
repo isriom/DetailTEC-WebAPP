@@ -109,13 +109,7 @@ export class ProveedoresComponent {
     "direccion",
     "contacto",
     "correo", "eliminar", "modificar"]
-  proveedores: proveedorElement[] = [new proveedorElement(
-    "SJ",
-    "San Jose",
-    "Lindora",
-    11111111,
-    "11153@cuentaprueba.com")
-  ];
+  proveedores: proveedorElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Proveedor = new FormGroup({});
 
@@ -139,12 +133,12 @@ export class ProveedoresComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_proveedores() {
-    var res = this.http.get<string>("https://localhost:7274/api/proveedores/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Proveedores/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.proveedores = JSON.parse(result);
+      this.proveedores = <proveedorElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -168,7 +162,7 @@ export class ProveedoresComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/proveedores/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Proveedores/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }

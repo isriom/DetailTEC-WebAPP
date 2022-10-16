@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del Cliente
  */
 export class clienteElement {
-  constructor(nombre: string, cedula: string, apellido_1: string, apellido_2: string, usuario: string, password: string, correo: string, puntos: string) {
+  constructor(nombre: string, cedula: number, apellido_1: string, apellido_2: string, usuario: string, password: string, correo: string, puntos: string) {
     this._cedula = cedula;
     this._nombre = nombre;
     this._apellido_1 = apellido_1;
@@ -41,13 +41,13 @@ export class clienteElement {
     this._nombre = value;
   }
 
-  private _cedula: string;
+  private _cedula: number;
 
-  get cedula(): string {
+  get cedula(): number {
     return this._cedula;
   }
 
-  set cedula(value: string) {
+  set cedula(value: number) {
     this._cedula = value;
   }
 
@@ -143,15 +143,7 @@ export class ClientesComponent {
     "password",
     "correo",
     "puntos", "eliminar", "modificar"]
-  Clientes: clienteElement[] = [new clienteElement(
-    "Isaac",
-    "10504030211",
-    "Barrios",
-    "Campos",
-    "isriom",
-    new Date().toDateString(),
-    "semanal",
-    "semanal")
+  Clientes: clienteElement[] = [
   ];
   actualEditor: NgbModalRef | undefined;
   Cliente = new FormGroup({});
@@ -176,12 +168,12 @@ export class ClientesComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Clientes() {
-    var res = this.http.get<string>("https://localhost:7274/api/Clientes/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Clientes/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Clientes = JSON.parse(result);
+      this.Clientes = <clienteElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -205,7 +197,7 @@ export class ClientesComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Clientes/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Clientes/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -244,13 +236,13 @@ export class ClientesComponent {
     console.log(res)
   }
 
-  async modify_Button(id: string
+  async modify_Button(cedula: number
   ) {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
     for (let cliente of this.Clientes) {
-      if (id === cliente.cedula) {
+      if (cedula === cliente.cedula) {
         this.actualEditor = this._modal.open(EditarClientesComponent)
         this.actualEditor.componentInstance.padre = this
         this.actualEditor.componentInstance.cliente = (cliente.clone())

@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del Sucursal
  */
 export class sucursalElement {
-  constructor(nombre: string, provincia: string, canton: string, distrito: string, telefono: number, fecha_de_apertura: string, gerente: string, fecha_gerente: string) {
+  constructor(nombre: string, provincia: string, canton: string, distrito: string, telefono: number, fecha_de_apertura: string, gerente: number, fecha_gerente: string) {
     this._nombre = nombre;
     this._provincia = provincia;
     this._canton = canton;
@@ -81,13 +81,13 @@ export class sucursalElement {
     this._fecha_de_apertura = value;
   }
 
-  private _gerente: string;
+  private _gerente: number;
 
-  get gerente(): string {
+  get gerente(): number {
     return this._gerente;
   }
 
-  set gerente(value: string) {
+  set gerente(value:number) {
     this._gerente = value;
   }
 
@@ -144,16 +144,7 @@ export class SucursalesComponent {
     "fecha_de_apertura",
     "gerente",
     "fecha_gerente", "eliminar", "modificar"]
-  Sucursales: sucursalElement[] = [new sucursalElement(
-    "SJ",
-    "San Jose",
-    "Lindora",
-    "servatilla",
-    11153,
-    new Date().toDateString(),
-    "semanal",
-    new Date().toDateString(),)
-  ];
+  Sucursales: sucursalElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Sucursal = new FormGroup({});
 
@@ -177,12 +168,12 @@ export class SucursalesComponent {
    * @constructor metodo donde se hace la llamada
    */
   get_Sucursales() {
-    var res = this.http.get<string>("https://localhost:7274/api/Sucursales/plantilla", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Sucursales/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Sucursales = JSON.parse(result);
+      this.Sucursales = <sucursalElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -206,7 +197,7 @@ export class SucursalesComponent {
 
     console.log(this.respuesta);
     console.log(answer);
-    let res = await this.http.post("https://localhost:7274/api/Sucursales/post", JSON.stringify(answer), {
+    let res = await this.http.put("https://localhost:7274/api/Admin/Sucursales/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
