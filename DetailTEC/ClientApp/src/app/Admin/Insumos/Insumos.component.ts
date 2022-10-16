@@ -10,56 +10,17 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del insumo
  */
 export class insumoElement {
-  constructor(nombre: string, marca: string, costo: number, proveedores: string) {
-    this._nombre = nombre;
-    this._marca = marca;
-    this._costo = costo;
-    this._proveedores = proveedores;
-  }
+  constructor(public nombre: string, public marca: string, public costo: number, public proveedores: string) {
+    this.nombre = nombre;
+    this.marca = marca;
+    this.costo = costo;
+    this.proveedores = proveedores;
 
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _marca: string;
-
-  get marca(): string {
-    return this._marca;
-  }
-
-  set marca(value: string) {
-    this._marca = value;
-  }
-
-  private _costo: number;
-
-  get costo(): number {
-    return this._costo;
-  }
-
-  set costo(value: number) {
-    this._costo = value;
-  }
-
-  private _proveedores: string;
-
-  get proveedores(): string {
-    return this._proveedores;
-  }
-
-  set proveedores(value: string) {
-    this._proveedores = value;
   }
 
 
-  clone() {
-    return new insumoElement(this.nombre, this.marca, this.costo, this.proveedores);
+  static clone(insumo: insumoElement) {
+    return new insumoElement(insumo.nombre, insumo.marca, insumo.costo, insumo.proveedores);
   }
 }
 
@@ -116,8 +77,8 @@ export class InsumoComponent {
   }
 
   /**
-   * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
-   * @constructor metodo donde se hace la llamada
+   * method to load the data from the server and put it in the view
+   * @constructor called in
    */
   get_Insumos() {
     var res = this.http.get<string>("https://localhost:7274/api/Admin/Insumos/list", {
@@ -132,20 +93,20 @@ export class InsumoComponent {
   }
 
   /**
-   * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al insumo
-   * @constructor metodo relacionado
+   * Button method to make the add request of the Product with the info of the input in the table foot
    */
   async Add() {
+
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      marca: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_canton: (<HTMLInputElement>document.getElementById("Numero_canton")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value
+      "nombre": (<HTMLInputElement>document.getElementById("ANombre")).value,
+      "marca": (<HTMLInputElement>document.getElementById("AMarca")).value,
+      "costo": (<HTMLInputElement>document.getElementById("ACosto")).value,
+      "proveedores": (<HTMLInputElement>document.getElementById("AProveedores")).value
     };
 
     console.log(this.respuesta);
-    console.log(answer);
-    let res = await this.http.put("https://localhost:7274/api/Admin/Insumos/add", JSON.stringify(answer), {
+    console.log(JSON.stringify(answer));
+    let res = await this.http.put("https://localhost:7274/api/Admin/Insumos/add", answer, {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -159,21 +120,21 @@ export class InsumoComponent {
   }
 
   /**
-   * Metodo para definir la funcionalidad del boton de DELETE
-   * @constructor metodo relacionado
+   * Delete method called by the delete button, use the branch name as a identification
    */
-  async Delete_Button(id: string
-  ) {
+  async Delete_Button(product: insumoElement) {
     Popup.open("Eliminar insumo", "Desea Eliminar este insumo?", "Sí",
-      (worker_id: string = id, context: InsumoComponent = this) => context.delete_Worker(id), [{id}])
+      (context: InsumoComponent = this) => () =>
+        context.delete_Worker([product.nombre, product.proveedores])
+    )
   }
 
-  async delete_Worker(id: string
+  async delete_Worker(key:string[]
   ) {
-    console.log("insumo eliminado: " + (<string>id))
-    let res = await this.http.delete("https://localhost:7274/api/Insumos/delete", {
+    console.log("insumo eliminado: " + key[0])
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Insumos/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: JSON.stringify(key)
       }
     )
     res.subscribe(result => {
@@ -184,16 +145,16 @@ export class InsumoComponent {
     console.log(res)
   }
 
-  async modify_Button(id: string
+  async modify_Button(name: string, brand: string
   ) {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
     for (let insumo of this.Insumos) {
-      if (id === insumo.nombre) {
+      if (name === insumo.nombre && brand == insumo.marca) {
         this.actualEditor = this._modal.open(EditarInsumosComponent)
-        this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.insumo = (insumo.clone())
+        this.actualEditor.componentInstance.padre = this;
+        this.actualEditor.componentInstance.insumo = insumoElement.clone(insumo);
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

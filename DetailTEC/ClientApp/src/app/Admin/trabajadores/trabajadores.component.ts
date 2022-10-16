@@ -5,115 +5,26 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarTrabajadorComponent} from "./EditarTrabajador/EditarTrabajador.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {K} from "@angular/cdk/keycodes";
 
 /*
 Representacion de los datos del trabajador
  */
 export class workerElement {
-  constructor(nombre: string, apellidos: string, cedula: number, fecha_de_ingreso: string, fecha_de_nacimiento: string, edad: number, password: string, rol: string, pago: string) {
-    this._nombre = nombre;
-    this._apellidos = apellidos;
-    this._cedula = cedula;
-    this._fecha_de_ingreso = fecha_de_ingreso;
-    this._fecha_de_nacimiento = fecha_de_nacimiento;
-    this._edad = edad;
-    this._password = password;
-    this._rol = rol;
-    this._pago = pago;
+  constructor(public nombre: string, public apellidos: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: number, public password: string, public rol: string, public pago: string) {
+    this.nombre = nombre;
+    this.apellidos = apellidos;
+    this.cedula = cedula;
+    this.fecha_de_ingreso = fecha_de_ingreso;
+    this.fecha_de_nacimiento = fecha_de_nacimiento;
+    this.edad = edad;
+    this.password = password;
+    this.rol = rol;
+    this.pago = pago;
   }
 
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _apellidos: string;
-
-  get apellidos(): string {
-    return this._apellidos;
-  }
-
-  set apellidos(value: string) {
-    this._apellidos = value;
-  }
-
-  private _cedula: number;
-
-  get cedula(): number {
-    return this._cedula;
-  }
-
-  set cedula(value: number) {
-    this._cedula = value;
-  }
-
-  private _fecha_de_ingreso: string;
-
-  get fecha_de_ingreso(): string {
-    return this._fecha_de_ingreso;
-  }
-
-  set fecha_de_ingreso(value: string) {
-    this._fecha_de_ingreso = value;
-  }
-
-  private _fecha_de_nacimiento: string;
-
-  get fecha_de_nacimiento(): string {
-    return this._fecha_de_nacimiento;
-  }
-
-  set fecha_de_nacimiento(value: string) {
-    this._fecha_de_nacimiento = value;
-  }
-
-  private _edad: number;
-
-  get edad(): number {
-    return this._edad;
-  }
-
-  set edad(value: number) {
-    this._edad = value;
-  }
-
-  private _password: string;
-
-  get password(): string {
-    return this._password;
-  }
-
-  set password(value: string) {
-    this._password = value;
-  }
-
-  private _rol: string;
-
-  get rol(): string {
-    return this._rol;
-  }
-
-  set rol(value: string) {
-    this._rol = value;
-  }
-
-  private _pago: string;
-
-  get pago(): string {
-    return this._pago;
-  }
-
-  set pago(value: string) {
-    this._pago = value;
-  }
-
-  clone() {
-    return new workerElement(this.nombre, this.apellidos, this.cedula, this.fecha_de_ingreso, this.fecha_de_nacimiento, this.edad, this.password, this.rol, this.pago);
+  static clone(worker: workerElement) {
+    return new workerElement(worker.nombre, worker.apellidos, worker.cedula, worker.fecha_de_ingreso, worker.fecha_de_nacimiento, worker.edad, worker.password, worker.rol, worker.pago);
   }
 }
 
@@ -196,14 +107,14 @@ export class TrabajadoresComponent {
    */
   async Add() {
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
-      Apellidos: (<HTMLInputElement>document.getElementById("AApellidos")).value,
-      Numero_Cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("AFecha_de_ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("AFecha_Nacimiento")).value,
-      Edad: (<HTMLInputElement>document.getElementById("AEdad")).value,
-      Password: (<HTMLInputElement>document.getElementById("APassword")).value,
-      Rol: (<HTMLInputElement>document.getElementById("ARol")).value
+      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      apellidos: (<HTMLInputElement>document.getElementById("AApellidos")).value,
+      cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
+      fecha_de_ingreso: (<HTMLInputElement>document.getElementById("AFecha_de_ingreso")).value,
+      fecha_de_nacimiento: (<HTMLInputElement>document.getElementById("AFecha_de_nacimiento")).value,
+      edad: (<HTMLInputElement>document.getElementById("AEdad")).value,
+      password: (<HTMLInputElement>document.getElementById("APassword")).value,
+      rol: (<HTMLInputElement>document.getElementById("ARol")).value
     };
 
     console.log(this.respuesta);
@@ -225,18 +136,16 @@ export class TrabajadoresComponent {
    * Metodo para definir la funcionalidad del boton de DELETE
    * @constructor metodo relacionado
    */
-  async Delete_Button(id: number
-  ) {
+  async Delete_Button(worker: workerElement) {
     Popup.open("Eliminar trabajador", "Desea Eliminar este trabajador?", "Sí",
-      (worker_id: number = id, context: TrabajadoresComponent = this) => context.delete_Worker(id), [{id}])
+      (context: TrabajadoresComponent = this) => () => context.delete_Worker([String(worker.cedula)]))
   }
 
-  async delete_Worker(id: number
-  ) {
-    console.log("trabajador eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/trabajadores/delete", {
+  async delete_Worker(key: string[]) {
+    console.log("trabajador eliminado: " + (key[0]))
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Trabajadores/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: key
       }
     )
     res.subscribe(result => {
@@ -256,7 +165,7 @@ export class TrabajadoresComponent {
       if (id === worker.cedula) {
         this.actualEditor = this._modal.open(EditarTrabajadorComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.worker = worker.clone()
+        this.actualEditor.componentInstance.worker = workerElement.clone(worker)
         console.log(this.actualEditor)
       }
     }

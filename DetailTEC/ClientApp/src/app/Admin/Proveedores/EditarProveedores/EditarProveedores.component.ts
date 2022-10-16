@@ -72,11 +72,16 @@ export class EditarProveedoresComponent implements OnInit {
     this._proveedor.contacto = this._Proveedor.controls.contacto.value
     this._proveedor.correo = this._Proveedor.controls.correo.value
 
-    this.http.patch("https://localhost:7274/api/EditProveedor", this._proveedor, {
+
+    var res = this.http.post("https://localhost:7274/api/Admin/Insumos/update", [this._proveedor], {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      })
+      }), withCredentials: true
     })
+    res.subscribe(result => {
+      console.log(result);
+
+    }, error => console.error(error));
   }
 }

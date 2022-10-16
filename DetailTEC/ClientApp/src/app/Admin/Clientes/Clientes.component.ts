@@ -5,110 +5,42 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarClientesComponent} from "./EditarClientes/EditarClientes.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {C} from "@angular/cdk/keycodes";
 
 /*
-Representacion de los datos del Cliente
+Client class
  */
 export class clienteElement {
-  constructor(nombre: string, cedula: number, apellido_1: string, apellido_2: string, usuario: string, password: string, correo: string, puntos: string) {
-    this._cedula = cedula;
-    this._nombre = nombre;
-    this._apellido_1 = apellido_1;
-    this._apellido_2 = apellido_2;
-    this._usuario = usuario;
-    this._password = password;
-    this._correo = correo;
-    this._puntos = puntos;
+  constructor(public nombre: string,
+              public cedula: number,
+              public apellido_1: string,
+              public apellido_2: string,
+              public usuario: string,
+              public password: string,
+              public correo: string,
+              public puntos: string) {
+    this.cedula = cedula;
+    this.nombre = nombre;
+    this.apellido_1 = apellido_1;
+    this.apellido_2 = apellido_2;
+    this.usuario = usuario;
+    this.password = password;
+    this.correo = correo;
+    this.puntos = puntos;
   }
 
-  private _password: string;
-
-  get password(): string {
-    return this._password;
-  }
-
-  set password(value: string) {
-    this._password = value;
-  }
-
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _cedula: number;
-
-  get cedula(): number {
-    return this._cedula;
-  }
-
-  set cedula(value: number) {
-    this._cedula = value;
-  }
-
-  private _apellido_1: string;
-
-  get apellido_1(): string {
-    return this._apellido_1;
-  }
-
-  set apellido_1(value: string) {
-    this._apellido_1 = value;
-  }
-
-  private _apellido_2: string;
-
-  get apellido_2(): string {
-    return this._apellido_2;
-  }
-
-  set apellido_2(value: string) {
-    this._apellido_2 = value;
-  }
-
-  private _usuario: string;
-
-  get usuario(): string {
-    return this._usuario;
-  }
-
-  set usuario(value: string) {
-    this._usuario = value;
-  }
-
-  private _correo: string;
-
-  get correo(): string {
-    return this._correo;
-  }
-
-  set correo(value: string) {
-    this._correo = value;
-  }
-
-  private _puntos: string;
-
-  get puntos(): string {
-    return this._puntos;
-  }
-
-  set puntos(value: string) {
-    this._puntos = value;
-  }
-
-  clone() {
-    return new clienteElement(this.nombre, this.cedula, this.apellido_1, this.apellido_2, this.usuario, this.password, this.correo, this.puntos);
+  static clone(client: clienteElement) {
+    return new clienteElement(client.nombre,
+      client.cedula,
+      client.apellido_1,
+      client.apellido_2,
+      client.usuario,
+      client.password,
+      client.correo,
+      client.puntos);
   }
 }
 
-/**
- * Componentes utilizados para el funcionamiento de la pagina
- */
 @Component({
   selector: 'app-Clientes',
   templateUrl: './Clientes.component.html',
@@ -117,7 +49,7 @@ export class clienteElement {
 
 
 /**
- * Clase donde se desarfecha_puntosla las funcionalidades de la Gestion de los Clientes en la Vista Taller
+ * Client management class
  */
 export class ClientesComponent {
 
@@ -143,17 +75,16 @@ export class ClientesComponent {
     "password",
     "correo",
     "puntos", "eliminar", "modificar"]
-  Clientes: clienteElement[] = [
-  ];
+  Clientes: clienteElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Cliente = new FormGroup({});
 
 
   /**
-   * Constructor de la clase
-   * @param http variable para la manipulacion del get y post
-   * @param baseUrl variable para manejar la direccion de la pagina
-   * @param _modal modal to show edit
+   * Class constructor
+   * @param http Http client to make the requests
+   * @param baseUrl Actual URL, not in use because the static references
+   * @param _modal modal to show edit component, injected
    */
   constructor(http: HttpClient, @Inject('BASE_URL')
     baseUrl: string, private _modal: NgbModal
@@ -164,8 +95,8 @@ export class ClientesComponent {
   }
 
   /**
-   * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
-   * @constructor metodo donde se hace la llamada
+   * method to load the data from the server and put it in the view
+   * @constructor called in
    */
   get_Clientes() {
     var res = this.http.get<string>("https://localhost:7274/api/Admin/Clientes/list", {
@@ -179,20 +110,21 @@ export class ClientesComponent {
     console.log(this.respuesta);
   }
 
+
   /**
-   * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al Cliente
-   * @constructor metodo relacionado
+   * Button method to make the add request of the Client with the info of the input in the table foote
    */
   async Add() {
+
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      cedula: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_apellido_1: (<HTMLInputElement>document.getElementById("Numero_apellido_1")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      _correo: (<HTMLInputElement>document.getElementById("_correo")).value,
-      puntos: (<HTMLInputElement>document.getElementById("puntos")).value,
-      fecha_puntos: (<HTMLInputElement>document.getElementById("fecha_puntos")).value
+      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
+      apellido_1: (<HTMLInputElement>document.getElementById("AApellido_1")).value,
+      apellido_2: (<HTMLInputElement>document.getElementById("AApellido_2")).value,
+      usuario: (<HTMLInputElement>document.getElementById("AUsuario")).value,
+      password: (<HTMLInputElement>document.getElementById("APassword")).value,
+      correo: (<HTMLInputElement>document.getElementById("ACorreo")).value,
+      puntos: (<HTMLInputElement>document.getElementById("APuntos")).value
     };
 
     console.log(this.respuesta);
@@ -211,21 +143,20 @@ export class ClientesComponent {
   }
 
   /**
-   * Metodo para definir la funcionalidad del boton de DELETE
-   * @constructor metodo relacionado
+   * Delete method called by the delete button, use the branch name as a identification
    */
-  async Delete_Button(id: number
+  async Delete_Button(Client: clienteElement
   ) {
     Popup.open("Eliminar Cliente", "Desea Eliminar este Cliente?", "Sí",
-      (worker_id: number = id, context: ClientesComponent = this) => context.delete_Worker(id), [{id}])
+      ( context: ClientesComponent = this) => () => context.delete_Worker([String(Client.cedula)]))
   }
 
-  async delete_Worker(id: number
+  async delete_Worker(key:string[]
   ) {
-    console.log("Cliente eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/Clientes/delete", {
+    console.log("Cliente eliminado: " + (key[0]))
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Clientes/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: key
       }
     )
     res.subscribe(result => {
@@ -233,7 +164,6 @@ export class ClientesComponent {
       console.log(this.respuesta);
 
     }, error => console.error(error));
-    console.log(res)
   }
 
   async modify_Button(cedula: number
@@ -245,9 +175,7 @@ export class ClientesComponent {
       if (cedula === cliente.cedula) {
         this.actualEditor = this._modal.open(EditarClientesComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.cliente = (cliente.clone())
-        console.log(this.actualEditor.componentInstance)
-        console.log(this.actualEditor)
+        this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
       }
     }
   }

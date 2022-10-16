@@ -54,6 +54,7 @@ export class Popup implements OnInit {
     Popup.pop.Text = TEXT;
     Popup.pop.actionText = ACTIONTEXT;
     (<HTMLDivElement>Popup.pop.div).hidden = false;
+    console.log(Popup.pop.actionText)
   }
 
   actionF: Function = () => this.close();
@@ -89,13 +90,17 @@ export class Popup implements OnInit {
   Dont assign new this
    */
   setactionF(value?: Function, parameters?: object) {
+    console.log("set action")
     if (value === undefined) {
+      console.log(Popup.pop.actionText)
       return;
     }
     if (parameters === null) {
-      this.actionF = () => value();
+      console.log(Popup.pop.actionText)
+      this.actionF = value();
     } else {
-      this.actionF = () => value(parameters);
+      this.actionF =
+        value(parameters);
     }
   }
 }

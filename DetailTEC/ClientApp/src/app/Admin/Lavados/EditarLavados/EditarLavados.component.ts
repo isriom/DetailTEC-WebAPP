@@ -81,11 +81,15 @@ export class EditarLavadosComponent implements OnInit {
     this._lavado.puntuacion_coste = this._Lavado.controls.Puntuacion_Coste.value
     this._lavado.precio = this._Lavado.controls.Precio.value
 
-    this.http.patch("https://localhost:7274/api/EditLavado", this._lavado, {
+    var res = this.http.post("https://localhost:7274/api/Admin/Lavados/update", [this.lavado], {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      })
+      }), withCredentials: true
     })
+    res.subscribe(result => {
+      console.log(result);
+
+    }, error => console.error(error));
   }
 }

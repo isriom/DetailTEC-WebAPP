@@ -79,11 +79,15 @@ export class EditarTrabajadorComponent implements OnInit {
     (this._worker.password) = this._trabajador.controls.password.value;
     (this._worker.fecha_de_ingreso) = this._trabajador.controls.Fecha_de_ingreso.value;
 
-    this.http.patch("https://localhost:7274/api/EditWorker", this._worker, {
+    var res = this.http.post("https://localhost:7274/api/Admin/Insumos/update", [this._worker], {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      })
+      }), withCredentials: true
     })
+    res.subscribe(result => {
+      console.log(result);
+
+    }, error => console.error(error));
   }
 }

@@ -5,111 +5,28 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarSucursalesComponent} from "./EditarSucursale/EditarSucursales.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {Key} from "@ng-bootstrap/ng-bootstrap/util/key";
 
 /*
-Representacion de los datos del Sucursal
+Branch class
  */
 export class sucursalElement {
-  constructor(nombre: string, provincia: string, canton: string, distrito: string, telefono: number, fecha_de_apertura: string, gerente: number, fecha_gerente: string) {
-    this._nombre = nombre;
-    this._provincia = provincia;
-    this._canton = canton;
-    this._distrito = distrito;
-    this._telefono = telefono;
-    this._fecha_de_apertura = fecha_de_apertura;
-    this._gerente = gerente;
-    this._fecha_gerente = fecha_gerente;
+  constructor(public nombre: string, public provincia: string, public canton: string, public distrito: string, public telefono: number, public fecha_de_apertura: string, public gerente: number, public fecha_gerente: string) {
+    this.nombre = nombre;
+    this.provincia = provincia;
+    this.canton = canton;
+    this.distrito = distrito;
+    this.telefono = telefono;
+    this.fecha_de_apertura = fecha_de_apertura;
+    this.gerente = gerente;
+    this.fecha_gerente = fecha_gerente;
   }
 
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _provincia: string;
-
-  get provincia(): string {
-    return this._provincia;
-  }
-
-  set provincia(value: string) {
-    this._provincia = value;
-  }
-
-  private _canton: string;
-
-  get canton(): string {
-    return this._canton;
-  }
-
-  set canton(value: string) {
-    this._canton = value;
-  }
-
-  private _distrito: string;
-
-  get distrito(): string {
-    return this._distrito;
-  }
-
-  set distrito(value: string) {
-    this._distrito = value;
-  }
-
-  private _telefono: number;
-
-  get telefono(): number {
-    return this._telefono;
-  }
-
-  set telefono(value: number) {
-    this._telefono = value;
-  }
-
-  private _fecha_de_apertura: string;
-
-  get fecha_de_apertura(): string {
-    return this._fecha_de_apertura;
-  }
-
-  set fecha_de_apertura(value: string) {
-    this._fecha_de_apertura = value;
-  }
-
-  private _gerente: number;
-
-  get gerente(): number {
-    return this._gerente;
-  }
-
-  set gerente(value:number) {
-    this._gerente = value;
-  }
-
-  private _fecha_gerente: string;
-
-  get fecha_gerente(): string {
-    return this._fecha_gerente;
-  }
-
-  set fecha_gerente(value: string) {
-    this._fecha_gerente = value;
-  }
-
-
-  clone() {
-    return new sucursalElement(this.nombre, this.provincia, this.canton, this.distrito, this.telefono, this.fecha_de_apertura, this.gerente, this.fecha_gerente);
+  static clone(branch: sucursalElement) {
+    return new sucursalElement(branch.nombre, branch.provincia, branch.canton, branch.distrito, branch.telefono, branch.fecha_de_apertura, branch.gerente, branch.fecha_gerente);
   }
 }
 
-/**
- * Componentes utilizados para el funcionamiento de la pagina
- */
 @Component({
   selector: 'app-Sucursales',
   templateUrl: './Sucursales.component.html',
@@ -118,7 +35,7 @@ export class sucursalElement {
 
 
 /**
- * Clase donde se desarfecha_gerentela las funcionalidades de la Gestion de los Sucursales en la Vista Taller
+ * Branch management class
  */
 export class SucursalesComponent {
 
@@ -150,10 +67,10 @@ export class SucursalesComponent {
 
 
   /**
-   * Constructor de la clase
-   * @param http variable para la manipulacion del get y post
-   * @param baseUrl variable para manejar la direccion de la pagina
-   * @param _modal modal to show edit
+   * Class constructor
+   * @param http Http client to make the requests
+   * @param baseUrl Actual URL, not in use because the static references
+   * @param _modal modal to show edit component, injected
    */
   constructor(http: HttpClient, @Inject('BASE_URL')
     baseUrl: string, private _modal: NgbModal
@@ -164,8 +81,8 @@ export class SucursalesComponent {
   }
 
   /**
-   * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
-   * @constructor metodo donde se hace la llamada
+   * method to load the data from the server and put it in the view
+   * @constructor called in
    */
   get_Sucursales() {
     var res = this.http.get<string>("https://localhost:7274/api/Admin/Sucursales/list", {
@@ -180,19 +97,19 @@ export class SucursalesComponent {
   }
 
   /**
-   * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al Sucursal
+   * Make a http request to add a new branch
    * @constructor metodo relacionado
    */
   async Add() {
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      provincia: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_canton: (<HTMLInputElement>document.getElementById("Numero_canton")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      fecha_de_apertura: (<HTMLInputElement>document.getElementById("fecha_de_apertura")).value,
-      gerente: (<HTMLInputElement>document.getElementById("gerente")).value,
-      fecha_gerente: (<HTMLInputElement>document.getElementById("fecha_gerente")).value
+      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      provincia: (<HTMLInputElement>document.getElementById("AProvincia")).value,
+      canton: (<HTMLInputElement>document.getElementById("ACanton")).value,
+      distrito: (<HTMLInputElement>document.getElementById("ADistrito")).value,
+      telefono: (<HTMLInputElement>document.getElementById("ATelefono")).value,
+      fecha_de_apertura: (<HTMLInputElement>document.getElementById("AFecha_de_apertura")).value,
+      gerente: (<HTMLInputElement>document.getElementById("AGerente")).value,
+      fecha_gerente: (<HTMLInputElement>document.getElementById("AFecha_gerente")).value
     };
 
     console.log(this.respuesta);
@@ -211,21 +128,26 @@ export class SucursalesComponent {
   }
 
   /**
-   * Metodo para definir la funcionalidad del boton de DELETE
+   * Delete Butto method.
+   * Ask the confirmation of the delete
    * @constructor metodo relacionado
    */
-  async Delete_Button(id: number
+  async Delete_Button(branch: sucursalElement
   ) {
     Popup.open("Eliminar Sucursal", "Desea Eliminar este Sucursal?", "Sí",
-      (worker_id: number = id, context: SucursalesComponent = this) => context.delete_Worker(id), [{id}])
+      (context: SucursalesComponent = this) => () => context.delete_Worker([branch.nombre]))
   }
 
-  async delete_Worker(id: number
+  /**
+   * method to make the delete request of a branch in the DB
+   * @param keys
+   */
+  async delete_Worker(keys: string[]
   ) {
-    console.log("Sucursal eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/Sucursales/delete", {
+    console.log("Sucursal eliminado: " + keys[0])
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Sucursales/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: keys
       }
     )
     res.subscribe(result => {
@@ -236,6 +158,11 @@ export class SucursalesComponent {
     console.log(res)
   }
 
+  /**
+   * Method used to instanciate the modal
+   * [Builder], value is storaged in actualEditor
+   * @param id
+   */
   async modify_Button(id: string
   ) {
     if (this.actualEditor != undefined) {
@@ -245,7 +172,7 @@ export class SucursalesComponent {
       if (id === sucursal.nombre) {
         this.actualEditor = this._modal.open(EditarSucursalesComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.sucursal = (sucursal.clone())
+        this.actualEditor.componentInstance.sucursal = (sucursalElement.clone(sucursal))
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

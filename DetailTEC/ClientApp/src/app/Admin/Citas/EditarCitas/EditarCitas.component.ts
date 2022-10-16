@@ -71,11 +71,11 @@ export class EditarCitasComponent implements OnInit {
     (this._cita.tipo) = this._Cita.controls.Tipo.value;
     (this._cita.sucursal) = this._Cita.controls.Sucursal.value;
 
-    var res=  this.http.post("https://localhost:7274/api/Citas/update", this.cita, {
+    var res = this.http.post("https://localhost:7274/api/Admin/Citas/update", this.cita, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      },),withCredentials: true
+      },), withCredentials: true
     })
     res.subscribe(result => {
       console.log(result);

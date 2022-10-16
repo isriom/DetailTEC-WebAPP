@@ -20,31 +20,38 @@ public class Admin : Controller
      */
     [HttpPut]
     [Route("api/[controller]/{web}/add")]
-    public ActionResult Register(string element, string web)
+    public ActionResult Register([FromBody]JsonElement element, string web)
     {
         //logica para insertar en la base de datos aqui
         switch (web)
         {
             case "Citas":
                 //logica de citas
+                Console.Out.Write(element);
                 return Ok();
             case "Clientes":
                 //logica de Clientes
+                Console.Out.Write(element);
                 return Ok();
             case "Insumos":
                 //logica de Insumos
+                Console.Out.Write(element);
                 return Ok();
             case "Lavados":
                 //logica de Lavados
+                Console.Out.Write(element);
                 return Ok();
             case "Proveedores":
                 //logica de Proveedores
+                Console.Out.Write(element);
                 return Ok();
             case "Trabajadores":
                 //logica de Trabajadores
+                Console.Out.Write(element);
                 return Ok();
             case "Sucursales":
                 //logica de Sucursales
+                Console.Out.Write(element);
                 return Ok();
         }
 
@@ -62,7 +69,9 @@ public class Admin : Controller
     public ActionResult Consult(string web)
     {
         //Logica para obtener la lista
-        Element[]? listTest = Array.Empty<Element>();
+        var listTest = Array.Empty<Element>();
+        Console.Out.Write(" consult: " + JsonSerializer.Serialize(web));
+
         switch (web)
         {
             case "Citas":
@@ -74,7 +83,6 @@ public class Admin : Controller
                         "servatilla",
                         true)
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Clientes":
@@ -88,7 +96,6 @@ public class Admin : Controller
                         "sudo apt",
                         "2001isaacbc@gmail.com", 100)
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Insumos":
@@ -100,7 +107,6 @@ public class Admin : Controller
                         1500,
                         "GOLLO")
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Lavados":
@@ -118,7 +124,6 @@ public class Admin : Controller
                         250,
                         45)
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Proveedores":
@@ -132,8 +137,6 @@ public class Admin : Controller
                         24518653,
                         "11153@cuentaprueba.com")
                 };
-
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Trabajadores":
@@ -150,7 +153,6 @@ public class Admin : Controller
                         "contraseña",
                         "limpiador", "semanal")
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
             case "Sucursales":
@@ -167,11 +169,9 @@ public class Admin : Controller
                         2536465,
                         "15/858/95")
                 };
-                Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
                 return Json(listTest);
         }
-        Console.Out.Write("consult: " + JsonSerializer.Serialize(listTest));
 
         return Json(listTest);
     }
@@ -182,7 +182,7 @@ public class Admin : Controller
      */
     [HttpPost]
     [Route("api/[controller]/{web}/update")]
-    public ActionResult Update(string element, string web)
+    public ActionResult Update([FromBody]JsonElement element, string web)
     {
         Console.Out.Write("update: ");
         switch (web)
@@ -220,19 +220,51 @@ public class Admin : Controller
      * Recieve a Element and erase it from the DB
      */
     [HttpDelete]
-    [Route("api/[controller]/{web}/Delete")]
-    public ActionResult Delete(string element)
+    [Route("api/[controller]/{web}/delete")]
+    public ActionResult Delete([FromBody] string[] element, string web)
     {
-        if (User.IsInRole("Trabajador"))
+        //logica para borrar una cita
+        Console.Out.Write("Delete: " + element[0]);
+
+        switch (web)
         {
-            //logica para borrar una cita
+            case "Citas":
+                //logica de citas
+                return new OkResult();
 
 
-            Console.Out.Write("Delete: " + JsonSerializer.Serialize(element));
+            case "Clientes":
+                //logica de Clientes
+                return new OkResult();
 
-            return new OkResult();
+
+            case "Insumos":
+                var name = element[0];
+                var brand = element[1];
+                //logica de Insumos
+                return new OkResult();
+
+            case "Lavados":
+                //logica de Lavados
+                return new OkResult();
+
+
+            case "Proveedores":
+                //logica de Proveedores
+                return new OkResult();
+
+
+            case "Trabajadores":
+                //logica de Trabajadores
+                return new OkResult();
+
+
+            case "Sucursales":
+                //logica de Sucursales
+                return new OkResult();
         }
 
-        return BadRequest();
+
+        return new OkResult();
     }
 }

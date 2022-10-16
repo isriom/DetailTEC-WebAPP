@@ -8,10 +8,10 @@ import {FormGroup} from "@angular/forms";
 import {getMatIconFailedToSanitizeLiteralError} from "@angular/material/icon";
 
 /*
-Representacion de los datos del Cita
+cite class
  */
 export class citaElement {
-  constructor(nombre: string, placa: number, fecha: string, cedula: number, tipo: string, sucursal: string, puntos: boolean) {
+  constructor(public nombre: string, public placa: number, public fecha: string, public cedula: number, public tipo: string, public sucursal: string, public puntos: boolean) {
     this.nombre = nombre;
     this.placa = placa;
     this.fecha = fecha;
@@ -21,41 +21,17 @@ export class citaElement {
     this.puntos = puntos;
   }
 
-  //nombre cliente
-  public nombre: string;
-
-
-  public placa: number;
-
-
-  public fecha: string;
-
-
-  public cedula: number;
-
-
-
-  //tipo de lavado
-  public tipo: string;
-
-
-  public sucursal: string;
-
-  public puntos: boolean;
-
 
   clone() {
     return new citaElement(this.nombre, this.placa, this.fecha, this.cedula, this.tipo, this.sucursal, this.puntos);
   }
+
   static clone2(cita: citaElement) {
     return new citaElement(cita.nombre, cita.placa, cita.fecha, cita.cedula, cita.tipo, cita.sucursal, cita.puntos);
   }
 }
 
 
-/**
- * Componentes utilizados para el funcionamiento de la pagina
- */
 @Component({
   selector: 'app-Citas',
   templateUrl: './Citas.component.html',
@@ -64,7 +40,7 @@ export class citaElement {
 
 
 /**
- * Clase donde se despliega las funcionalidades de la Gestion de los Citas en la Vista Taller
+ * Cite management class
  */
 export class CitasComponent {
 
@@ -95,10 +71,10 @@ export class CitasComponent {
 
 
   /**
-   * Constructor de la clase
-   * @param http variable para la manipulacion del get y post
-   * @param baseUrl variable para manejar la direccion de la pagina
-   * @param _modal modal to show edit
+   * Class constructor
+   * @param http Http client to make the requests
+   * @param baseUrl Actual URL, not in use because the static references
+   * @param _modal modal to show edit component, injected
    */
   constructor(http: HttpClient, @Inject('BASE_URL')
     baseUrl: string, public _modal: NgbModal
@@ -109,8 +85,8 @@ export class CitasComponent {
   }
 
   /**
-   * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
-   * @constructor metodo donde se hace la llamada
+   * method to load the data from the server and put it in the view
+   * @constructor called in
    */
   get_Citas() {
     var res = this.http.get<string>("https://localhost:7274/api/Admin/Citas/list", {
@@ -127,8 +103,7 @@ export class CitasComponent {
   }
 
   /**
-   * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al Cita
-   * @constructor metodo relacionado
+   * Button method to make the add request of the Provider with the info of the input in the table foote
    */
   async Add() {
     const data = {
@@ -156,25 +131,24 @@ export class CitasComponent {
   }
 
   /**
-   * Method to ask the user about the delete of a item
+   * Method to ask the user about the deletion of a item
    */
   async Delete_Button(cita: citaElement
   ) {
     Popup.open("Eliminar Cita", "Desea Eliminar este Cita?", "Sí",
-      (context: CitasComponent = this) => context.delete_Worker(cita),
-      [cita]
+      (context: CitasComponent = this) => () => context.delete_Worker([cita.fecha, String(cita.placa), cita.sucursal])
     )
   }
 
   /**
    * methof to call the server and delete the indicate cite
-   * @param cita
+   * @param key
    */
-  async delete_Worker(cita: citaElement) {
-    console.log("Cita eliminada: " + (cita.placa) + " " + (cita.fecha) + " " + cita.sucursal)
-    let res = await this.http.delete("https://localhost:7274/api/Citas/delete", {
+  async delete_Worker(key: string[]) {
+    console.log("Cita eliminada: " + key)
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Citas/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: JSON.stringify(cita)
+        withCredentials: true, body: key
       }
     )
     res.subscribe(result => {
@@ -191,14 +165,8 @@ export class CitasComponent {
       this.actualEditor.close()
     }
     this.actualEditor = this._modal.open(EditarCitasComponent)
-    console.log("Boton clickleado1"+this.actualEditor.componentInstance)
     this.actualEditor.componentInstance.padre = this
-    console.log("Boton clickleado2"+this.actualEditor.componentInstance)
-    console.log(JSON.stringify(cita))
     this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
-    console.log("Boton clickleado3"+this.actualEditor.componentInstance)
-    console.log(this.actualEditor.componentInstance)
-    console.log(this.actualEditor)
   }
 
   clean() {

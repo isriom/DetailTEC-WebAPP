@@ -10,111 +10,19 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del Sucursal
  */
 export class lavadoElement {
-  constructor(nombre: string, costo: number, precio: number, duracion: number, productos: string, lavador: boolean, pulidor: boolean, puntuacion_coste: number, puntuacion_ganancia: string) {
-    this._nombre = nombre;
-    this._costo = costo;
-    this._precio = precio;
-    this._duracion = duracion;
-    this._productos = productos;
-    this._lavador = lavador;
-    this._pulidor = pulidor;
-    this._puntuacion_coste = puntuacion_coste;
-    this._puntuacion_ganancia = puntuacion_ganancia;
+  constructor(public nombre: string, public costo: number, public precio: number, public duracion: number, public productos: string, public lavador: boolean, public pulidor: boolean, public puntuacion_coste: number, public puntuacion_ganancia: string) {
+    this.nombre = nombre;
+    this.costo = costo;
+    this.precio = precio;
+    this.duracion = duracion;
+    this.productos = productos;
+    this.lavador = lavador;
+    this.pulidor = pulidor;
+    this.puntuacion_coste = puntuacion_coste;
+    this.puntuacion_ganancia = puntuacion_ganancia;
   }
-
-  private _lavador: boolean;
-
-  get lavador(): boolean {
-    return this._lavador;
-  }
-
-  set lavador(value: boolean) {
-    this._lavador = value;
-  }
-
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _costo: number;
-
-  get costo(): number {
-    return this._costo;
-  }
-
-  set costo(value: number) {
-    this._costo = value;
-  }
-
-  private _precio: number;
-
-  get precio(): number {
-    return this._precio;
-  }
-
-  set precio(value: number) {
-    this._precio = value;
-  }
-
-  private _duracion: number;
-
-  get duracion(): number {
-    return this._duracion;
-  }
-
-  set duracion(value: number) {
-    this._duracion = value;
-  }
-
-  private _productos: string;
-
-  get productos(): string {
-    return this._productos;
-  }
-
-  set productos(value: string) {
-    this._productos = value;
-  }
-
-  private _pulidor: boolean;
-
-  get pulidor(): boolean {
-    return this._pulidor;
-  }
-
-  set pulidor(value: boolean) {
-    this._pulidor = value;
-  }
-
-  private _puntuacion_coste: number;
-
-  get puntuacion_coste(): number {
-    return this._puntuacion_coste;
-  }
-
-  set puntuacion_coste(value: number) {
-    this._puntuacion_coste = value;
-  }
-
-  private _puntuacion_ganancia: string;
-
-  get puntuacion_ganancia(): string {
-    return this._puntuacion_ganancia;
-  }
-
-  set puntuacion_ganancia(value: string) {
-    this._puntuacion_ganancia = value;
-  }
-
-
-  clone() {
-    return new lavadoElement(this.nombre, this.costo, this.precio, this.duracion, this.productos, this.lavador, this.pulidor, this.puntuacion_coste, this.puntuacion_ganancia);
+  static clone(wash:lavadoElement) {
+    return new lavadoElement(wash.nombre, wash.costo, wash.precio, wash.duracion, wash.productos, wash.lavador, wash.pulidor, wash.puntuacion_coste, wash.puntuacion_ganancia);
   }
 }
 
@@ -197,14 +105,14 @@ export class LavadosComponent {
    */
   async Add() {
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      costo: (<HTMLInputElement>document.getElementById("marca")).value,
-      Numero_precio: (<HTMLInputElement>document.getElementById("Numero_precio")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      _pulidor: (<HTMLInputElement>document.getElementById("_pulidor")).value,
-      puntuacion_coste: (<HTMLInputElement>document.getElementById("puntuacion_coste")).value,
-      fecha_puntuacion_coste: (<HTMLInputElement>document.getElementById("fecha_puntuacion_coste")).value
+      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      costo: (<HTMLInputElement>document.getElementById("ACosto")).value,
+      precio: (<HTMLInputElement>document.getElementById("APrecio")).value,
+      duracion: (<HTMLInputElement>document.getElementById("ADuracion")).value,
+      productos: (<HTMLInputElement>document.getElementById("AProductos")).value,
+      lavador: (<HTMLInputElement>document.getElementById("ALavador")).value,
+      pulidor: (<HTMLInputElement>document.getElementById("APulidor")).value,
+      puntuacion_coste: (<HTMLInputElement>document.getElementById("APuntuacion_coste")).value
     };
 
     console.log(this.respuesta);
@@ -223,21 +131,20 @@ export class LavadosComponent {
   }
 
   /**
-   * Metodo para definir la funcionalidad del boton de DELETE
-   * @constructor metodo relacionado
+   * Delete method called by the delete button, use the branch name as a identification
    */
-  async Delete_Button(id: number
+  async Delete_Button(wash: lavadoElement
   ) {
     Popup.open("Eliminar Sucursal", "Desea Eliminar este Sucursal?", "Sí",
-      (worker_id: number = id, context: LavadosComponent = this) => context.delete_Worker(id), [{id}])
+      ( context: LavadosComponent = this) => () => context.delete_Worker([wash.nombre]))
   }
 
-  async delete_Worker(id: number
+  async delete_Worker(key: string[]
   ) {
-    console.log("Sucursal eliminado: " + (<Number>id))
+    console.log("Sucursal eliminado: " + (key[0]))
     let res = await this.http.delete("https://localhost:7274/api/Admin/Lavados/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: key
       }
     )
     res.subscribe(result => {
@@ -257,7 +164,7 @@ export class LavadosComponent {
       if (id === lavado.nombre) {
         this.actualEditor = this._modal.open(EditarLavadosComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.lavado = (lavado.clone())
+        this.actualEditor.componentInstance.lavado = (lavadoElement.clone(lavado))
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

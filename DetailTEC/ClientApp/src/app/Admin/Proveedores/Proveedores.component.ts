@@ -7,77 +7,22 @@ import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 
 /*
-Representacion de los datos del proveedor
+Provider class
  */
 export class proveedorElement {
-  constructor(nombre: string, juridica: string, direccion: string, contacto: number, correo: string) {
-    this._nombre = nombre;
-    this._juridica = juridica;
-    this._direccion = direccion;
-    this._contacto = contacto;
-    this._correo = correo;
+  constructor(public nombre: string, public juridica: string, public direccion: string, public contacto: number, public correo: string) {
+    this.nombre = nombre;
+    this.juridica = juridica;
+    this.direccion = direccion;
+    this.contacto = contacto;
+    this.correo = correo;
   }
 
-  private _nombre: string;
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
-  }
-
-  private _juridica: string;
-
-  get juridica(): string {
-    return this._juridica;
-  }
-
-  set juridica(value: string) {
-    this._juridica = value;
-  }
-
-  private _direccion: string;
-
-  get direccion(): string {
-    return this._direccion;
-  }
-
-  set direccion(value: string) {
-    this._direccion = value;
-  }
-
-
-  private _contacto: number;
-
-  get contacto(): number {
-    return this._contacto;
-  }
-
-  set contacto(value: number) {
-    this._contacto = value;
-  }
-
-  private _correo: string;
-
-  get correo(): string {
-    return this._correo;
-  }
-
-  set correo(value: string) {
-    this._correo = value;
-  }
-
-
-  clone() {
-    return new proveedorElement(this.nombre, this.juridica, this.direccion, this.contacto, this.correo);
+  static clone(provider: proveedorElement) {
+    return new proveedorElement(provider.nombre, provider.juridica, provider.direccion, provider.contacto, provider.correo);
   }
 }
 
-/**
- * Componentes utilizados para el funcionamiento de la pagina
- */
 @Component({
   selector: 'app-proveedores',
   templateUrl: './proveedores.component.html',
@@ -86,7 +31,7 @@ export class proveedorElement {
 
 
 /**
- * Clase donde se desarfecha_gerentela las funcionalidades de la Gestion de los proveedores en la Vista Taller
+ * Provider management class
  */
 export class ProveedoresComponent {
 
@@ -115,22 +60,20 @@ export class ProveedoresComponent {
 
 
   /**
-   * Constructor de la clase
-   * @param http variable para la manipulacion del get y post
-   * @param baseUrl variable para manejar la direccion de la pagina
-   * @param _modal modal to show edit
+   * Class constructor
+   * @param http Http client to make the requests
+   * @param baseUrl Actual URL, not in use because the static references
+   * @param _modal modal to show edit component, injected
    */
-  constructor(http: HttpClient, @Inject('BASE_URL')
-    baseUrl: string, private _modal: NgbModal
-  ) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private _modal: NgbModal) {
     this.http = http;
     this.baseurl = baseUrl;
     this.get_proveedores();
   }
 
   /**
-   * Metodo que crea la pagina en el momento que es solicitada en los componentes de la barra de menu
-   * @constructor metodo donde se hace la llamada
+   * method to load the data from the server and put it in the view
+   * @constructor called in
    */
   get_proveedores() {
     var res = this.http.get<string>("https://localhost:7274/api/Admin/Proveedores/list", {
@@ -145,19 +88,15 @@ export class ProveedoresComponent {
   }
 
   /**
-   * Metodo para definar la accion que debe realizar el boton para obtener la informacion relacionada al proveedor
-   * @constructor metodo relacionado
+   * Button method to make the add request of the Provider with the info of the input in the table foote
    */
   async Add() {
     const answer = {
-      Nombre: (<HTMLInputElement>document.getElementById("Nombre")).value,
-      juridica: (<HTMLInputElement>document.getElementById("juridica")).value,
-      Numero_direccion: (<HTMLInputElement>document.getElementById("Numero_direccion")).value,
-      Fecha_Ingreso: (<HTMLInputElement>document.getElementById("Fecha_Ingreso")).value,
-      Fecha_Nacimiento: (<HTMLInputElement>document.getElementById("Fecha_Nacimiento")).value,
-      correo: (<HTMLInputElement>document.getElementById("correo")).value,
-      gerente: (<HTMLInputElement>document.getElementById("gerente")).value,
-      fecha_gerente: (<HTMLInputElement>document.getElementById("fecha_gerente")).value
+      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      juridica: (<HTMLInputElement>document.getElementById("AJuridica")).value,
+      direccion: (<HTMLInputElement>document.getElementById("ADireccion")).value,
+      contacto: (<HTMLInputElement>document.getElementById("Acontacto")).value,
+      correo: (<HTMLInputElement>document.getElementById("ACorreo")).value
     };
 
     console.log(this.respuesta);
@@ -176,21 +115,22 @@ export class ProveedoresComponent {
   }
 
   /**
-   * Metodo para definir la funcionalidad del boton de DELETE
-   * @constructor metodo relacionado
+   * Method to ask the user about the deletion of a item
    */
-  async Delete_Button(id: number
-  ) {
+  async Delete_Button(provider: proveedorElement) {
     Popup.open("Eliminar proveedor", "Desea Eliminar este proveedor?", "Sí",
-      (worker_id: number = id, context: ProveedoresComponent = this) => context.delete_Worker(id), [{id}])
+      (context: ProveedoresComponent = this) => () => context.delete_Worker([provider.juridica]))
   }
 
-  async delete_Worker(id: number
-  ) {
-    console.log("proveedor eliminado: " + (<Number>id))
-    let res = await this.http.delete("https://localhost:7274/api/proveedores/delete", {
+  /**
+   * methof to call the server and delete the indicate cite
+   * @param cita
+   */
+  async delete_Worker(keys:string[]) {
+    console.log("proveedor eliminado: " + (keys[0]))
+    let res = await this.http.delete("https://localhost:7274/api/Admin/Proveedores/delete", {
         headers: this.httpOptions.headers,
-        withCredentials: true, body: id
+        withCredentials: true, body: keys
       }
     )
     res.subscribe(result => {
@@ -201,8 +141,7 @@ export class ProveedoresComponent {
     console.log(res)
   }
 
-  async modify_Button(id: string
-  ) {
+  async modify_Button(id: string) {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
@@ -210,7 +149,7 @@ export class ProveedoresComponent {
       if (id === proveedor.nombre) {
         this.actualEditor = this._modal.open(EditarProveedoresComponent)
         this.actualEditor.componentInstance.padre = this
-        this.actualEditor.componentInstance.proveedor = (proveedor.clone())
+        this.actualEditor.componentInstance.proveedor = (proveedorElement.clone(proveedor))
         console.log(this.actualEditor.componentInstance)
         console.log(this.actualEditor)
       }

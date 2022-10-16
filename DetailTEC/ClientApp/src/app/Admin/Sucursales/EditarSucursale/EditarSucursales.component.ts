@@ -77,12 +77,15 @@ export class EditarSucursalesComponent implements OnInit {
     (this._sucursal.canton) = this._Sucursal.controls.Canton.value;
     (this._sucursal.fecha_gerente) = this._Sucursal.controls.Fecha_gerente.value;
     (this._sucursal.distrito) = this._Sucursal.controls.Distrito.value;
-
-    this.http.patch("https://localhost:7274/api/EditSucursal", this._sucursal, {
+    var res = this.http.post("https://localhost:7274/api/Admin/Insumos/update", [this._sucursal], {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      })
+      }), withCredentials: true
     })
+    res.subscribe(result => {
+      console.log(result);
+
+    }, error => console.error(error));
   }
 }

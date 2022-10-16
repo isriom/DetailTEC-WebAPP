@@ -78,11 +78,14 @@ export class EditarClientesComponent implements OnInit {
     this._cliente.correo = this._Cliente.controls.Correo.value
     this._cliente.puntos = this._Cliente.controls.Puntos.value
 
-    this.http.patch("https://localhost:7274/api/EditCliente", this._cliente, {
+    this.http.post("https://localhost:7274/api/Admin/Clientes/update", this._cliente, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'
-      })
-    })
+      }), withCredentials: true
+    }).subscribe(result => {
+      console.log(result);
+
+    }, error => console.error(error));
   }
 }

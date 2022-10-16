@@ -1,0 +1,27 @@
+<div class="modal-title justify-content-center text-capitalize text-center text-bg-primary">
+  <h2 class="p-2 ">
+    Insumo {{ insumo.nombre }}
+  </h2>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="update()" [formGroup]="Insumo">
+
+    <p class="form-text form-label">Costo</p>
+    <input
+      class="form-control"
+      formControlName="Costo"
+      id="Costo"
+      placeholder="{{ insumo.costo }}"
+      required
+      type="text"
+      value=""
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="update()" [disabled]="!Insumo.valid" class="btn btn-outline-secondary btn-success text-dark"
+          type="submit">Update
+  </button>
+  <button (click)="activeModal.close()" class="btn btn-outline-secondary btn-danger text-dark">Cancel</button>
+
+</div>
