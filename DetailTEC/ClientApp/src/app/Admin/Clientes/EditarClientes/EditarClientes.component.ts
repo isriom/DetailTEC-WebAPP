@@ -11,7 +11,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrls: ['./EditarClientes.component.css']
 })
 export class EditarClientesComponent implements OnInit {
-  constructor(public activeModal: NgbActiveModal, public http: HttpClient) {
+  constructor(public activeModal: NgbActiveModal, public http: HttpClient, public dir: String = "Admin") {
     console.log("modal creado")
   }
 
@@ -78,7 +78,7 @@ export class EditarClientesComponent implements OnInit {
     this._cliente.correo = this._Cliente.controls.Correo.value
     this._cliente.puntos = this._Cliente.controls.Puntos.value
 
-    this.http.post("https://localhost:7274/api/Admin/Clientes/update", this._cliente, {
+    this.http.post("https://localhost:7274/api/" + this.dir + "/Clientes/update", this._cliente, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'

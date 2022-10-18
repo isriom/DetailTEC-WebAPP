@@ -87,6 +87,22 @@
         type="text"
       /></tfoot>
     </ng-container>
+    <ng-container matColumnDef="direccion">
+      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <td *matCellDef="let cliente" mat-cell>
+        <button>Direcciones</button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="telefono">
+      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <td *matCellDef="let cliente" mat-cell>
+        <button>Correos</button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      </tfoot>
+    </ng-container>
     <ng-container matColumnDef="puntos">
       <th *matHeaderCellDef mat-header-cell>Puntos</th>
       <td *matCellDef="let cliente" mat-cell>{{cliente.puntos}}</td>

@@ -1,0 +1,61 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Usuario</p>
+  <table [dataSource]="Usuario" class="table table-active table-responsive-md" mat-table>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let cliente" mat-cell> {{cliente.nombre}} </td>
+    </ng-container>
+    <ng-container matColumnDef="apellido_1">
+      <th *matHeaderCellDef mat-header-cell>Apellido_1</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.apellido_1}}</td>
+    </ng-container>
+    <ng-container matColumnDef="apellido_2">
+      <th *matHeaderCellDef mat-header-cell>Apellido_2</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.apellido_2}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cedula">
+      <th *matHeaderCellDef mat-header-cell>Cedula</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.cedula}}</td>
+    </ng-container>
+    <ng-container matColumnDef="usuario">
+      <th *matHeaderCellDef mat-header-cell>Usuario</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.usuario}}</td>
+    </ng-container>
+    <ng-container matColumnDef="password">
+      <th *matHeaderCellDef mat-header-cell>Password</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.password}}</td>
+    </ng-container>
+    <ng-container matColumnDef="correo">
+      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.correo}}</td>
+    </ng-container>
+    <ng-container matColumnDef="direccion">
+      <th *matHeaderCellDef mat-header-cell>direccion</th>
+      <td *matCellDef="let cliente" mat-cell>
+        <button>Direcciones</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="telefono">
+      <th *matHeaderCellDef mat-header-cell>telefono</th>
+      <td *matCellDef="let cliente" mat-cell>
+        <button>Correos</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="puntos">
+      <th *matHeaderCellDef mat-header-cell>Puntos</th>
+      <td *matCellDef="let cliente" mat-cell>{{cliente.puntos}}</td>
+    </ng-container>
+    <ng-container matColumnDef="modificar">
+      <th *matHeaderCellDef mat-header-cell>Modificar</th>
+      <td *matCellDef="let cliente" class="d-table-cell " mat-cell>
+        <button (click)="modify_Button(cliente.cedula)" class="btn btn-warning bg-white" data-target="#edit"
+                data-toggle="modal"
+                mat-button>Modificar
+        </button>
+      </td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let cliente; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

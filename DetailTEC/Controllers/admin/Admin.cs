@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PruebaDetail.Models;
 
 namespace DetailTEC.Controllers.admin;
 
@@ -14,13 +15,21 @@ namespace DetailTEC.Controllers.admin;
  */
 public class Admin : Controller
 {
+
+    private readonly PruebaDetail.Models.PruebaContext _context;
+
+    public Admin(PruebaContext context)
+    {
+        _context = context;
+    }
+
     /**
      * Add cite to DB
      * Recieve a @CODE {Admin.CitaElement} and add it to the DB
      */
     [HttpPut]
     [Route("api/[controller]/{web}/add")]
-    public ActionResult Register([FromBody]JsonElement element, string web)
+    public ActionResult Register([FromBody] JsonElement element, string web)
     {
         //logica para insertar en la base de datos aqui
         switch (web)
@@ -182,7 +191,7 @@ public class Admin : Controller
      */
     [HttpPost]
     [Route("api/[controller]/{web}/update")]
-    public ActionResult Update([FromBody]JsonElement element, string web)
+    public ActionResult Update([FromBody] JsonElement element, string web)
     {
         Console.Out.Write("update: ");
         switch (web)

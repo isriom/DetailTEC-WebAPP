@@ -126,7 +126,7 @@ export class ProveedoresComponent {
    * methof to call the server and delete the indicate cite
    * @param cita
    */
-  async delete_Worker(keys:string[]) {
+  async delete_Worker(keys: string[]) {
     console.log("proveedor eliminado: " + (keys[0]))
     let res = await this.http.delete("https://localhost:7274/api/Admin/Proveedores/delete", {
         headers: this.httpOptions.headers,

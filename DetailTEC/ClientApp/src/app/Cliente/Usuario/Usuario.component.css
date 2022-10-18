@@ -51,6 +51,7 @@ Define las caracteristicas que tendran los botones
   font-size: larger;
 }
 
+
 p {
   font-size: 20px;
   alignment: center;
@@ -80,12 +81,6 @@ tr {
 }
 
 td.d-table-cell {
-  text-align: center;
-  justify-self: center;
-  justify-content: center;
-}
-
-tfoot.d-table-cell {
   text-align: center;
   justify-self: center;
   justify-content: center;
@@ -121,13 +116,6 @@ input {
 }
 
 th.mat-header-cell, mat-cell {
-  justify-content: center;
-  text-align: center;
-  justify-self: center;
-
-}
-
-tfoot.mat-header-cell, tfoot.mat-cell {
   justify-content: center;
   text-align: center;
   justify-self: center;

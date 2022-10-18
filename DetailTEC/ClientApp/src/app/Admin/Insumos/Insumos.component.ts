@@ -129,7 +129,7 @@ export class InsumoComponent {
     )
   }
 
-  async delete_Worker(key:string[]
+  async delete_Worker(key: string[]
   ) {
     console.log("insumo eliminado: " + key[0])
     let res = await this.http.delete("https://localhost:7274/api/Admin/Insumos/delete", {

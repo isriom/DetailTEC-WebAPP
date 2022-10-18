@@ -25,6 +25,12 @@ import {ClientesComponent} from "./Admin/Clientes/Clientes.component";
 import {EditarClientesComponent} from "./Admin/Clientes/EditarClientes/EditarClientes.component";
 import {CitasComponent} from "./Admin/Citas/Citas.component";
 import {EditarCitasComponent} from "./Admin/Citas/EditarCitas/EditarCitas.component";
+import {RCitasComponent} from "./Cliente/RCitas/RCitas.component";
+import {EditarRCitasComponent} from "./Cliente/RCitas/EditarRCitas/EditarRCitas.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {UsuarioComponent} from "./Cliente/Usuario/Usuario.component";
+import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
 
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
@@ -41,6 +47,8 @@ import {EditarCitasComponent} from "./Admin/Citas/EditarCitas/EditarCitas.compon
     LavadosComponent,
     ClientesComponent,
     CitasComponent,
+    RCitasComponent,
+    UsuarioComponent, RPuntosComponent,
     Popup,
     SafePipe,
     EditarTrabajadorComponent,
@@ -50,6 +58,7 @@ import {EditarCitasComponent} from "./Admin/Citas/EditarCitas/EditarCitas.compon
     EditarLavadosComponent,
     EditarClientesComponent,
     EditarCitasComponent,
+    EditarRCitasComponent,
 
 
   ],
@@ -73,10 +82,19 @@ import {EditarCitasComponent} from "./Admin/Citas/EditarCitas/EditarCitas.compon
           {path: 'Lavados', data: {title: "Gestion Lavados"}, component: LavadosComponent},
           {path: 'Clientes', data: {title: "Gestion Cliente"}, component: ClientesComponent},
           {path: 'Citas', data: {title: "Gestion Citas"}, component: CitasComponent},]
-      },
+      }, {
+        path: "cliente", children: [
+          {path: 'RCitas', data: {title: "Registro Citas"}, component: RCitasComponent},
+          {
+            path: 'RPuntos', data: {title: "Registro Puntaje"}, component: RPuntosComponent
+          }
+        ]
+      }
     ]),
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

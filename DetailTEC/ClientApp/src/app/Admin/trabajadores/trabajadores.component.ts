@@ -5,15 +5,15 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarTrabajadorComponent} from "./EditarTrabajador/EditarTrabajador.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
-import {K} from "@angular/cdk/keycodes";
 
 /*
 Representacion de los datos del trabajador
  */
 export class workerElement {
-  constructor(public nombre: string, public apellidos: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: number, public password: string, public rol: string, public pago: string) {
+  constructor(public nombre: string, public apellidos: string, public apellidos2: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: number, public password: string, public rol: string, public pago: string) {
     this.nombre = nombre;
     this.apellidos = apellidos;
+    this.apellidos2 = apellidos2;
     this.cedula = cedula;
     this.fecha_de_ingreso = fecha_de_ingreso;
     this.fecha_de_nacimiento = fecha_de_nacimiento;
@@ -24,7 +24,7 @@ export class workerElement {
   }
 
   static clone(worker: workerElement) {
-    return new workerElement(worker.nombre, worker.apellidos, worker.cedula, worker.fecha_de_ingreso, worker.fecha_de_nacimiento, worker.edad, worker.password, worker.rol, worker.pago);
+    return new workerElement(worker.nombre, worker.apellidos, worker.apellidos2, worker.cedula, worker.fecha_de_ingreso, worker.fecha_de_nacimiento, worker.edad, worker.password, worker.rol, worker.pago);
   }
 }
 
@@ -59,6 +59,7 @@ export class TrabajadoresComponent {
   displayedColumns: string[] = [
     "nombre",
     "apellidos",
+    "apellidos2",
     "cedula",
     "fecha_de_ingreso",
     "fecha_de_nacimiento",
@@ -109,6 +110,7 @@ export class TrabajadoresComponent {
     const answer = {
       nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
       apellidos: (<HTMLInputElement>document.getElementById("AApellidos")).value,
+      apellidos2: (<HTMLInputElement>document.getElementById("AApellidos2")).value,
       cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
       fecha_de_ingreso: (<HTMLInputElement>document.getElementById("AFecha_de_ingreso")).value,
       fecha_de_nacimiento: (<HTMLInputElement>document.getElementById("AFecha_de_nacimiento")).value,

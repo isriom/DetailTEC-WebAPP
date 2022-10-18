@@ -1,0 +1,34 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Puntos</p>
+  <table [dataSource]="Puntos" class="table table-active table-responsive-md" mat-table>
+    <ng-container matColumnDef="placa">
+      <th *matHeaderCellDef mat-header-cell>Placa</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.placa}}</td>
+    </ng-container>
+    <ng-container matColumnDef="fecha">
+      <th *matHeaderCellDef mat-header-cell>Fecha</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.fecha}}</td>
+    </ng-container>
+    <ng-container matColumnDef="tipo">
+      <th *matHeaderCellDef mat-header-cell>Tipo</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.tipo}}</td>
+    </ng-container>
+    <ng-container matColumnDef="sucursal">
+      <th *matHeaderCellDef mat-header-cell>Sucursal</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.sucursal}}</td>
+    </ng-container>
+    <ng-container matColumnDef="puntos">
+      <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
+      <td *matCellDef="let cita" mat-cell><input class="form-check-input" type="Checkbox" [checked]="cita.puntos"
+                                                 disabled></td>
+    </ng-container>
+    <ng-container matColumnDef="puntaje">
+      <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.puntaje}}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let cita; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

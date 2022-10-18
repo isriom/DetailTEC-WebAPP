@@ -5,7 +5,6 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarClientesComponent} from "./EditarClientes/EditarClientes.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
-import {C} from "@angular/cdk/keycodes";
 
 /*
 Client class
@@ -74,8 +73,8 @@ export class ClientesComponent {
     "usuario",
     "password",
     "correo",
-    "puntos", "eliminar", "modificar"]
-  Clientes: clienteElement[] = [];
+    "puntos","direccion","telefono", "eliminar", "modificar"]
+  Clientes: clienteElement[] = [new clienteElement("isaac",105040201,"Barrios", "Campos","Isriom","asdasdasd","2001","500")];
   actualEditor: NgbModalRef | undefined;
   Cliente = new FormGroup({});
 
@@ -104,7 +103,7 @@ export class ClientesComponent {
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      this.Clientes = <clienteElement[]><unknown>result;
+      // this.Clientes = <clienteElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -148,10 +147,10 @@ export class ClientesComponent {
   async Delete_Button(Client: clienteElement
   ) {
     Popup.open("Eliminar Cliente", "Desea Eliminar este Cliente?", "Sí",
-      ( context: ClientesComponent = this) => () => context.delete_Worker([String(Client.cedula)]))
+      (context: ClientesComponent = this) => () => context.delete_Worker([String(Client.cedula)]))
   }
 
-  async delete_Worker(key:string[]
+  async delete_Worker(key: string[]
   ) {
     console.log("Cliente eliminado: " + (key[0]))
     let res = await this.http.delete("https://localhost:7274/api/Admin/Clientes/delete", {

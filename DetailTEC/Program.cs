@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using PruebaDetail.Models;
 
 //Load Database from FILE
 
@@ -27,6 +29,9 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddDbContext<PruebaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
 // Add services to the container.
 

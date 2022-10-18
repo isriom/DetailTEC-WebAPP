@@ -53,7 +53,7 @@ public class Data
         /**
          * Metodo  para obtener la info
          */
-        public LoginUser(string? contraseña = null, string usuario = null)
+        public LoginUser(string contraseña = null, string usuario = null)
         {
             Usuario = usuario;
             Contraseña = contraseña;

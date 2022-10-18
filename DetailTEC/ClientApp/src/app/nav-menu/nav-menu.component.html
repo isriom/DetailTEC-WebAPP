@@ -3,7 +3,7 @@
     class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="navbar" style="margin: 0">
-      <a [routerLink]="['{{this.rol}}']" class="navbar-brand text-center">DetailTEC </a>
+      <a [routerLink]="['/']" class="navbar-brand text-center">DetailTEC </a>
 
     </div>
     <div class="container" style="margin: 0">
@@ -87,11 +87,16 @@
               [routerLinkActive]="['link-active']"
               class="nav-item"
             >
-              <a [routerLink]="['cliente/']" class="nav-link text-dark">Home</a>
+              <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
             </li>
             <li [routerLinkActive]="['link-active']" class="nav-item">
               <a [routerLink]="['cliente/RCitas']" class="nav-link text-dark"
               >Registro_Citas</a
+              >
+            </li>
+            <li [routerLinkActive]="['link-active']" class="nav-item">
+              <a [routerLink]="['cliente/RPuntos']" class="nav-link text-dark"
+              >Registro Puntos</a
               >
             </li>
             <li class="nav-item">

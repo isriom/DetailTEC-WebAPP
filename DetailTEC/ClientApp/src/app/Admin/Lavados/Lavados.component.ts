@@ -21,7 +21,8 @@ export class lavadoElement {
     this.puntuacion_coste = puntuacion_coste;
     this.puntuacion_ganancia = puntuacion_ganancia;
   }
-  static clone(wash:lavadoElement) {
+
+  static clone(wash: lavadoElement) {
     return new lavadoElement(wash.nombre, wash.costo, wash.precio, wash.duracion, wash.productos, wash.lavador, wash.pulidor, wash.puntuacion_coste, wash.puntuacion_ganancia);
   }
 }
@@ -136,7 +137,7 @@ export class LavadosComponent {
   async Delete_Button(wash: lavadoElement
   ) {
     Popup.open("Eliminar Sucursal", "Desea Eliminar este Sucursal?", "Sí",
-      ( context: LavadosComponent = this) => () => context.delete_Worker([wash.nombre]))
+      (context: LavadosComponent = this) => () => context.delete_Worker([wash.nombre]))
   }
 
   async delete_Worker(key: string[]
