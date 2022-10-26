@@ -17,13 +17,13 @@
       value=""
     />
     <p class="form-text form-label">Tipo</p>
-    <select class="form-control text-dark" id="Tipo" formControlName="Tipo"
+    <select class="form-control text-dark" formControlName="Tipo" id="Tipo"
             required>
       <option *ngFor="let kind of kinds" [value]="kind">{{kind}}</option>
       <option [value]="'kind'">kind</option>
     </select>
     <p class="form-text form-label">Sucursal</p>
-    <select class="form-control text-dark" id="Sucursal" formControlName="Sucursal" required>
+    <select class="form-control text-dark" formControlName="Sucursal" id="Sucursal" required>
       <option *ngFor="let branch of branchs" [value]="branch">{{branch}}</option>
     </select>
     <p class="form-text form-label">Puntos</p>

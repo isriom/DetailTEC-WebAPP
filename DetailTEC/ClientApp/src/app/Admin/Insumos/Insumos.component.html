@@ -51,6 +51,18 @@
         type="text"
       /></tfoot>
     </ng-container>
+    <ng-container matColumnDef="cantidad">
+      <th *matHeaderCellDef mat-header-cell>Proveedores</th>
+      <td *matCellDef="let insumo" mat-cell>{{insumo.cantidad}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AInsumo"
+        id="Acantidad"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
     <ng-container matColumnDef="eliminar">
       <th *matHeaderCellDef mat-header-cell>Eliminar</th>
       <td *matCellDef="let insumo" mat-cell>

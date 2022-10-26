@@ -75,10 +75,34 @@
         type="text"
       /></tfoot>
     </ng-container>
+    <ng-container matColumnDef="monto">
+      <th *matHeaderCellDef mat-header-cell>Monto</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.monto}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="AMonto"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="iva">
+      <th *matHeaderCellDef mat-header-cell>IVA</th>
+      <td *matCellDef="let cita" mat-cell>{{cita.iva}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="ACita"
+        id="AIva"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
     <ng-container matColumnDef="puntos">
       <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
-      <td *matCellDef="let cita" mat-cell><input class="form-check-input" type="Checkbox" [checked]="cita.puntos"
-                                                 disabled></td>
+      <td *matCellDef="let cita" mat-cell><input [checked]="cita.puntos" class="form-check-input" disabled
+                                                 type="Checkbox"></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
         class="form-check-input d-table-cell "
@@ -87,6 +111,24 @@
         required
         type="checkbox"
       /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="trabajador">
+      <th *matHeaderCellDef mat-header-cell>Trabajador</th>
+      <td *matCellDef="let cita" mat-cell>
+        <button (click)="Trabajador()" class="btn btn-outline-secondary">Trabajadores</button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="productos">
+      <th *matHeaderCellDef mat-header-cell>Productos</th>
+      <td *matCellDef="let cita" mat-cell>
+        <button (click)="Productos()" class="btn btn-outline-secondary">Productos</button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="eliminar">
       <th *matHeaderCellDef mat-header-cell>Eliminar</th>

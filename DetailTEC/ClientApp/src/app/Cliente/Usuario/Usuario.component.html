@@ -32,13 +32,13 @@
     <ng-container matColumnDef="direccion">
       <th *matHeaderCellDef mat-header-cell>direccion</th>
       <td *matCellDef="let cliente" mat-cell>
-        <button>Direcciones</button>
+        <button (click)="Directions()">Direcciones</button>
       </td>
     </ng-container>
     <ng-container matColumnDef="telefono">
       <th *matHeaderCellDef mat-header-cell>telefono</th>
       <td *matCellDef="let cliente" mat-cell>
-        <button>Correos</button>
+        <button (click)="Phone()">Telefono</button>
       </td>
     </ng-container>
     <ng-container matColumnDef="puntos">
@@ -56,6 +56,5 @@
     </ng-container>
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let cliente; columns:displayedColumns" class="text-capitalize" mat-row></tr>
-    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
   </table>
 </div>

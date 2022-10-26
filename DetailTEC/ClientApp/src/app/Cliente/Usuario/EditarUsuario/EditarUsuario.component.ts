@@ -1,29 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {clienteElement, ClientesComponent} from "../Clientes.component";
+import {UsuarioComponent} from "../Usuario.component";
 import {FormControl, FormGroup} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {clienteElement} from "../../../Admin/Clientes/Clientes.component";
 
 
 @Component({
-  selector: 'app-EditarClientesComponent',
-  templateUrl: './EditarClientes.component.html',
-  styleUrls: ['./EditarClientes.component.css']
+  selector: 'app-EditarUsuarioComponent',
+  templateUrl: './EditarUsuario.component.html',
+  styleUrls: ['./EditarUsuario.component.css']
 })
-export class EditarClientesComponent implements OnInit {
+export class EditarUsuarioComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal, public http: HttpClient) {
     console.log("modal creado")
   }
 
-  public dir: String = "Admin"
+  private _padre: UsuarioComponent | undefined;
 
-  private _padre: ClientesComponent | undefined;
-
-  get padre(): ClientesComponent {
-    return <ClientesComponent>this._padre;
+  get padre(): UsuarioComponent {
+    return <UsuarioComponent>this._padre;
   }
 
-  set padre(value: ClientesComponent) {
+  set padre(value: UsuarioComponent) {
     this._padre = value;
   }
 
@@ -35,14 +34,12 @@ export class EditarClientesComponent implements OnInit {
 
   set cliente(value: clienteElement) {
     this._cliente = value;
-    console.log("cliente agregado")
     this._Cliente.controls.Nombre.setValue(this._cliente.nombre)
     this._Cliente.controls.Apellido_1.setValue(this._cliente.apellido_1)
     this._Cliente.controls.Apellido_2.setValue(this._cliente.apellido_2)
     this._Cliente.controls.Usuario.setValue(this._cliente.usuario)
     this._Cliente.controls.Password.setValue(this._cliente.password)
     this._Cliente.controls.Correo.setValue(this._cliente.correo)
-    this._Cliente.controls.Puntos.setValue(this._cliente.puntos)
   }
 
   private _Cliente = new FormGroup({
@@ -51,7 +48,6 @@ export class EditarClientesComponent implements OnInit {
     Apellido_1: new FormControl(),
     Apellido_2: new FormControl(),
     Usuario: new FormControl(),
-    Puntos: new FormControl(),
     Correo: new FormControl(),
   });
 
@@ -78,9 +74,8 @@ export class EditarClientesComponent implements OnInit {
     this._cliente.apellido_2 = this._Cliente.controls.Apellido_2.value
     this._cliente.password = this._Cliente.controls.Password.value
     this._cliente.correo = this._Cliente.controls.Correo.value
-    this._cliente.puntos = this._Cliente.controls.Puntos.value
 
-    this.http.post("https://localhost:7274/api/" + this.dir + "/Clientes/update", this._cliente, {
+    this.http.post("https://localhost:7274/api/client/Usuario/update", this._cliente, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'withCredentials': 'true'

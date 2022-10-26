@@ -73,8 +73,8 @@ export class ClientesComponent {
     "usuario",
     "password",
     "correo",
-    "puntos","direccion","telefono", "eliminar", "modificar"]
-  Clientes: clienteElement[] = [new clienteElement("isaac",105040201,"Barrios", "Campos","Isriom","asdasdasd","2001","500")];
+    "puntos", "direccion", "telefono", "eliminar", "modificar"]
+  Clientes: clienteElement[] = [new clienteElement("isaac", 105040201, "Barrios", "Campos", "Isriom", "asdasdasd", "2001", "500")];
   actualEditor: NgbModalRef | undefined;
   Cliente = new FormGroup({});
 

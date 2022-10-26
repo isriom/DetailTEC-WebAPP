@@ -1,6 +1,6 @@
+using DetailTEC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using PruebaDetail.Models;
 
 //Load Database from FILE
 
@@ -12,7 +12,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "";
         options.AccessDeniedPath = "";
     });
-//Add cors
+//Add cors  
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -30,7 +30,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<PruebaContext>(options =>
+builder.Services.AddDbContext<DetailTECContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
 // Add services to the container.

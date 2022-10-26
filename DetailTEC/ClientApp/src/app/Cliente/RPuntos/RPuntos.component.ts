@@ -9,9 +9,9 @@ import {citaElement} from "../../Admin/Citas/Citas.component";
 class RPuntos extends citaElement {
   puntaje: number = 0
 
-  constructor(nombre: string, placa: number, fecha: string, cedula: number, tipo: string, sucursal: string, puntos: boolean, puntaje: number) {
-    super(nombre, placa, fecha, cedula, tipo, sucursal, puntos);
-    this.puntaje=puntaje;
+  constructor(nombre: string, placa: number, fecha: string, cedula: number, tipo: string, sucursal: string, puntos: boolean, monto: number, iva: number, puntaje: number) {
+    super(nombre, placa, fecha, cedula, tipo, sucursal, puntos, monto, iva);
+    this.puntaje = puntaje;
   }
 }
 
@@ -45,8 +45,8 @@ export class RPuntosComponent {
     "fecha",
     "tipo",
     "sucursal",
-    "puntos","puntaje",]
-  Puntos: RPuntos[] = [new RPuntos("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true,150)];
+    "puntos", "puntaje",]
+  Puntos: RPuntos[] = [new RPuntos("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true, 1500, 150, 45)];
   actualEditor: NgbModalRef | undefined;
   Cita = new FormGroup({});
 
@@ -70,7 +70,7 @@ export class RPuntosComponent {
    * @constructor called in
    */
   get_Puntos() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/Puntos/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/client/RPuntos/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {

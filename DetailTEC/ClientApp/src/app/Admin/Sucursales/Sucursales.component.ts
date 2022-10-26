@@ -5,7 +5,6 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarSucursalesComponent} from "./EditarSucursale/EditarSucursales.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
-import {Key} from "@ng-bootstrap/ng-bootstrap/util/key";
 
 /*
 Branch class
@@ -144,7 +143,6 @@ export class SucursalesComponent {
    */
   async delete_Worker(keys: string[]
   ) {
-    console.log("Sucursal eliminado: " + keys[0])
     let res = await this.http.delete("https://localhost:7274/api/Admin/Sucursales/delete", {
         headers: this.httpOptions.headers,
         withCredentials: true, body: keys
@@ -152,6 +150,7 @@ export class SucursalesComponent {
     )
     res.subscribe(result => {
       this.respuesta = result;
+      console.log("Sucursal eliminado: " + keys[0])
       console.log(this.respuesta);
 
     }, error => console.error(error));

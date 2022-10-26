@@ -12,6 +12,9 @@ import {citaElement} from "../../../Admin/Citas/Citas.component";
   styleUrls: ['./EditarRCitas.component.css']
 })
 export class EditarRCitasComponent implements OnInit {
+  kinds: string[] = ["asd"];
+  branchs: string[] = ["asd"];
+
   constructor(public activeModal: NgbActiveModal, public http: HttpClient) {
     console.log("modal creado")
   }
@@ -51,8 +54,6 @@ export class EditarRCitasComponent implements OnInit {
     Sucursal: new FormControl(),
     Puntos: new FormControl()
   });
-  kinds: string[] = ["asd"];
-  branchs: string[] = ["asd"];
 
   get Cita(): any {
     return this._Cita;

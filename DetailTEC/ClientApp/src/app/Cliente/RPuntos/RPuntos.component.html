@@ -19,11 +19,11 @@
     </ng-container>
     <ng-container matColumnDef="puntos">
       <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
-      <td *matCellDef="let cita" mat-cell><input class="form-check-input" type="Checkbox" [checked]="cita.puntos"
-                                                 disabled></td>
+      <td *matCellDef="let cita" mat-cell><input [checked]="cita.puntos" class="form-check-input" disabled
+                                                 type="Checkbox"></td>
     </ng-container>
     <ng-container matColumnDef="puntaje">
-      <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
+      <th *matHeaderCellDef mat-header-cell>Puntaje</th>
       <td *matCellDef="let cita" mat-cell>{{cita.puntaje}}</td>
     </ng-container>
 

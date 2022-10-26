@@ -39,7 +39,7 @@ export class RCitasComponent {
     "tipo",
     "sucursal",
     "puntos", "eliminar", "modificar"]
-  Citas: citaElement[] = [new citaElement("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true)];
+  Citas: citaElement[] = [new citaElement("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true, 1500, 1800)];
   actualEditor: NgbModalRef | undefined;
   Cita = new FormGroup({});
   public kinds: string[] = ["Prueba", "Prueba2"];
@@ -57,6 +57,8 @@ export class RCitasComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
+    this.get_Kinds();
+    this.get_branchs();
     this.get_Citas();
   }
 
@@ -65,7 +67,7 @@ export class RCitasComponent {
    * @constructor called in
    */
   get_Citas() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/Citas/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/client/RCitas/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
@@ -91,7 +93,7 @@ export class RCitasComponent {
     };
     console.log(this.respuesta);
     console.log(data);
-    let res = await this.http.put("https://localhost:7274/api/Admin/Citas/add", JSON.stringify(data), {
+    let res = await this.http.put("https://localhost:7274/api/client/RCitas/add", JSON.stringify(data), {
         headers: this.httpOptions.headers,
         withCredentials: true,
       }
@@ -119,7 +121,7 @@ export class RCitasComponent {
    */
   async delete_Worker(key: string[]) {
     console.log("Cita eliminada: " + key)
-    let res = await this.http.delete("https://localhost:7274/api/Admin/Citas/delete", {
+    let res = await this.http.delete("https://localhost:7274/api/client/RCitas/delete", {
         headers: this.httpOptions.headers,
         withCredentials: true, body: key
       }
@@ -140,9 +142,36 @@ export class RCitasComponent {
     this.actualEditor = this._modal.open(EditarRCitasComponent)
     this.actualEditor.componentInstance.padre = this
     this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
+
   }
 
   clean() {
 
+  }
+
+  private get_Kinds() {
+    this.http.get<string>("https://localhost:7274/api/client/RCitas/kinds", {
+      headers: this.httpOptions.headers,
+      withCredentials: true
+    }).subscribe(result => {
+      this.respuesta = result;
+      console.log(this.respuesta);
+      this.kinds = (<string[]><unknown>result);
+      console.log(this.kinds);
+
+    }, error => console.error(error));
+  }
+
+  private get_branchs() {
+    this.http.get<string>("https://localhost:7274/api/client/RCitas/branchs", {
+      headers: this.httpOptions.headers,
+      withCredentials: true
+    }).subscribe(result => {
+      this.respuesta = result;
+      console.log(this.respuesta);
+      this.branchs = (<string[]><unknown>result);
+      console.log(this.branchs);
+
+    }, error => console.error(error));
   }
 }

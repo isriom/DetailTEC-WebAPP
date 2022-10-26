@@ -33,7 +33,6 @@
       <tfoot *matFooterCellDef class="d-table-cell ">
       <mat-form-field>
         <mat-select class="" id="ATipo">
-          <mat-option [value]="'Prueba'">Prueba</mat-option>
           <mat-option *ngFor="let kind of kinds" [value]="kind">{{kind}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -45,7 +44,6 @@
       <tfoot *matFooterCellDef class="d-table-cell ">
       <mat-form-field>
         <mat-select class="" id="ASucursal">
-          <mat-option [value]="'Prueba'">Prueba</mat-option>
           <mat-option *ngFor="let branch of branchs" [value]="branch">{{branch}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -53,8 +51,8 @@
     </ng-container>
     <ng-container matColumnDef="puntos">
       <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>
-      <td *matCellDef="let cita" mat-cell><input class="form-check-input" type="Checkbox" [checked]="cita.puntos"
-                                                 disabled></td>
+      <td *matCellDef="let cita" mat-cell><input [checked]="cita.puntos" class="form-check-input" disabled
+                                                 type="Checkbox"></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
         class="form-check-input d-table-cell "

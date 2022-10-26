@@ -10,17 +10,17 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del insumo
  */
 export class insumoElement {
-  constructor(public nombre: string, public marca: string, public costo: number, public proveedores: string) {
+  constructor(public nombre: string, public marca: string, public costo: number, public proveedores: string, public cantidad: number) {
     this.nombre = nombre;
     this.marca = marca;
     this.costo = costo;
     this.proveedores = proveedores;
-
+    this.cantidad = cantidad;
   }
 
 
   static clone(insumo: insumoElement) {
-    return new insumoElement(insumo.nombre, insumo.marca, insumo.costo, insumo.proveedores);
+    return new insumoElement(insumo.nombre, insumo.marca, insumo.costo, insumo.proveedores, insumo.cantidad);
   }
 }
 
@@ -56,7 +56,7 @@ export class InsumoComponent {
     "nombre",
     "marca",
     "costo",
-    "proveedores", "eliminar", "modificar"]
+    "proveedores", "cantidad", "eliminar", "modificar"]
   Insumos: insumoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   insumo = new FormGroup({});
@@ -125,7 +125,7 @@ export class InsumoComponent {
   async Delete_Button(product: insumoElement) {
     Popup.open("Eliminar insumo", "Desea Eliminar este insumo?", "Sí",
       (context: InsumoComponent = this) => () =>
-        context.delete_Worker([product.nombre, product.proveedores])
+        context.delete_Worker([product.nombre, product.marca])
     )
   }
 

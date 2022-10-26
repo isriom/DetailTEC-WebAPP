@@ -31,6 +31,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {UsuarioComponent} from "./Cliente/Usuario/Usuario.component";
 import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
+import {TablaRelacionesComponent} from "./TablaRelaciones/TablaRelaciones.component";
+import {EditarUsuarioComponent} from "./Cliente/Usuario/EditarUsuario/EditarUsuario.component";
 
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
@@ -48,7 +50,9 @@ import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
     ClientesComponent,
     CitasComponent,
     RCitasComponent,
-    UsuarioComponent, RPuntosComponent,
+    UsuarioComponent,
+    RPuntosComponent,
+    TablaRelacionesComponent,
     Popup,
     SafePipe,
     EditarTrabajadorComponent,
@@ -59,8 +63,7 @@ import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
     EditarClientesComponent,
     EditarCitasComponent,
     EditarRCitasComponent,
-
-
+    EditarUsuarioComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -85,9 +88,7 @@ import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
       }, {
         path: "cliente", children: [
           {path: 'RCitas', data: {title: "Registro Citas"}, component: RCitasComponent},
-          {
-            path: 'RPuntos', data: {title: "Registro Puntaje"}, component: RPuntosComponent
-          }
+          {path: 'RPuntos', data: {title: "Registro Puntaje"}, component: RPuntosComponent}
         ]
       }
     ]),

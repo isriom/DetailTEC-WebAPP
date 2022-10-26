@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
+using DetailTEC.Controllers.admin;
 using DetailTEC.Controllers.DB;
+using DetailTEC.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +16,14 @@ namespace DetailTEC.Controllers;
  */
 public class LoginController : Controller
 {
+    private readonly DetailTECContext _context;
+
+    public LoginController(DetailTECContext context)
+    {
+        Element.Context = context;
+        _context = context;
+    }
+
     /**
      * Metodo donde se realiza la autorizacion de los usuarios cuando se presiona el boton de Sign In
      */
@@ -53,19 +63,29 @@ public class LoginController : Controller
     /**
      * Metodo que realiza la autenticacion del usuario
      */
-    private static Task<string> AuthenticateUser(string id, string password)
+    private Task<string> AuthenticateUser(string id, string password)
     {
-        return Task.FromResult(id switch
+        //Debug to access with default user and password delete this in production
+        switch (id)
         {
-            "admin" when password == "admin" => "Trabajador",
-            "user" when password == "user" => "Cliente",
-            _ => "Trabajador"
-        });
+            case "admin" when password == "admin":
+                return Task.FromResult("Trabajador");
+            case "user" when password == "user":
+                return Task.FromResult("Cliente");
+            default:
+            {
+                var user = this._context.Clientes
+                    .FirstOrDefault(u => u.Usuario == id && u.Password == password);
+                if (user != null)
+                {
+                    var role = user.Usuario;
+                    return Task.FromResult(role);
+                }
+                return Task.FromResult<string>("No Found");
+                break;
 
-        // //Implementar codigo para revisar base de datos aquí
-
-        // var role = DBController.FoundUser(id, password);
-        // return role;
+            }
+        }
     }
 
     /**

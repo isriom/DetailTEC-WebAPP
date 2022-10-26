@@ -27,11 +27,21 @@
         <Content Remove="$(SpaRoot)**" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <None Remove="Controllers\Controllers\**" />
+        <Content Remove="Controllers\Controllers\**" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="ClientApp\src\app\Admin" />
         <Folder Include="Controllers\General" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Controllers\Controllers\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="Controllers\Controllers\**" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

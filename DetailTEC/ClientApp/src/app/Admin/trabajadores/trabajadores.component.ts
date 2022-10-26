@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del trabajador
  */
 export class workerElement {
-  constructor(public nombre: string, public apellidos: string, public apellidos2: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: number, public password: string, public rol: string, public pago: string) {
+  constructor(public nombre: string, public apellidos: string, public apellidos2: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: Number, public password: string, public rol: string, public pago: string) {
     this.nombre = nombre;
     this.apellidos = apellidos;
     this.apellidos2 = apellidos2;
@@ -116,7 +116,8 @@ export class TrabajadoresComponent {
       fecha_de_nacimiento: (<HTMLInputElement>document.getElementById("AFecha_de_nacimiento")).value,
       edad: (<HTMLInputElement>document.getElementById("AEdad")).value,
       password: (<HTMLInputElement>document.getElementById("APassword")).value,
-      rol: (<HTMLInputElement>document.getElementById("ARol")).value
+      rol: (<HTMLInputElement>document.getElementById("ARol")).value,
+      pago: (<HTMLInputElement>document.getElementById("APago")).value
     };
 
     console.log(this.respuesta);

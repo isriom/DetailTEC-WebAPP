@@ -5,6 +5,8 @@ import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 import {clienteElement} from "../../Admin/Clientes/Clientes.component";
 import {EditarClientesComponent} from "../../Admin/Clientes/EditarClientes/EditarClientes.component";
+import {TablaRelacionesComponent} from "../../TablaRelaciones/TablaRelaciones.component";
+import {EditarUsuarioComponent} from "./EditarUsuario/EditarUsuario.component";
 
 
 @Component({
@@ -65,12 +67,13 @@ export class UsuarioComponent {
    * @constructor called in
    */
   get_Usuario() {
-    var res = this.http.get<string>("https://localhost:7274/api/Cliente/Usuario/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/client/Usuario/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
-      console.log(this.respuesta);
-      this.Usuario = <clienteElement[]><unknown>result;
+      console.log(result);
+      this.Usuario = <clienteElement[]><unknown>(result);
+      console.log(this.Usuario);
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -83,7 +86,7 @@ export class UsuarioComponent {
     }
     for (let cliente of this.Usuario) {
       if (cedula === cliente.cedula) {
-        this.actualEditor = this._modal.open(EditarClientesComponent)
+        this.actualEditor = this._modal.open(EditarUsuarioComponent)
         this.actualEditor.componentInstance.padre = this
         this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
         this.actualEditor.componentInstance.dir = "Cliente"
@@ -93,5 +96,20 @@ export class UsuarioComponent {
 
   clean() {
 
+  }
+
+
+  Phone() {
+    this.actualEditor = this._modal.open(TablaRelacionesComponent)
+    this.actualEditor.componentInstance.table1 = "Cliente"
+    this.actualEditor.componentInstance.table2 = "Telefono"
+    this.actualEditor.componentInstance.get_Package();
+  }
+
+  Directions() {
+    this.actualEditor = this._modal.open(TablaRelacionesComponent)
+    this.actualEditor.componentInstance.table1 = "Cliente"
+    this.actualEditor.componentInstance.table2 = "Direcciones"
+    this.actualEditor.componentInstance.get_Package();
   }
 }

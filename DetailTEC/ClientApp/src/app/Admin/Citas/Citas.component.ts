@@ -5,13 +5,12 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarCitasComponent} from "./EditarCitas/EditarCitas.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
-import {getMatIconFailedToSanitizeLiteralError} from "@angular/material/icon";
 
 /*
 cite class
  */
 export class citaElement {
-  constructor(public nombre: string, public placa: number, public fecha: string, public cedula: number, public tipo: string, public sucursal: string, public puntos: boolean) {
+  constructor(public nombre: string, public placa: number, public fecha: string, public cedula: number, public tipo: string, public sucursal: string, public puntos: boolean, public monto: number, public iva: number) {
     this.nombre = nombre;
     this.placa = placa;
     this.fecha = fecha;
@@ -19,15 +18,16 @@ export class citaElement {
     this.tipo = tipo;
     this.sucursal = sucursal;
     this.puntos = puntos;
-  }
-
-
-  clone() {
-    return new citaElement(this.nombre, this.placa, this.fecha, this.cedula, this.tipo, this.sucursal, this.puntos);
+    this.iva = iva;
+    this.monto = monto;
   }
 
   static clone2(cita: citaElement) {
-    return new citaElement(cita.nombre, cita.placa, cita.fecha, cita.cedula, cita.tipo, cita.sucursal, cita.puntos);
+    return new citaElement(cita.nombre, cita.placa, cita.fecha, cita.cedula, cita.tipo, cita.sucursal, cita.puntos, cita.monto, cita.iva);
+  }
+
+  clone() {
+    return new citaElement(this.nombre, this.placa, this.fecha, this.cedula, this.tipo, this.sucursal, this.puntos, this.monto, this.iva);
   }
 }
 
@@ -63,8 +63,8 @@ export class CitasComponent {
     "fecha",
     "cedula",
     "tipo",
-    "sucursal",
-    "puntos", "eliminar", "modificar"]
+    "sucursal", "monto", "iva",
+    "puntos", "trabajador", "productos", "eliminar", "modificar"]
   Citas: citaElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Cita = new FormGroup({});
@@ -136,7 +136,7 @@ export class CitasComponent {
   async Delete_Button(cita: citaElement
   ) {
     Popup.open("Eliminar Cita", "Desea Eliminar este Cita?", "Sí",
-      (context: CitasComponent = this) => () => context.delete_Worker([cita.fecha, String(cita.placa), cita.sucursal])
+      (context: CitasComponent = this) => () => context.delete_Worker([String(cita.placa),cita.fecha, cita.sucursal])
     )
   }
 
@@ -170,6 +170,21 @@ export class CitasComponent {
   }
 
   clean() {
+
+  }
+
+  /**
+   * acces to worker data of Cite
+   */
+  Trabajador() {
+
+  }
+
+  /**
+   * acceso to products data of cite
+   * @constructor
+   */
+  Productos() {
 
   }
 }
