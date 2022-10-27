@@ -5,12 +5,14 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarCitasComponent} from "./EditarCitas/EditarCitas.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {CitasInsumosComponent} from "./CitasInsumo/CitasInsumo.component";
+import {CitasTrabajadoresComponent} from "./CitasTrabajadores/CitasTrabajadores.component";
 
 /*
 cite class
  */
 export class citaElement {
-  constructor(public nombre: string, public placa: number, public fecha: string, public cedula: number, public tipo: string, public sucursal: string, public puntos: boolean, public monto: number, public iva: number) {
+  constructor(public nombre: string, public placa: number, public fecha: string, public cedula: string, public tipo: string, public sucursal: string, public puntos: boolean, public monto: number, public iva: number) {
     this.nombre = nombre;
     this.placa = placa;
     this.fecha = fecha;
@@ -173,18 +175,21 @@ export class CitasComponent {
 
   }
 
-  /**
-   * acces to worker data of Cite
-   */
-  Trabajador() {
-
+  Productos(cita:citaElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(CitasInsumosComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
   }
 
-  /**
-   * acceso to products data of cite
-   * @constructor
-   */
-  Productos() {
-
+  Trabajador(cita: citaElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(CitasTrabajadoresComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
   }
 }

@@ -115,7 +115,7 @@
     <ng-container matColumnDef="trabajador">
       <th *matHeaderCellDef mat-header-cell>Trabajador</th>
       <td *matCellDef="let cita" mat-cell>
-        <button (click)="Trabajador()" class="btn btn-outline-secondary">Trabajadores</button>
+        <button (click)="Trabajador(cita)" class="btn btn-outline-secondary">Trabajadores</button>
       </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
 
@@ -124,7 +124,7 @@
     <ng-container matColumnDef="productos">
       <th *matHeaderCellDef mat-header-cell>Productos</th>
       <td *matCellDef="let cita" mat-cell>
-        <button (click)="Productos()" class="btn btn-outline-secondary">Productos</button>
+        <button (click)="Productos(cita)" class="btn btn-outline-secondary">Productos</button>
       </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
 

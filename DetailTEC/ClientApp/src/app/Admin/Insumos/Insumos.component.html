@@ -41,18 +41,12 @@
     </ng-container>
     <ng-container matColumnDef="proveedores">
       <th *matHeaderCellDef mat-header-cell>Proveedores</th>
-      <td *matCellDef="let insumo" mat-cell>{{insumo.proveedores}}</td>
+      <td *matCellDef="let insumo" mat-cell><button (click)="Proveedores(insumo)">Proveedores</button></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="AInsumo"
-        id="AProveedores"
-        required
-        type="text"
-      /></tfoot>
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="cantidad">
-      <th *matHeaderCellDef mat-header-cell>Proveedores</th>
+      <th *matHeaderCellDef mat-header-cell>Cantidad</th>
       <td *matCellDef="let insumo" mat-cell>{{insumo.cantidad}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input

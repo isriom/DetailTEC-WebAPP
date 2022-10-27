@@ -10,10 +10,10 @@ import {FormGroup} from "@angular/forms";
 Representacion de los datos del trabajador
  */
 export class workerElement {
-  constructor(public nombre: string, public apellidos: string, public apellidos2: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: Number, public password: string, public rol: string, public pago: string) {
+  constructor(public nombre: string, public apellido1: string, public apellido2: string, public cedula: number, public fecha_de_ingreso: string, public fecha_de_nacimiento: string, public edad: Number, public password: string, public rol: string, public pago: string) {
     this.nombre = nombre;
-    this.apellidos = apellidos;
-    this.apellidos2 = apellidos2;
+    this.apellido1 = apellido1;
+    this.apellido2 = apellido2;
     this.cedula = cedula;
     this.fecha_de_ingreso = fecha_de_ingreso;
     this.fecha_de_nacimiento = fecha_de_nacimiento;
@@ -24,7 +24,7 @@ export class workerElement {
   }
 
   static clone(worker: workerElement) {
-    return new workerElement(worker.nombre, worker.apellidos, worker.apellidos2, worker.cedula, worker.fecha_de_ingreso, worker.fecha_de_nacimiento, worker.edad, worker.password, worker.rol, worker.pago);
+    return new workerElement(worker.nombre, worker.apellido1, worker.apellido2, worker.cedula, worker.fecha_de_ingreso, worker.fecha_de_nacimiento, worker.edad, worker.password, worker.rol, worker.pago);
   }
 }
 
@@ -97,6 +97,7 @@ export class TrabajadoresComponent {
     }).subscribe(result => {
       console.log(this.respuesta);
       this.Workers = <workerElement[]><unknown>result;
+      console.log(this.Workers)
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -130,7 +131,6 @@ export class TrabajadoresComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
-
     }, error => console.error(error));
     console.log(res)
   }

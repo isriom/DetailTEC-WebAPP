@@ -5,6 +5,9 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarClientesComponent} from "./EditarClientes/EditarClientes.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {insumoElement} from "../Insumos/Insumos.component";
+import {DireccionesComponent} from "./Direccion/Direccion.component";
+import {TelefonoComponent} from "./Telefono/Telefono.component";
 
 /*
 Client class
@@ -68,13 +71,11 @@ export class ClientesComponent {
   displayedColumns: string[] = [
     "nombre",
     "cedula",
-    "apellido_1",
-    "apellido_2",
     "usuario",
     "password",
     "correo",
     "puntos", "direccion", "telefono", "eliminar", "modificar"]
-  Clientes: clienteElement[] = [new clienteElement("isaac", 105040201, "Barrios", "Campos", "Isriom", "asdasdasd", "2001", "500")];
+  Clientes: clienteElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Cliente = new FormGroup({});
 
@@ -103,7 +104,7 @@ export class ClientesComponent {
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.Clientes = <clienteElement[]><unknown>result;
+      this.Clientes = <clienteElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -180,6 +181,27 @@ export class ClientesComponent {
   }
 
   clean() {
+
+  }
+
+  Direccion(cliente: clienteElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(DireccionesComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
+
+
+  }
+
+  Telefono(cliente: clienteElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(TelefonoComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
 
   }
 }

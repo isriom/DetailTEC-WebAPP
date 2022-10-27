@@ -164,4 +164,9 @@ export class InsumoComponent {
   clean() {
 
   }
+
+  Proveedores(insumo: insumoElement) {
+    this.router?.navigate(["/Proveedores", insumo.nombre, insumo.marca]);
+
+  }
 }

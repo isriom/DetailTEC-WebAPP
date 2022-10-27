@@ -103,7 +103,10 @@ public class Admin : Controller
      */
     [HttpGet]
     [Route("api/[controller]/{web}/list")]
-    public ActionResult Consult(string web)
+    [Route("api/[controller]/{web}/list/{id}")]
+    [Route("api/[controller]/{web}/list/{id}/{id2}")]
+    [Route("api/[controller]/{web}/list/{id}/{id2}/{id3}")]
+    public ActionResult Consult(string web, string? id, string? id2, string? id3)
     {
         //Logica para obtener la lista
         var listTest = Array.Empty<Element>();
@@ -142,7 +145,58 @@ public class Admin : Controller
                 return Json(listTest);
             case "Sucursales":
                 //logica de Sucursales
-                listTest = _context.Sucursals.Select(sucursal => new AdminData.SucursalElement(sucursal)).ToArray();
+                var listSucursals = _context.Sucursals.ToList();
+                var listtmp = new List<AdminData.SucursalElement>();
+
+                foreach (var sucursal in listSucursals)
+                {
+                    listtmp.Add(new AdminData.SucursalElement(sucursal));
+                }
+
+                listTest = listtmp.ToArray();
+                return Json(listTest);
+            case "Dirreccion":
+                //logica de Dirreccion
+                var listDirreccion = _context.Clientes.First(x => x.Cedula == id);
+                var cliente = listDirreccion.ClienteDireccions.ToArray();
+                listTest = cliente.Select(dirreccion => new AdminData.DireccionElement(dirreccion)).ToArray();
+                return Json(listTest);
+            case "Telefono":
+                //logica de Telefono
+                var listTelefono = _context.Clientes.First(x => x.Cedula == id);
+                var telefono = listTelefono.ClienteTelefonos.ToArray();
+                listTest = telefono.Select(tel => new AdminData.TelefonoElement(tel)).ToArray();
+                return Json(listTest);
+            case "CitasInsumos":
+                //logica de CitaInsumos
+                var listCitaInsumos = _context.Cita.First(x =>
+                    x.Placa.ToString() == id && x.Fecha.ToShortDateString() == id2 && x.Sucursal == id3);
+                var citaInsumos = listCitaInsumos.CitaProductoConsumidos.ToArray();
+                listTest = citaInsumos.Select(citaInsumo => new AdminData.ProductoCita(citaInsumo)).ToArray();
+                return Json(listTest);
+            case "CitasTrabajador":
+                //logica de CitaTrabajador
+                var listCitaTrabajador = _context.Cita.First(x =>
+                    x.Placa.ToString() == id && x.Fecha.ToShortDateString() == id2 && x.Sucursal == id3);
+                var citaTrabajador = listCitaTrabajador.Cedulas.ToArray();
+                var listCedula = citaTrabajador.Select(citaTrabajador1 => citaTrabajador1.Cedula).ToArray();
+                return Json(listCedula);
+            case "InsumoLavado":
+                //logica de InsumoLavadors
+                var listInsumoLavadors = _context.Lavados.First(x => x.Tipo == id);
+                var insumoLavadors = listInsumoLavadors.InsumoProductos.ToArray();
+                listTest = insumoLavadors.Select(insumoLavador => new AdminData.ProductoLavadoElement(insumoLavador))
+                    .ToArray();
+                return Json(listTest);
+            case "ProveedorProductos":
+                //logica de ProveedorProductos
+                var listProveedorProductos = _context.InsumoProductos.First(x => x.NombreIP == id && x.Marca == id2);
+                var proveedorProductos = listProveedorProductos.CedulaJuridicas.ToList();
+                return Json(proveedorProductos);
+            case "Gerente":
+                //logica de Gerente
+                var listGerente = _context.TrabajadorSucursals.First(x => x.Nombre == id);
+                listTest = new[] { new AdminData.GerenteElement(listGerente) };
                 return Json(listTest);
         }
 
@@ -172,6 +226,7 @@ public class Admin : Controller
                 var updaterCliente =
                     element.Deserialize<AdminData.ClienteElement>();
                 var cliente = _context.Clientes.Find(updaterCliente.cedula);
+                updaterCliente.cedula = cliente.Cedula;
                 updaterCliente.UpdateModel(cliente);
                 _context.SaveChanges();
                 return Ok();

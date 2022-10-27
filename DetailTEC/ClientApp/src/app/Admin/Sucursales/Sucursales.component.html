@@ -64,7 +64,7 @@
       /></tfoot>
     </ng-container>
     <ng-container matColumnDef="fecha_de_apertura">
-      <th *matHeaderCellDef mat-header-cell>Fecha_de_Apertura</th>
+      <th *matHeaderCellDef mat-header-cell>Fecha de Apertura</th>
       <td *matCellDef="let sucursal" mat-cell>{{sucursal.fecha_de_apertura}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
@@ -77,27 +77,9 @@
     </ng-container>
     <ng-container matColumnDef="gerente">
       <th *matHeaderCellDef mat-header-cell>Gerente</th>
-      <td *matCellDef="let sucursal" mat-cell>{{sucursal.gerente}}</td>
+      <td *matCellDef="let sucursal" mat-cell><button (click)="Gerente(sucursal)">Gerente</button></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ASucursal"
-        id="AGerente"
-        required
-        type="text"
-      /></tfoot>
-    </ng-container>
-    <ng-container matColumnDef="fecha_gerente">
-      <th *matHeaderCellDef mat-header-cell>Fecha_gerente</th>
-      <td *matCellDef="let sucursal" mat-cell>{{sucursal.fecha_gerente}}</td>
-      <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ASucursal"
-        id="AFecha_gerente"
-        required
-        type="text"
-      /></tfoot>
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="eliminar">
       <th *matHeaderCellDef mat-header-cell>Eliminar</th>

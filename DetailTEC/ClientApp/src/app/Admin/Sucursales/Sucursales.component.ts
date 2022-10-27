@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 Branch class
  */
 export class sucursalElement {
-  constructor(public nombre: string, public provincia: string, public canton: string, public distrito: string, public telefono: number, public fecha_de_apertura: string, public gerente: number, public fecha_gerente: string) {
+  constructor(public nombre: string, public provincia: string, public canton: string, public distrito: string, public telefono: number, public fecha_de_apertura: string, public gerente: number) {
     this.nombre = nombre;
     this.provincia = provincia;
     this.canton = canton;
@@ -18,11 +18,10 @@ export class sucursalElement {
     this.telefono = telefono;
     this.fecha_de_apertura = fecha_de_apertura;
     this.gerente = gerente;
-    this.fecha_gerente = fecha_gerente;
   }
 
   static clone(branch: sucursalElement) {
-    return new sucursalElement(branch.nombre, branch.provincia, branch.canton, branch.distrito, branch.telefono, branch.fecha_de_apertura, branch.gerente, branch.fecha_gerente);
+    return new sucursalElement(branch.nombre, branch.provincia, branch.canton, branch.distrito, branch.telefono, branch.fecha_de_apertura, branch.gerente);
   }
 }
 
@@ -58,8 +57,7 @@ export class SucursalesComponent {
     "distrito",
     "telefono",
     "fecha_de_apertura",
-    "gerente",
-    "fecha_gerente", "eliminar", "modificar"]
+    "gerente", "eliminar", "modificar"]
   Sucursales: sucursalElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Sucursal = new FormGroup({});
@@ -108,7 +106,6 @@ export class SucursalesComponent {
       telefono: (<HTMLInputElement>document.getElementById("ATelefono")).value,
       fecha_de_apertura: (<HTMLInputElement>document.getElementById("AFecha_de_apertura")).value,
       gerente: (<HTMLInputElement>document.getElementById("AGerente")).value,
-      fecha_gerente: (<HTMLInputElement>document.getElementById("AFecha_gerente")).value
     };
 
     console.log(this.respuesta);
@@ -181,4 +178,18 @@ export class SucursalesComponent {
   clean() {
 
   }
+
+  Gerente(sucursal: sucursalElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(EditarSucursalesComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.sucursal = (sucursalElement.clone(sucursal))
+    console.log(this.actualEditor.componentInstance)
+    console.log(this.actualEditor)
+
+  }
+
+
 }

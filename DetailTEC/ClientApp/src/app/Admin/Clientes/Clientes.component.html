@@ -88,17 +88,17 @@
       /></tfoot>
     </ng-container>
     <ng-container matColumnDef="direccion">
-      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <th *matHeaderCellDef mat-header-cell>Direccion</th>
       <td *matCellDef="let cliente" mat-cell>
-        <button>Direcciones</button>
+        <button (click)="Direccion(cliente)">Direcciones</button>
       </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       </tfoot>
     </ng-container>
     <ng-container matColumnDef="telefono">
-      <th *matHeaderCellDef mat-header-cell>Correo</th>
+      <th *matHeaderCellDef mat-header-cell>Telefono</th>
       <td *matCellDef="let cliente" mat-cell>
-        <button>Correos</button>
+        <button (click)="Telefono(cliente)">Correos</button>
       </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       </tfoot>

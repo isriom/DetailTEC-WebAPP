@@ -38,14 +38,16 @@ export class EditarTrabajadorComponent implements OnInit {
     this._trabajador.controls.rol.setValue(this._worker.rol)
     this._trabajador.controls.pago.setValue(this._worker.pago)
     this._trabajador.controls.Nombre.setValue(this._worker.nombre)
-    this._trabajador.controls.Apellidos.setValue(this._worker.apellidos)
+    this._trabajador.controls.Apellido1.setValue(this._worker.apellido1)
+    this._trabajador.controls.Apellido2.setValue(this._worker.apellido2)
     this._trabajador.controls.password.setValue(this._worker.password)
     this._trabajador.controls.Fecha_de_ingreso.setValue(this._worker.fecha_de_ingreso)
   }
 
   private _trabajador = new FormGroup({
     Nombre: new FormControl(),
-    Apellidos: new FormControl(),
+    Apellido1: new FormControl(),
+    Apellido2: new FormControl(),
     Fecha_de_ingreso: new FormControl(),
     Fecha_de_nacimiento: new FormControl(),
     edad: new FormControl(),
@@ -75,7 +77,8 @@ export class EditarTrabajadorComponent implements OnInit {
     (this._worker.rol) = this._trabajador.controls.rol.value;
     (this._worker.pago) = this._trabajador.controls.pago.value;
     (this._worker.nombre) = this._trabajador.controls.Nombre.value;
-    (this._worker.apellidos) = this._trabajador.controls.Apellidos.value;
+    (this._worker.apellido1) = this._trabajador.controls.Apellido1.value;
+    (this._worker.apellido2) = this._trabajador.controls.Apellido2.value;
     (this._worker.password) = this._trabajador.controls.password.value;
     (this._worker.fecha_de_ingreso) = this._trabajador.controls.Fecha_de_ingreso.value;
 

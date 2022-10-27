@@ -1,0 +1,64 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Gerentes</p>
+  <table [dataSource]="Gerentes" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="AGerente">
+    </form>
+    <ng-container matColumnDef="nombre">
+      <th *matHeaderCellDef mat-header-cell>Nombre</th>
+      <td *matCellDef="let gerente" mat-cell> {{gerente.nombre}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AGerente"
+        id="ANombre"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="cedula">
+      <th *matHeaderCellDef mat-header-cell>Cedula</th>
+      <td *matCellDef="let gerente" mat-cell>{{gerente.cedula}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="AGerente"
+        id="ACedula"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+    <ng-container matColumnDef="fechaInicio">
+      <th *matHeaderCellDef mat-header-cell>FechaInicio</th>
+      <td *matCellDef="let gerente" mat-cell>{{gerente.fechaInicio}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control "
+        form="AGerente"
+        id="AFechaInicio"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+
+
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let gerente" mat-cell>
+        <button (click)="Delete_Button(gerente)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="AGerente">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let gerente; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

@@ -33,6 +33,13 @@ import {UsuarioComponent} from "./Cliente/Usuario/Usuario.component";
 import {RPuntosComponent} from "./Cliente/RPuntos/RPuntos.component";
 import {TablaRelacionesComponent} from "./TablaRelaciones/TablaRelaciones.component";
 import {EditarUsuarioComponent} from "./Cliente/Usuario/EditarUsuario/EditarUsuario.component";
+import {InsumoLavadosComponent} from "./Admin/Lavados/InsumoLavado/InsumoLavado.component";
+import {CitasInsumosComponent} from "./Admin/Citas/CitasInsumo/CitasInsumo.component";
+import {CitasTrabajadoresComponent} from "./Admin/Citas/CitasTrabajadores/CitasTrabajadores.component";
+import {DireccionesComponent} from "./Admin/Clientes/Direccion/Direccion.component";
+import {TelefonoComponent} from "./Admin/Clientes/Telefono/Telefono.component";
+import {GerentesComponent} from "./Admin/Sucursales/Gerente/Gerente.component";
+import {ProveedorProductosComponent} from "./Admin/Insumos/ProveedorProducto/ProveedorProducto.component";
 
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
@@ -63,7 +70,16 @@ import {EditarUsuarioComponent} from "./Cliente/Usuario/EditarUsuario/EditarUsua
     EditarClientesComponent,
     EditarCitasComponent,
     EditarRCitasComponent,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    InsumoLavadosComponent,
+    CitasInsumosComponent,
+    CitasTrabajadoresComponent,
+    DireccionesComponent,
+    TelefonoComponent,
+    GerentesComponent,
+    ProveedorProductosComponent,
+
+
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

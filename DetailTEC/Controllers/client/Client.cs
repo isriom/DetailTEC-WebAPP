@@ -74,46 +74,31 @@ public class Client : Controller
         //Logica para obtener la lista
         var listTest = Array.Empty<Element>();
         Console.Out.Write(" consult: " + JsonSerializer.Serialize(web));
+        var user = _context.Clientes.First(cliente => cliente.Usuario == User.ToString());
+        switch (web)
+        {
+        }
 
         switch (web)
         {
             case "RPuntos":
                 //logica de Puntos
-                listTest = new[]
-                {
-                    new AdminData.RPuntos("Isaac", 1231, "15/22/23", "106040722",
-                        "Lindora",
-                        "servatilla",
-                        true, 150, 190, -100)
-                };
+                var listCitas = _context.Cita.Where(x => x.Cedula == user.Cedula).ToList();
+                var listPuntos = listCitas.Select(cita => new AdminData.RPuntos(cita)).ToList();
 
-                return Json(listTest);
+                return Json(listPuntos);
             case "RCitas":
-                //logica de Citas
+                var list = _context.Cita.Where(x => x.Cedula == user.Cedula).ToList();
+                var listCita = list.Select(cita => new AdminData.CitaElement(cita)).ToList();
 
-                //Logica para obtener la lista de citas
-                listTest = new[]
-                {
-                    new AdminData.CitaElement("Isaac", 1231, "15/22/23", "106040722",
-                        "Lindora",
-                        "servatilla",
-                        true, 150, 190)
-                };
-
-                return Json(listTest);
+                return Json(listCita);
             case "Usuario":
-                //logica de Citas
-
-                //Logica para obtener la lista de citas
-                listTest = new[]
-                {
-                    new AdminData.ClienteElement("Isaac Barrios Campos", "1231",
-                        "Isriom",
-                        "NG genereate component constraseña",
-                        "true@gmail.com", 150)
-                };
+                //logica de Clientes
+                var cliente = _context.Clientes.First(x => x.Usuario == User.ToString());
+                var listCliente = new AdminData.ClienteElement(cliente);
+                var listClientes = new List<AdminData.ClienteElement> { listCliente };
                 Console.Out.Write(Json(listTest).ToJson());
-                return Json(listTest);
+                return Json(listClientes);
         }
 
         return Json(listTest);
@@ -132,12 +117,28 @@ public class Client : Controller
         {
             case "RCitas":
                 //logica de citas
+                var updater = element.Deserialize<AdminData.CitaElement>();
+                var cita = _context.Cita.Find(updater.placa, updater.fecha, updater.sucursal);
+                updater.cedula = cita.Cedula;
+                updater.nombre = cita.Nombre;
+                updater.monto = (int)cita.Monto;
+                updater.iva = (int)cita.Iva;
+                _context.SaveChanges();
+                updater.UpdateModel(cita);
                 return Ok();
             case "RClientes":
                 //logica de Clientes
+                var update = element.Deserialize<AdminData.ClienteElement>();
+                var cliente = _context.Clientes.Find(update.cedula);
+                update.UpdateModel(cliente);
+                _context.SaveChanges();
                 return Ok();
             case "Usuario":
                 //logica de Insumos
+                var updateCliente = element.Deserialize<AdminData.ClienteElement>();
+                var cliente1 = _context.Clientes.Find(updateCliente.cedula);
+                updateCliente.UpdateModel(cliente1);
+                _context.SaveChanges();
                 return Ok();
         }
 
@@ -161,6 +162,8 @@ public class Client : Controller
         {
             case "RCitas":
                 //logica de citas
+                var cita = _context.Cita.Find(element);
+                _context.Cita.Remove(cita);
                 return new OkResult();
         }
 
@@ -182,5 +185,4 @@ public class Client : Controller
         var list = _context.Sucursals.Select(branch => branch.Nombre).ToList();
         return Json(list);
     }
-
 }

@@ -39,9 +39,7 @@ export class EditarRCitasComponent implements OnInit {
   }
 
   set cita(value: citaElement) {
-    console.log("cita agregado")
     this._cita = value;
-    console.log("cita agregado")
     this._Cita.controls.Fecha.setValue(this._cita.fecha)
     this._Cita.controls.Tipo.setValue(this._cita.tipo)
     this._Cita.controls.Sucursal.setValue(this._cita.sucursal)

@@ -5,6 +5,7 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarLavadosComponent} from "./EditarLavados/EditarLavados.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {InsumoLavadosComponent} from "./InsumoLavado/InsumoLavado.component";
 
 /*
 Representacion de los datos del Sucursal
@@ -173,6 +174,18 @@ export class LavadosComponent {
   }
 
   clean() {
+
+  }
+
+  Productos(lavado: lavadoElement
+  ) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(InsumoLavadosComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.lavado = (lavadoElement.clone(lavado))
+
 
   }
 }

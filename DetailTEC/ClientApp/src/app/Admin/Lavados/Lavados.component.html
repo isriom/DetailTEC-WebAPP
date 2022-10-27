@@ -53,42 +53,37 @@
     </ng-container>
     <ng-container matColumnDef="productos">
       <th *matHeaderCellDef mat-header-cell>Productos</th>
-      <td *matCellDef="let lavado" mat-cell>{{lavado.productos}}</td>
+      <td *matCellDef="let lavado" mat-cell>
+        <button (click)="Productos(lavado)">Productos</button>
+      </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ALavado"
-        id="AProductos"
-        required
-        type="text"
-      /></tfoot>
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="lavador">
       <th *matHeaderCellDef mat-header-cell>Lavador</th>
-      <td *matCellDef="let lavado" mat-cell>{{lavado.lavador}}</td>
+      <td *matCellDef="let lavado" mat-cell><input [checked]="lavado.lavador" class="form-check-input" disabled
+                                                   type="Checkbox"></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ALavado"
-        id="ALavador"
-        required
-        type="text"
-      /></tfoot>
+      <input form="ALavado"
+             id="ALavador" class="form-check-input" required
+             type="Checkbox">
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="pulidor">
       <th *matHeaderCellDef mat-header-cell>Pulidor</th>
-      <td *matCellDef="let lavado" mat-cell>{{lavado.pulidor}}</td>
+      <td *matCellDef="let lavado" mat-cell><input [checked]="lavado.pulidor" class="form-check-input" disabled
+                                                   type="Checkbox"></td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
-        class="d-table-cell form-control"
+        class="form-check-input"
         form="ALavado"
         id="APulidor"
         required
-        type="text"
+        type="Checkbox"
       /></tfoot>
     </ng-container>
     <ng-container matColumnDef="puntuacion_coste">
-      <th *matHeaderCellDef mat-header-cell>Puntuacion_coste</th>
+      <th *matHeaderCellDef mat-header-cell>Puntuacion coste</th>
       <td *matCellDef="let lavado" mat-cell>{{lavado.puntuacion_coste}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
@@ -100,7 +95,7 @@
       /></tfoot>
     </ng-container>
     <ng-container matColumnDef="puntuacion_ganancia">
-      <th *matHeaderCellDef mat-header-cell>Puntuacion_ganacia</th>
+      <th *matHeaderCellDef mat-header-cell>Puntuacion ganacia</th>
       <td *matCellDef="let lavado" mat-cell>{{lavado.puntuacion_ganancia}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input

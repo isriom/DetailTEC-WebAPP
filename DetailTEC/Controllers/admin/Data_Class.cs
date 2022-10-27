@@ -75,8 +75,8 @@ public class AdminData
             cita.Tipo = tipo;
             cita.Puntos = puntos;
             cita.Sucursal = sucursal;
-            cita.Monto = monto;
-            cita.Iva = iva;
+            cita.Monto = Context.Lavados.FirstOrDefault(l => l.Tipo == tipo).Precio;
+            cita.Iva = (int?)(monto * 0.13);
         }
     }
 
@@ -313,7 +313,7 @@ public class AdminData
             telefono = sucursal.Telefono;
             fecha_de_apertura = sucursal.FechaDeApertura.ToString();
             var datosGErente = Context.TrabajadorSucursals.First(x => x.Nombre == sucursal.Nombre);
-            gerente = datosGErente.Nombre;
+            gerente = datosGErente.Cedula;
             fecha_gerente = datosGErente.FechaDeInicio.ToString();
         }
 
@@ -341,7 +341,7 @@ public class AdminData
             sucursal.Distrito = distrito;
             sucursal.Telefono = telefono;
             sucursal.FechaDeApertura = DateTime.Parse(fecha_de_apertura);
-            var gerentedata = Context.TrabajadorSucursals.First(x=>x.Nombre==this.nombre);
+            var gerentedata = Context.TrabajadorSucursals.First(x => x.Nombre == this.nombre);
             gerentedata.Cedula = this.gerente;
             gerentedata.FechaDeInicio = DateTime.Parse(fecha_gerente);
         }
@@ -372,8 +372,8 @@ public class AdminData
         public TrabajadorElement(Trabajador trabajador)
         {
             nombre = trabajador.Nombre;
-            apellidos = trabajador.Apellido1;
-            apellidos = trabajador.Apellido1;
+            apellido1 = trabajador.Apellido1;
+            apellido2 = trabajador.Apellido2;
             cedula = trabajador.Cedula;
             fecha_de_ingreso = trabajador.FechaDeIngreso.ToShortDateString();
             fecha_de_nacimiento = trabajador.FechaDeNacimiento.ToShortDateString();
@@ -388,7 +388,6 @@ public class AdminData
         public string apellido2 { get; set; }
 
         public string nombre { get; set; }
-        public string apellidos { get; set; }
         public string cedula { get; set; }
         public string fecha_de_ingreso { get; set; }
         public string fecha_de_nacimiento { get; set; }
@@ -408,7 +407,7 @@ public class AdminData
         public void UpdateModel(Trabajador trabajador)
         {
             trabajador.Nombre = nombre;
-            trabajador.Apellido1 = apellidos;
+            trabajador.Apellido1 = apellido1;
             Console.Out.Write(apellido2);
             trabajador.Apellido2 = apellido2;
             Console.Out.Write(apellido2);
@@ -446,6 +445,305 @@ public class AdminData
             this.puntaje = puntaje;
         }
 
+        public RPuntos(Citum cita)
+        {
+            this.nombre = cita.Nombre;
+            this.placa = cita.Placa;
+            this.fecha = cita.Fecha.ToShortDateString();
+            this.cedula = cita.Cedula;
+            this.tipo = cita.Tipo;
+            this.sucursal = cita.Sucursal;
+            this.puntos = cita.Puntos;
+            this.monto = (cita.Monto ?? 0);
+            this.iva = (cita.Iva ?? 0);
+            if (this.puntos)
+                puntaje = -1 * Context.Lavados.Find(this.tipo).PuntosRequeridos;
+            else
+                puntaje = Context.Lavados.Find(this.tipo).PuntosOrtorgados;
+        }
+
         public int puntaje { get; set; }
+    }
+
+    public class DireccionElement : Element
+    {
+        public DireccionElement(string cedula, string direccion)
+        {
+            Cedula = cedula;
+            Direccion = direccion;
+        }
+
+        public DireccionElement()
+        {
+        }
+
+        public DireccionElement(ClienteDireccion direccion)
+        {
+            Cedula = direccion.Cedula;
+            Direccion = direccion.Direccion;
+        }
+
+        public ClienteDireccion Model()
+        {
+            var direccion = new ClienteDireccion();
+            UpdateModel(direccion);
+            return direccion;
+        }
+
+        public void UpdateModel(ClienteDireccion direccion)
+        {
+            direccion.Cedula = Cedula;
+            direccion.Direccion = Direccion;
+        }
+
+        public string Cedula { get; set; } = null!;
+        public string Direccion { get; set; } = null!;
+    }
+
+
+    public class TelefonoElement : Element
+    {
+        public TelefonoElement(string cedula, string telefono)
+        {
+            Cedula = cedula;
+            Telefono = telefono;
+        }
+
+        public TelefonoElement()
+        {
+        }
+
+        public TelefonoElement(ClienteTelefono telefono)
+        {
+            Cedula = telefono.Cedula;
+            Telefono = telefono.Telefono;
+        }
+
+        public ClienteTelefono Model()
+        {
+            var telefono = new ClienteTelefono();
+            UpdateModel(telefono);
+            return telefono;
+        }
+
+        public void UpdateModel(ClienteTelefono telefono)
+        {
+            telefono.Cedula = Cedula;
+            telefono.Telefono = Telefono;
+        }
+
+        public string Cedula { get; set; } = null!;
+        public string Telefono { get; set; } = null!;
+    }
+
+    public class CitaTrabajadorElement : Element
+    {
+        public CitaTrabajadorElement(int placaAuto, DateTime fechaCita, string sucursal, string cedula)
+        {
+            PlacaAuto = placaAuto;
+            FechaCita = fechaCita;
+            Sucursal = sucursal;
+            Cedula = cedula;
+        }
+
+        public CitaTrabajadorElement()
+        {
+        }
+
+        public CitaTrabajadorElement(Trabajador Trabajador, Citum cita)
+        {
+            PlacaAuto = cita.Placa;
+            FechaCita = cita.Fecha;
+            Sucursal = cita.Sucursal;
+            Cedula = Trabajador.Cedula;
+        }
+
+        public CitaTrabajador Model()
+        {
+            var citaTrabajador = new CitaTrabajador();
+            UpdateModel(citaTrabajador);
+            return citaTrabajador;
+        }
+
+        public void UpdateModel(CitaTrabajador citaTrabajador)
+        {
+            citaTrabajador.PlacaAuto = PlacaAuto;
+            citaTrabajador.FechaCita = FechaCita;
+            citaTrabajador.Sucursal = Sucursal;
+            citaTrabajador.Cedula = Cedula;
+        }
+
+        public int PlacaAuto { get; set; }
+        public DateTime FechaCita { get; set; }
+        public string Sucursal { get; set; }
+        public string Cedula { get; set; }
+    }
+
+    public class ProductoLavadoElement : Element
+    {
+        public ProductoLavadoElement(string nombreIp, string marca, string tipo)
+        {
+            NombreIP = nombreIp;
+            Marca = marca;
+        }
+
+        public ProductoLavadoElement()
+        {
+        }
+
+        public ProductoLavadoElement(InsumoProducto productoLavado)
+        {
+            NombreIP = productoLavado.NombreIP;
+            Marca = productoLavado.Marca;
+        }
+
+        public InsumoProductoLavado Model()
+        {
+            var productoLavado = new InsumoProductoLavado();
+            UpdateModel(productoLavado);
+            return productoLavado;
+        }
+
+        public void UpdateModel(InsumoProductoLavado productoLavado)
+        {
+            productoLavado.NombreIP = NombreIP;
+            productoLavado.Marca = Marca;
+        }
+
+
+        public string NombreIP { get; set; }
+        public string Marca { get; set; }
+    }
+
+    public class ProveedorProducto : Element
+    {
+        public ProveedorProducto(int cedulaJurica, string nombreIp, string marca)
+        {
+            CedulaJurica = cedulaJurica;
+            NombreIP = nombreIp;
+            Marca = marca;
+        }
+
+        public ProveedorProducto()
+        {
+        }
+
+        public ProveedorProducto(ProveedorInsumoProducto proveedorProducto)
+        {
+            CedulaJurica = proveedorProducto.CedulaJurica;
+            NombreIP = proveedorProducto.NombreIP;
+            Marca = proveedorProducto.Marca;
+        }
+
+        public ProveedorInsumoProducto Model()
+        {
+            var proveedorProducto = new ProveedorInsumoProducto();
+            UpdateModel(proveedorProducto);
+            return proveedorProducto;
+        }
+
+        public void UpdateModel(ProveedorInsumoProducto proveedorProducto)
+        {
+            proveedorProducto.CedulaJurica = CedulaJurica;
+            proveedorProducto.NombreIP = NombreIP;
+            proveedorProducto.Marca = Marca;
+        }
+
+        public int CedulaJurica { get; set; }
+
+        public string NombreIP { get; set; }
+
+        public string Marca { get; set; }
+    }
+
+    public class GerenteElement : Element
+    {
+        public GerenteElement(string cedula, string nombre, DateTime fechaDeInicio)
+        {
+            Cedula = cedula;
+            Nombre = nombre;
+            FechaDeInicio = fechaDeInicio;
+        }
+
+        public GerenteElement()
+        {
+        }
+
+        public GerenteElement(TrabajadorSucursal gerente)
+        {
+            Cedula = gerente.Cedula;
+            Nombre = gerente.Nombre;
+            FechaDeInicio = gerente.FechaDeInicio;
+        }
+
+        public TrabajadorSucursal Model()
+        {
+            var gerente = new TrabajadorSucursal();
+            UpdateModel(gerente);
+            return gerente;
+        }
+
+        public void UpdateModel(TrabajadorSucursal gerente)
+        {
+            gerente.Cedula = Cedula;
+            gerente.Nombre = Nombre;
+            gerente.FechaDeInicio = FechaDeInicio;
+        }
+
+
+        public string Cedula { get; set; } = null!;
+        public string Nombre { get; set; } = null!;
+        public DateTime FechaDeInicio { get; set; }
+    }
+
+    public class ProductoCita : Element
+    {
+        public ProductoCita(int placa, DateTime fecha, string sucursal, string nombreIp, string marca, int cantidad)
+        {
+            Placa = placa;
+            Fecha = fecha;
+            Sucursal = sucursal;
+            NombreIP = nombreIp;
+            Marca = marca;
+            Cantidad = cantidad;
+        }
+
+        public ProductoCita()
+        {
+        }
+
+        public ProductoCita(CitaProductoConsumido productoCita)
+        {
+            Placa = productoCita.Placa;
+            Fecha = productoCita.Fecha;
+            Sucursal = productoCita.Sucursal;
+            NombreIP = productoCita.NombreIP;
+            Marca = productoCita.Marca;
+            Cantidad = productoCita.Cantidad;
+        }
+
+        public CitaProductoConsumido Model()
+        {
+            var productoCita = new CitaProductoConsumido();
+            UpdateModel(productoCita);
+            return productoCita;
+        }
+
+        public void UpdateModel(CitaProductoConsumido productoCita)
+        {
+            productoCita.Placa = Placa;
+            productoCita.Fecha = Fecha;
+            productoCita.Sucursal = Sucursal;
+            productoCita.NombreIP = NombreIP;
+            productoCita.Marca = Marca;
+            productoCita.Cantidad = Cantidad;
+        }
+
+        public int Placa { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Sucursal { get; set; } = null!;
+        public string NombreIP { get; set; } = null!;
+        public string Marca { get; set; } = null!;
+        public int Cantidad { get; set; }
     }
 }

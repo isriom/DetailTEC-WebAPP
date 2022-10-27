@@ -19,7 +19,6 @@ class atribute {
   tr: HTMLTableRowElement = document.createElement("tr");
   public inputs: HTMLInputElement[] = [];
   tb1: string = "";
-  tb2: string = "";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,9 +29,8 @@ class atribute {
   http: HttpClient;
 
 
-  constructor(table1: string, table2: string, data: string[], foot: boolean = false, http: HttpClient) {
+  constructor(table1: string, data: string[], foot: boolean = false, http: HttpClient) {
     this.tb1 = table1;
-    this.tb2 = table2;
     this.http = http;
     if (foot) {
       this.foot(data);
@@ -77,7 +75,7 @@ class atribute {
       this.inputs.forEach((input) => {
         answer.data[0].push(input.value.toString());
       })
-      let res = await this.http.put("https://localhost:7274/api/Admin/Lavados/add", answer, {
+      let res = await this.http.put("https://localhost:7274/api/Admin/" + this.tb1 + "/add", answer, {
           headers: this.httpOptions.headers,
           withCredentials: true,
         }
@@ -152,7 +150,6 @@ export class TablaRelacionesComponent {
   actualEditor: NgbModalRef | undefined;
 
   public table1: string = "";
-  public table2: string = "";
   public foot: HTMLTableSectionElement = <HTMLTableSectionElement>document.getElementById("Foot");
   public head: HTMLTableSectionElement = <HTMLTableSectionElement>document.getElementById("Head");
 
@@ -161,8 +158,7 @@ export class TablaRelacionesComponent {
    * @param http Http client to make the requests
    * @param baseUrl Actual URL, not in use because the static references
    * @param _modal modal to show edit component, injected
-   * @param table1 table 1 of the relation
-   * @param table2 table 2 of the relation
+   * @param table1 table of the relation
    */
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, public _modal: NgbModal,) {
     this.http = http;
@@ -176,7 +172,7 @@ export class TablaRelacionesComponent {
    */
   public get_Package() {
     atribute.body = <HTMLTableSectionElement>document.getElementById("Body");
-    this.URL = "https://localhost:7274/api/" + this.Rol + "/" + this.table1 + "/" + this.table2;
+    this.URL = "https://localhost:7274/api/" + this.Rol + "/" + this.table1;
     var res = this.http.get<string>(this.URL + "/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
@@ -187,9 +183,9 @@ export class TablaRelacionesComponent {
           console.log(this.respuesta);
           var ColData = (<Datapackage><unknown>result);
           this.displayedColumns = ColData.columns
-          ColData.data.forEach((col, key) => new atribute(this.table1, this.table2, col, false, this.http))
+          ColData.data.forEach((col, key) => new atribute(this.table1, col, false, this.http))
           atribute.body = this.foot
-          new atribute(this.table1, this.table2, ColData.columns, true, this.http);
+          new atribute(this.table1, ColData.columns, true, this.http);
         },
         error =>
           console.error(error));
