@@ -36,10 +36,8 @@ export class EditarSucursalesComponent implements OnInit {
     console.log("sucursal agregado")
     this._Sucursal.controls.Telefono.setValue(this._sucursal.telefono)
     this._Sucursal.controls.Fecha_de_Apertura.setValue(this._sucursal.fecha_de_apertura)
-    this._Sucursal.controls.Gerente.setValue(this._sucursal.gerente)
     this._Sucursal.controls.Canton.setValue(this._sucursal.canton)
     this._Sucursal.controls.Provincia.setValue(this._sucursal.provincia)
-    this._Sucursal.controls.Fecha_gerente.setValue(this._sucursal.fecha_gerente)
     this._Sucursal.controls.Distrito.setValue(this._sucursal.distrito)
   }
 
@@ -49,8 +47,6 @@ export class EditarSucursalesComponent implements OnInit {
     Distrito: new FormControl(),
     Telefono: new FormControl(),
     Fecha_de_Apertura: new FormControl(),
-    Gerente: new FormControl(),
-    Fecha_gerente: new FormControl(),
   });
 
   get Sucursal(): any {
@@ -72,10 +68,8 @@ export class EditarSucursalesComponent implements OnInit {
     }
     (this._sucursal.telefono) = this._Sucursal.controls.Telefono.value;
     (this._sucursal.fecha_de_apertura) = this._Sucursal.controls.Fecha_de_Apertura.value;
-    (this._sucursal.gerente) = this._Sucursal.controls.Gerente.value;
     (this._sucursal.provincia) = this._Sucursal.controls.Provincia.value;
     (this._sucursal.canton) = this._Sucursal.controls.Canton.value;
-    (this._sucursal.fecha_gerente) = this._Sucursal.controls.Fecha_gerente.value;
     (this._sucursal.distrito) = this._Sucursal.controls.Distrito.value;
     var res = this.http.post("https://localhost:7274/api/Admin/Insumos/update", [this._sucursal], {
       headers: new HttpHeaders({

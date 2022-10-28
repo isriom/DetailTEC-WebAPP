@@ -47,11 +47,12 @@ export class TelefonoComponent {
   };
   elseBlock: any;
   displayedColumns: string[] = [
-    "telefono",
-    "cedula", "eliminar"]
-  Telefonos: telefonoElement[] = [new telefonoElement("isaac", 105040201)];
+    "telefono", "eliminar"]
+  Telefonos: telefonoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Telefono = new FormGroup({});
+  cedula="";
+
 
 
   /**
@@ -65,7 +66,6 @@ export class TelefonoComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_Telefono();
   }
 
   /**
@@ -73,12 +73,12 @@ export class TelefonoComponent {
    * @constructor called in
    */
   get_Telefono() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/Telefono/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Telefono/list/"+this.cedula, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.Telefono = <telefonoElement[]><unknown>result;
+      this.Telefonos = <telefonoElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -91,14 +91,8 @@ export class TelefonoComponent {
   async Add() {
 
     const answer = {
-      telefono: (<HTMLInputElement>document.getElementById("ATelefono")).value,
-      cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
-      apellido_1: (<HTMLInputElement>document.getElementById("AApellido_1")).value,
-      apellido_2: (<HTMLInputElement>document.getElementById("AApellido_2")).value,
-      usuario: (<HTMLInputElement>document.getElementById("AUsuario")).value,
-      password: (<HTMLInputElement>document.getElementById("APassword")).value,
-      correo: (<HTMLInputElement>document.getElementById("ACorreo")).value,
-      puntos: (<HTMLInputElement>document.getElementById("APuntos")).value
+      telefono: (<HTMLInputElement>document.getElementById("ATelefonos")).value,
+      cedula: this.cedula
     };
 
     console.log(this.respuesta);
@@ -111,7 +105,7 @@ export class TelefonoComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
-
+      this.get_Telefono()
     }, error => console.error(error));
     console.log(res)
   }

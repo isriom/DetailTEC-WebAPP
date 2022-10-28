@@ -9,7 +9,7 @@ import {citaElement} from "../../Admin/Citas/Citas.component";
 class RPuntos extends citaElement {
   puntaje: number = 0
 
-  constructor(nombre: string, placa: number, fecha: string, cedula: number, tipo: string, sucursal: string, puntos: boolean, monto: number, iva: number, puntaje: number) {
+  constructor(nombre: string, placa: number, fecha: string, cedula: string, tipo: string, sucursal: string, puntos: boolean, monto: number, iva: number, puntaje: number) {
     super(nombre, placa, fecha, cedula, tipo, sucursal, puntos, monto, iva);
     this.puntaje = puntaje;
   }
@@ -46,7 +46,7 @@ export class RPuntosComponent {
     "tipo",
     "sucursal",
     "puntos", "puntaje",]
-  Puntos: RPuntos[] = [new RPuntos("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true, 1500, 150, 45)];
+  Puntos: RPuntos[] = [];
   actualEditor: NgbModalRef | undefined;
   Cita = new FormGroup({});
 

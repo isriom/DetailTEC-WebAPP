@@ -105,7 +105,6 @@ export class SucursalesComponent {
       distrito: (<HTMLInputElement>document.getElementById("ADistrito")).value,
       telefono: (<HTMLInputElement>document.getElementById("ATelefono")).value,
       fecha_de_apertura: (<HTMLInputElement>document.getElementById("AFecha_de_apertura")).value,
-      gerente: (<HTMLInputElement>document.getElementById("AGerente")).value,
     };
 
     console.log(this.respuesta);

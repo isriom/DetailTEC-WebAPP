@@ -190,7 +190,8 @@ export class ClientesComponent {
     }
     this.actualEditor = this._modal.open(DireccionesComponent)
     this.actualEditor.componentInstance.padre = this
-    this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
+    this.actualEditor.componentInstance.cedula = cliente.cedula
+    this.actualEditor.componentInstance.get_Direccions()
 
 
   }
@@ -201,7 +202,8 @@ export class ClientesComponent {
     }
     this.actualEditor = this._modal.open(TelefonoComponent)
     this.actualEditor.componentInstance.padre = this
-    this.actualEditor.componentInstance.cliente = (clienteElement.clone(cliente))
+    this.actualEditor.componentInstance.cedula = cliente.cedula
+    this.actualEditor.componentInstance.get_Telefono()
 
   }
 }

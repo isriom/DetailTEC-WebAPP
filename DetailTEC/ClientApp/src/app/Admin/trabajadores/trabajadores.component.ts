@@ -110,12 +110,11 @@ export class TrabajadoresComponent {
   async Add() {
     const answer = {
       nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
-      apellidos: (<HTMLInputElement>document.getElementById("AApellidos")).value,
-      apellidos2: (<HTMLInputElement>document.getElementById("AApellidos2")).value,
+      apellido1: (<HTMLInputElement>document.getElementById("AApellidos")).value,
+      apellido2: (<HTMLInputElement>document.getElementById("AApellidos2")).value,
       cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
       fecha_de_ingreso: (<HTMLInputElement>document.getElementById("AFecha_de_ingreso")).value,
       fecha_de_nacimiento: (<HTMLInputElement>document.getElementById("AFecha_de_nacimiento")).value,
-      edad: (<HTMLInputElement>document.getElementById("AEdad")).value,
       password: (<HTMLInputElement>document.getElementById("APassword")).value,
       rol: (<HTMLInputElement>document.getElementById("ARol")).value,
       pago: (<HTMLInputElement>document.getElementById("APago")).value

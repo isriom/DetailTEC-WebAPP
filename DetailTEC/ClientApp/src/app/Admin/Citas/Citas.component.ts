@@ -109,7 +109,6 @@ export class CitasComponent {
    */
   async Add() {
     const data = {
-      "nombre": (<HTMLInputElement>document.getElementById("ANombre")).value,
       "placa": (<HTMLInputElement>document.getElementById("APlaca")).value,
       "fecha": (<HTMLInputElement>document.getElementById("AFecha")).value,
       "cedula": (<HTMLInputElement>document.getElementById("ACedula")).value,

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Popup} from "../../../Popup/Popup.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {insumoElement} from "../Insumos.component";
 
 /*
 Client class
@@ -19,7 +20,7 @@ export class proveedorProductoElement {
 
   static clone(client: proveedorProductoElement) {
     return new proveedorProductoElement(client.nombre,
-      client.cedula,client.marca);
+      client.cedula, client.marca);
   }
 }
 
@@ -50,10 +51,11 @@ export class ProveedorProductosComponent {
   elseBlock: any;
   displayedColumns: string[] = [
     "nombre",
-    "cedula","marca", "eliminar"]
-  ProveedorProductos: proveedorProductoElement[] = [new proveedorProductoElement("isaac", "105040201","motos")];
+    "cedula", "marca", "eliminar"]
+  ProveedorProductos: proveedorProductoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   ProveedorProducto = new FormGroup({});
+  Insumo: insumoElement = new insumoElement("", "", 1, "", 1)
 
 
   /**
@@ -67,7 +69,6 @@ export class ProveedorProductosComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_ProveedorProductos();
   }
 
   /**
@@ -75,12 +76,12 @@ export class ProveedorProductosComponent {
    * @constructor called in
    */
   get_ProveedorProductos() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/ProveedorProductos/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/ProveedorProductos/list/" + this.Insumo.nombre + "/" + this.Insumo.marca, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.ProveedorProductos = <proveedorProductoElement[]><unknown>result;
+      this.ProveedorProductos = <proveedorProductoElement[]><unknown>result;
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -108,6 +109,7 @@ export class ProveedorProductosComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_ProveedorProductos();
 
     }, error => console.error(error));
     console.log(res)
@@ -119,7 +121,7 @@ export class ProveedorProductosComponent {
   async Delete_Button(Client: proveedorProductoElement
   ) {
     Popup.open("Eliminar ProveedorProducto", "Desea Eliminar este ProveedorProducto?", "Sí",
-      (context: ProveedorProductosComponent = this) => () => context.delete_Worker([String(Client.cedula),String(Client.nombre),String(Client.marca)]))
+      (context: ProveedorProductosComponent = this) => () => context.delete_Worker([String(Client.cedula), String(Client.nombre), String(Client.marca)]))
   }
 
   async delete_Worker(key: string[]

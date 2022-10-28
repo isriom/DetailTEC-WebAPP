@@ -90,6 +90,69 @@ public class Admin : Controller
                 _context.SaveChanges();
                 Console.Out.Write(element);
                 return Ok();
+
+            case "Direccion":
+                //logica de Dirreccion
+                var dirreccion = JsonSerializer.Deserialize<AdminData.DireccionElement>(element, options);
+                _context.ClienteDireccions.Add(dirreccion.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "Telefono":
+                //logica de Telefono
+                var telefono = JsonSerializer.Deserialize<AdminData.TelefonoElement>(element, options);
+                _context.ClienteTelefonos.Add(telefono.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "CitasInsumos":
+                //logica de CitasInsumos
+                var citasInsumos = JsonSerializer.Deserialize<AdminData.ProductoCita>(element, options);
+                _context.CitaProductoConsumidos.Add(citasInsumos.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "CitasTrabajador":
+                //logica de citas
+                var citaTrabajador = JsonSerializer.Deserialize<AdminData.CitaTrabajadorElement>(element, options);
+                var citaforadd = _context.Cita.Find(citaTrabajador.PlacaAuto, citaTrabajador.FechaCita,
+                    citaTrabajador.Sucursal);
+                var trabajadorforadd = _context.Trabajadors.Find(citaTrabajador.Cedula);
+                citaforadd.Cedulas.Add(trabajadorforadd);
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "InsumoLavado":
+                var insumoLavado = JsonSerializer.Deserialize<AdminData.ProductoLavadoElement>(element, options);
+                var lavadoForAdd = _context.Lavados.Find(insumoLavado.tipo);
+                var insumoForAdd = _context.InsumoProductos.Find(insumoLavado.NombreIP, insumoLavado.Marca);
+                lavadoForAdd.InsumoProductos.Add(insumoForAdd);
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "ProveedorProductos":
+                //logica de ProveedorProductos
+                var proveedorProducto = JsonSerializer.Deserialize<AdminData.ProveedorProducto>(element, options);
+                var productoforadd = _context.InsumoProductos.Find(proveedorProducto.NombreIP, proveedorProducto.Marca);
+                var proveedortoadd = _context.Proveedors.Find(proveedorProducto.CedulaJurica);
+                productoforadd.CedulaJuridicas.Add(proveedortoadd);
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+            case "Gerente":
+                //logica de Gerente
+                var gerente = JsonSerializer.Deserialize<AdminData.GerenteElement>(element, options);
+                _context.TrabajadorSucursals.Add(gerente.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+            default:
+                return BadRequest();
         }
 
         Console.Out.Write(element);
@@ -98,9 +161,9 @@ public class Admin : Controller
     }
 
     /**
-     * Get the list of cites with their data
-     * Send the cites list with their as a JSON using the @CODE {Admin.CitaElement} as template
-     */
+* Get the list of cites with their data
+* Send the cites list with their as a JSON using the @CODE {Admin.CitaElement} as template
+*/
     [HttpGet]
     [Route("api/[controller]/{web}/list")]
     [Route("api/[controller]/{web}/list/{id}")]
@@ -110,6 +173,7 @@ public class Admin : Controller
     {
         //Logica para obtener la lista
         var listTest = Array.Empty<Element>();
+        Models.Cliente Client_reference;
         Console.Out.Write(" consult: " + JsonSerializer.Serialize(web));
 
         switch (web)
@@ -145,26 +209,20 @@ public class Admin : Controller
                 return Json(listTest);
             case "Sucursales":
                 //logica de Sucursales
-                var listSucursals = _context.Sucursals.ToList();
-                var listtmp = new List<AdminData.SucursalElement>();
-
-                foreach (var sucursal in listSucursals)
-                {
-                    listtmp.Add(new AdminData.SucursalElement(sucursal));
-                }
-
-                listTest = listtmp.ToArray();
+                listTest = _context.Sucursals.Select(sucursal => new AdminData.SucursalElement(sucursal)).ToArray();
                 return Json(listTest);
-            case "Dirreccion":
+            case "Direccion":
                 //logica de Dirreccion
-                var listDirreccion = _context.Clientes.First(x => x.Cedula == id);
-                var cliente = listDirreccion.ClienteDireccions.ToArray();
-                listTest = cliente.Select(dirreccion => new AdminData.DireccionElement(dirreccion)).ToArray();
+                Client_reference = _context.Clientes.First(x => x.Cedula == id);
+                var clienteDuieecion = _context.ClienteDireccions.Where(X => X.Cedula == Client_reference.Cedula)
+                    .ToArray();
+                listTest = clienteDuieecion.Select(dirreccion => new AdminData.DireccionElement(dirreccion)).ToArray();
+                Console.Out.Write(listTest.Length);
                 return Json(listTest);
             case "Telefono":
                 //logica de Telefono
-                var listTelefono = _context.Clientes.First(x => x.Cedula == id);
-                var telefono = listTelefono.ClienteTelefonos.ToArray();
+                Client_reference = _context.Clientes.First(x => x.Cedula == id);
+                var telefono = _context.ClienteTelefonos.Where(x => x.Cedula == Client_reference.Cedula).ToArray();
                 listTest = telefono.Select(tel => new AdminData.TelefonoElement(tel)).ToArray();
                 return Json(listTest);
             case "CitasInsumos":
@@ -183,16 +241,18 @@ public class Admin : Controller
                 return Json(listCedula);
             case "InsumoLavado":
                 //logica de InsumoLavadors
-                var listInsumoLavadors = _context.Lavados.First(x => x.Tipo == id);
-                var insumoLavadors = listInsumoLavadors.InsumoProductos.ToArray();
-                listTest = insumoLavadors.Select(insumoLavador => new AdminData.ProductoLavadoElement(insumoLavador))
+                var listLavadors = _context.Lavados.First(x => x.Tipo == id);
+                var insumoLavadors = listLavadors.InsumoProductos.ToArray();
+                listTest = insumoLavadors.Select(insumoLavador =>
+                        new AdminData.ProductoLavadoElement(insumoLavador, listLavadors))
                     .ToArray();
                 return Json(listTest);
             case "ProveedorProductos":
                 //logica de ProveedorProductos
-                var listProveedorProductos = _context.InsumoProductos.First(x => x.NombreIP == id && x.Marca == id2);
-                var proveedorProductos = listProveedorProductos.CedulaJuridicas.ToList();
-                return Json(proveedorProductos);
+                var ProveedorProductos = _context.InsumoProductos.First(x => x.NombreIP == id && x.Marca == id2);
+                var Productos = _context.Proveedors.ToArray();
+                var listproveedorProductos = ProveedorProductos.CedulaJuridicas.ToList();
+                return Json(listproveedorProductos);
             case "Gerente":
                 //logica de Gerente
                 var listGerente = _context.TrabajadorSucursals.First(x => x.Nombre == id);
@@ -204,9 +264,9 @@ public class Admin : Controller
     }
 
     /**
-     * Function to update a cite
-     * Update all the element atributes with the new values; In case that ald and new value are the same still update it.
-     */
+* Function to update a cite
+* Update all the element atributes with the new values; In case that ald and new value are the same still update it.
+*/
     [HttpPost]
     [Route("api/[controller]/{web}/update")]
     public ActionResult Update([FromBody] JsonElement element, string web)
@@ -279,9 +339,9 @@ public class Admin : Controller
     }
 
     /**
-     * Function to delete a cite
-     * Recieve a Element and erase it from the DB
-     */
+* Function to delete a cite
+* Recieve a Element and erase it from the DB
+*/
     [HttpDelete]
     [Route("api/[controller]/{web}/delete")]
     public ActionResult Delete([FromBody] string[] element, string web)
@@ -338,6 +398,55 @@ public class Admin : Controller
                 //logica de Sucursales
                 var toDeleteBranch = _context.Sucursals.Find(element);
                 _context.Sucursals.Remove(toDeleteBranch);
+                return new OkResult();
+            case "Dirreccion":
+                //logica de Direccion
+                var toDeleteAddres = _context.ClienteDireccions.Find(element);
+                _context.ClienteDireccions.Remove(toDeleteAddres);
+                return new OkResult();
+            case "Telefono":
+                //logica de Telefono
+                var toDeletePhone = _context.ClienteTelefonos.Find(element);
+                _context.ClienteTelefonos.Remove(toDeletePhone);
+                return new OkResult();
+
+
+            case "CitasInsumos":
+                //logica de Insumos citas
+                var toDeleteCitaInsumo = _context.CitaProductoConsumidos.Find(element);
+                _context.CitaProductoConsumidos.Remove(toDeleteCitaInsumo);
+                return new OkResult();
+            case "CitasTrabajador":
+                //logica de trabajador en citas
+                var toDeleteCitaTrabajador = _context.Cita.Find(element[0], element[1], element[2]);
+                var toDeleteTrabajador = toDeleteCitaTrabajador.Cedulas.First(x => x.Cedula == element[3]);
+                toDeleteCitaTrabajador.Cedulas.Remove(toDeleteTrabajador);
+                return new OkResult();
+
+
+            case "InsumoLavado":
+                //logica de Insumo lavado
+                var toDeleteInsumoLavado = _context.Lavados.Find(element[0]);
+                var toDeleteInsumo =
+                    toDeleteInsumoLavado.InsumoProductos.First(x => x.NombreIP == element[1] && x.Marca == element[2]);
+                toDeleteInsumoLavado.InsumoProductos.Remove(toDeleteInsumo);
+                return new OkResult();
+
+
+            case "ProveedorProductos":
+                //logica de Proveedor productos
+                var toDeleteProveedorProducto = _context.Proveedors.Find(element[0]);
+                var toDeleteProducto =
+                    toDeleteProveedorProducto.InsumoProductos.First(x =>
+                        x.NombreIP == element[1] && x.Marca == element[2]);
+                toDeleteProveedorProducto.InsumoProductos.Remove(toDeleteProducto);
+                return new OkResult();
+
+
+            case "Gerente":
+                //logica de Gerente
+                var toDeleteGerente = _context.TrabajadorSucursals.Find(element[1]);
+                _context.TrabajadorSucursals.Remove(toDeleteGerente);
                 return new OkResult();
         }
 

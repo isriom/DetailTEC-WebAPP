@@ -111,10 +111,10 @@ export class LavadosComponent {
       costo: (<HTMLInputElement>document.getElementById("ACosto")).value,
       precio: (<HTMLInputElement>document.getElementById("APrecio")).value,
       duracion: (<HTMLInputElement>document.getElementById("ADuracion")).value,
-      productos: (<HTMLInputElement>document.getElementById("AProductos")).value,
-      lavador: (<HTMLInputElement>document.getElementById("ALavador")).value,
-      pulidor: (<HTMLInputElement>document.getElementById("APulidor")).value,
-      puntuacion_coste: (<HTMLInputElement>document.getElementById("APuntuacion_coste")).value
+      lavador: (<HTMLInputElement>document.getElementById("ALavador")).checked,
+      pulidor: (<HTMLInputElement>document.getElementById("APulidor")).checked,
+      puntuacion_coste: (<HTMLInputElement>document.getElementById("APuntuacion_coste")).value,
+      puntuacion_ganancia: (<HTMLInputElement>document.getElementById("APuntuacion_ganacia")).value
     };
 
     console.log(this.respuesta);

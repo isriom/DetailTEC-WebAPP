@@ -47,11 +47,11 @@ export class DireccionesComponent {
   };
   elseBlock: any;
   displayedColumns: string[] = [
-    "direccion",
-    "cedula", "eliminar"]
+    "direccion", "eliminar"]
   Direcciones: direccionElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Direccion = new FormGroup({});
+  cedula = "";
 
 
   /**
@@ -65,21 +65,20 @@ export class DireccionesComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_Direccions();
   }
 
   /**
    * method to load the data from the server and put it in the view
    * @constructor called in
    */
-  get_Direccions() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/Direccion/list", {
+  public get_Direccions() {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Direccion/list/" + this.cedula, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.Direccions = <direccionElement[]><unknown>result;
-
+      this.Direcciones = <direccionElement[]><unknown>result;
+      console.log(this.Direcciones);
     }, error => console.error(error));
     console.log(this.respuesta);
   }
@@ -92,7 +91,7 @@ export class DireccionesComponent {
 
     const answer = {
       direccion: (<HTMLInputElement>document.getElementById("ADirecciones")).value,
-      cedula: (<HTMLInputElement>document.getElementById("ACedula")).value
+      cedula: this.cedula
     };
 
     console.log(this.respuesta);
@@ -105,6 +104,7 @@ export class DireccionesComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_Direccions();
 
     }, error => console.error(error));
     console.log(res)
@@ -116,7 +116,7 @@ export class DireccionesComponent {
   async Delete_Button(Client: direccionElement
   ) {
     Popup.open("Eliminar Direccion", "Desea Eliminar este Direccion?", "Sí",
-      (context: DireccionesComponent = this) => () => context.delete_Worker([String(Client.cedula),String(Client.direccion)]))
+      (context: DireccionesComponent = this) => () => context.delete_Worker([String(Client.cedula), String(Client.direccion)]))
   }
 
   async delete_Worker(key: string[]

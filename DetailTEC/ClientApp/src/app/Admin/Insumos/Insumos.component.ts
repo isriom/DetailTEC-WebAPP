@@ -5,6 +5,8 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarInsumosComponent} from "./EditarInsumos/EditarInsumos.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {TelefonoComponent} from "../Clientes/Telefono/Telefono.component";
+import {ProveedorProductosComponent} from "./ProveedorProducto/ProveedorProducto.component";
 
 /*
 Representacion de los datos del insumo
@@ -17,7 +19,6 @@ export class insumoElement {
     this.proveedores = proveedores;
     this.cantidad = cantidad;
   }
-
 
   static clone(insumo: insumoElement) {
     return new insumoElement(insumo.nombre, insumo.marca, insumo.costo, insumo.proveedores, insumo.cantidad);
@@ -101,8 +102,8 @@ export class InsumoComponent {
       "nombre": (<HTMLInputElement>document.getElementById("ANombre")).value,
       "marca": (<HTMLInputElement>document.getElementById("AMarca")).value,
       "costo": (<HTMLInputElement>document.getElementById("ACosto")).value,
-      "proveedores": (<HTMLInputElement>document.getElementById("AProveedores")).value
-    };
+      "cantidad": (<HTMLInputElement>document.getElementById("ACantidad")).value
+    }
 
     console.log(this.respuesta);
     console.log(JSON.stringify(answer));
@@ -114,6 +115,7 @@ export class InsumoComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_Insumos()
 
     }, error => console.error(error));
     console.log(res)
@@ -129,8 +131,7 @@ export class InsumoComponent {
     )
   }
 
-  async delete_Worker(key: string[]
-  ) {
+  async delete_Worker(key: string[]) {
     console.log("insumo eliminado: " + key[0])
     let res = await this.http.delete("https://localhost:7274/api/Admin/Insumos/delete", {
         headers: this.httpOptions.headers,
@@ -145,8 +146,7 @@ export class InsumoComponent {
     console.log(res)
   }
 
-  async modify_Button(name: string, brand: string
-  ) {
+  async modify_Button(name: string, brand: string) {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
@@ -166,7 +166,12 @@ export class InsumoComponent {
   }
 
   Proveedores(insumo: insumoElement) {
-    this.router?.navigate(["/Proveedores", insumo.nombre, insumo.marca]);
-
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(ProveedorProductosComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.Insumo = insumo
+    this.actualEditor.componentInstance.get_ProveedorProductos()
   }
 }

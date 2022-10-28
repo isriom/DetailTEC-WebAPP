@@ -7,13 +7,6 @@
       <th *matHeaderCellDef mat-header-cell>Nombre cliente</th>
       <td *matCellDef="let cita" mat-cell> {{cita.nombre}} </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ACita"
-        id="ANombre"
-        required
-        type="text">
-      </tfoot>
     </ng-container>
     <ng-container matColumnDef="placa">
       <th *matHeaderCellDef mat-header-cell>Placa</th>
@@ -36,7 +29,7 @@
         form="ACita"
         id="AFecha"
         required
-        type="text"
+        type="datetime-local"
       /></tfoot>
     </ng-container>
     <ng-container matColumnDef="cedula">
@@ -79,25 +72,13 @@
       <th *matHeaderCellDef mat-header-cell>Monto</th>
       <td *matCellDef="let cita" mat-cell>{{cita.monto}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ACita"
-        id="AMonto"
-        required
-        type="text"
-      /></tfoot>
+     </tfoot>
     </ng-container>
     <ng-container matColumnDef="iva">
       <th *matHeaderCellDef mat-header-cell>IVA</th>
       <td *matCellDef="let cita" mat-cell>{{cita.iva}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <input
-        class="d-table-cell form-control"
-        form="ACita"
-        id="AIva"
-        required
-        type="text"
-      /></tfoot>
+      </tfoot>
     </ng-container>
     <ng-container matColumnDef="puntos">
       <th *matHeaderCellDef mat-header-cell>Pago en Puntos</th>

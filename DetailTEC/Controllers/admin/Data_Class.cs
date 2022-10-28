@@ -75,6 +75,7 @@ public class AdminData
             cita.Tipo = tipo;
             cita.Puntos = puntos;
             cita.Sucursal = sucursal;
+            cita.Nombre = Context.Clientes.FirstOrDefault(c => c.Cedula == cedula).NombreCompleto;
             cita.Monto = Context.Lavados.FirstOrDefault(l => l.Tipo == tipo).Precio;
             cita.Iva = (int?)(monto * 0.13);
         }
@@ -288,7 +289,7 @@ public class AdminData
     public class SucursalElement : Element
     {
         public SucursalElement(string nombre, string provincia, string canton, string distrito, string telefono,
-            string fechaDeApertura, string gerente, string fechaGerente)
+            string fechaDeApertura)
         {
             this.nombre = nombre;
             this.provincia = provincia;
@@ -296,8 +297,6 @@ public class AdminData
             this.distrito = distrito;
             this.telefono = telefono;
             fecha_de_apertura = fechaDeApertura;
-            this.gerente = gerente;
-            fecha_gerente = fechaGerente;
         }
 
         public SucursalElement()
@@ -312,9 +311,6 @@ public class AdminData
             distrito = sucursal.Distrito;
             telefono = sucursal.Telefono;
             fecha_de_apertura = sucursal.FechaDeApertura.ToString();
-            var datosGErente = Context.TrabajadorSucursals.First(x => x.Nombre == sucursal.Nombre);
-            gerente = datosGErente.Cedula;
-            fecha_gerente = datosGErente.FechaDeInicio.ToString();
         }
 
         public string nombre { get; set; }
@@ -323,8 +319,6 @@ public class AdminData
         public string distrito { get; set; }
         public string telefono { get; set; }
         public string fecha_de_apertura { get; set; }
-        public string gerente { get; set; }
-        public string fecha_gerente { get; set; }
 
         public Sucursal Model()
         {
@@ -341,9 +335,6 @@ public class AdminData
             sucursal.Distrito = distrito;
             sucursal.Telefono = telefono;
             sucursal.FechaDeApertura = DateTime.Parse(fecha_de_apertura);
-            var gerentedata = Context.TrabajadorSucursals.First(x => x.Nombre == this.nombre);
-            gerentedata.Cedula = this.gerente;
-            gerentedata.FechaDeInicio = DateTime.Parse(fecha_gerente);
         }
     }
 
@@ -408,12 +399,10 @@ public class AdminData
         {
             trabajador.Nombre = nombre;
             trabajador.Apellido1 = apellido1;
-            Console.Out.Write(apellido2);
             trabajador.Apellido2 = apellido2;
-            Console.Out.Write(apellido2);
             trabajador.FechaDeIngreso = DateTime.Parse(fecha_de_ingreso);
             trabajador.FechaDeNacimiento = DateTime.Parse(fecha_de_nacimiento);
-            trabajador.Edad = edad;
+            trabajador.Edad = (int)((DateTime.Now-trabajador.FechaDeNacimiento).TotalDays/365);
             trabajador.PasswordT = password;
             trabajador.Rol = rol;
             trabajador.TipoDePago = pago;
@@ -585,16 +574,18 @@ public class AdminData
         {
             NombreIP = nombreIp;
             Marca = marca;
+            tipo = tipo;
         }
 
         public ProductoLavadoElement()
         {
         }
 
-        public ProductoLavadoElement(InsumoProducto productoLavado)
+        public ProductoLavadoElement(InsumoProducto productoLavado, Lavado lavado)
         {
             NombreIP = productoLavado.NombreIP;
             Marca = productoLavado.Marca;
+            tipo = lavado.Tipo;
         }
 
         public InsumoProductoLavado Model()
@@ -613,6 +604,8 @@ public class AdminData
 
         public string NombreIP { get; set; }
         public string Marca { get; set; }
+
+        public string tipo { get; set; }
     }
 
     public class ProveedorProducto : Element

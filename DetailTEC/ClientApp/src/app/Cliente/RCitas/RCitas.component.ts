@@ -39,7 +39,7 @@ export class RCitasComponent {
     "tipo",
     "sucursal",
     "puntos", "eliminar", "modificar"]
-  Citas: citaElement[] = [new citaElement("Isaac", 1, "15/18/2233", 2, "limpieza maxima", "San jose", true, 1500, 1800)];
+  Citas: citaElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Cita = new FormGroup({});
   public kinds: string[] = ["Prueba", "Prueba2"];
