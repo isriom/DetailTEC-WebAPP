@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using DetailTEC.Controllers.admin;
 using DetailTEC.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -35,17 +36,18 @@ public class Client : Controller
     [Route("api/[controller]/{web}/add")]
     public ActionResult Register([FromBody] JsonElement element, string web)
     {
-        //logica para insertar en la base de datos aqui
+        //logica para insertar en la base de datos 
+        var user = _context.Clientes.First(cliente => cliente.Usuario == HttpContext.User.Identity.Name);
+
         switch (web)
         {
             case "RCitas":
                 //logica de citas
                 var cita = element.Deserialize<AdminData.CitaElement>(options);
-                var client = _context.Clientes.First(x => x.Usuario == User.ToString());
                 if (cita == null) return BadRequest();
-                cita.cedula = client.Cedula;
-                cita.nombre = client.NombreCompleto;
                 var monto = _context.Lavados.FirstOrDefault(x => x.Tipo == cita.tipo);
+                cita.cedula = user.Cedula;
+                cita.nombre= user.NombreCompleto;
                 if (monto == null)
                 {
                     return BadRequest();
@@ -55,6 +57,23 @@ public class Client : Controller
                 cita.iva = (int)(cita.monto * 0.13);
                 _context.Cita.Add(cita.Model());
                 _context.SaveChanges();
+                return Ok();
+            
+            
+            case "Direccion":
+                //logica de Dirreccion
+                var dirreccion = JsonSerializer.Deserialize<AdminData.DireccionElement>(element, options);
+                _context.ClienteDireccions.Add(dirreccion.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
+                return Ok();
+
+            case "Telefono":
+                //logica de Telefono
+                var telefono = JsonSerializer.Deserialize<AdminData.TelefonoElement>(element, options);
+                _context.ClienteTelefonos.Add(telefono.Model());
+                _context.SaveChanges();
+                Console.Out.Write(element);
                 return Ok();
         }
 
@@ -69,12 +88,15 @@ public class Client : Controller
      */
     [HttpGet]
     [Route("api/[controller]/{web}/list")]
-    public ActionResult Consult(string web)
+    [Route("api/[controller]/{web}/list/{id}")]
+    [Route("api/[controller]/{web}/list/{id}/{id2}")]
+    [Route("api/[controller]/{web}/list/{id}/{id2}/{id3}")]
+    public ActionResult Consult(string web, string? id, string? id2, string? id3)
     {
         //Logica para obtener la lista
         var listTest = Array.Empty<Element>();
         Console.Out.Write(" consult: " + JsonSerializer.Serialize(web));
-        var user = _context.Clientes.First(cliente => cliente.Usuario == User.ToString());
+        var user = _context.Clientes.First(cliente => cliente.Usuario == HttpContext.User.Identity.Name);
         switch (web)
         {
         }
@@ -94,11 +116,23 @@ public class Client : Controller
                 return Json(listCita);
             case "Usuario":
                 //logica de Clientes
-                var cliente = _context.Clientes.First(x => x.Usuario == User.ToString());
-                var listCliente = new AdminData.ClienteElement(cliente);
-                var listClientes = new List<AdminData.ClienteElement> { listCliente };
+                listTest = new[] { new AdminData.ClienteElement(user) };
                 Console.Out.Write(Json(listTest).ToJson());
-                return Json(listClientes);
+                return Json(listTest);
+            case "Direccion":
+                //logica de Dirreccion
+                var clienteDuieecion = _context.ClienteDireccions.Where(X => X.Cedula == user.Cedula)
+                    .ToArray();
+                listTest = clienteDuieecion.Select(dirreccion => new AdminData.DireccionElement(dirreccion)).ToArray();
+                Console.Out.Write(listTest.Length);
+                _context.SaveChanges();
+                return Json(listTest);
+            case "Telefono":
+                //logica de Telefono
+                var telefono = _context.ClienteTelefonos.Where(x => x.Cedula == user.Cedula).ToArray();
+                listTest = telefono.Select(tel => new AdminData.TelefonoElement(tel)).ToArray();
+                _context.SaveChanges();
+                return Json(listTest);
         }
 
         return Json(listTest);
@@ -162,9 +196,23 @@ public class Client : Controller
         {
             case "RCitas":
                 //logica de citas
-                var cita = _context.Cita.Find(element);
+                var cita = _context.Cita.ToArray().First(x => x.Placa.ToString() == element[1] && x.Fecha.ToString(CultureInfo.InvariantCulture) == element[0] && x.Sucursal == element[2]);
                 _context.Cita.Remove(cita);
+                _context.SaveChanges();
                 return new OkResult();
+            case "Direccion":
+                //logica de Direccion
+                var toDeleteAddres = _context.ClienteDireccions.Find(element);
+                _context.ClienteDireccions.Remove(toDeleteAddres);
+                _context.SaveChanges();
+                return new OkResult();
+            case "Telefono":
+                //logica de Telefono
+                var toDeletePhone = _context.ClienteTelefonos.Find(element);
+                _context.ClienteTelefonos.Remove(toDeletePhone);
+                _context.SaveChanges();
+                return new OkResult();
+
         }
 
         return new OkResult();

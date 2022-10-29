@@ -1,0 +1,50 @@
+﻿<div #editor>
+  <p class="text-center w-100" id="title">Gestion de Telefonos</p>
+  <table [dataSource]="Telefonos" class="table table-active table-responsive-md" mat-table>
+    <form (ngSubmit)="Add()" id="Atelefono">
+    </form>
+    <ng-container matColumnDef="cedula">
+      <th *matHeaderCellDef mat-header-cell>Cedula</th>
+      <td *matCellDef="let telefono" mat-cell> {{telefono.cedula}} </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="Atelefono"
+        id="ACedula"
+        required
+        type="text">
+      </tfoot>
+    </ng-container>
+    <ng-container matColumnDef="telefono">
+      <th *matHeaderCellDef mat-header-cell>Telefonos</th>
+      <td *matCellDef="let telefono" mat-cell>{{telefono.telefono}}</td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <input
+        class="d-table-cell form-control"
+        form="Atelefono"
+        id="ATelefonos"
+        required
+        type="text"
+      /></tfoot>
+    </ng-container>
+
+    <ng-container matColumnDef="eliminar">
+      <th *matHeaderCellDef mat-header-cell>Eliminar</th>
+      <td *matCellDef="let telefono" mat-cell>
+        <button (click)="Delete_Button(telefono)"
+                class="btn btn-danger btn-outline-secondary bg-danger text-dark"
+                mat-button>Eliminar
+        </button>
+      </td>
+      <tfoot *matFooterCellDef class="d-table-cell ">
+      <button
+        (click)="Add()" class="d-table-cell btn btn-success btn-outline-secondary btn-close-white" form="Atelefono">
+        Add
+      </button>
+      </tfoot>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let telefono; columns:displayedColumns" class="text-capitalize" mat-row></tr>
+    <tr *matFooterRowDef="displayedColumns" mat-footer-row style="width: 100%"></tr>
+  </table>
+</div>

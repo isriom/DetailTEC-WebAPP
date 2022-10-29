@@ -40,6 +40,8 @@ import {DireccionesComponent} from "./Admin/Clientes/Direccion/Direccion.compone
 import {TelefonoComponent} from "./Admin/Clientes/Telefono/Telefono.component";
 import {GerentesComponent} from "./Admin/Sucursales/Gerente/Gerente.component";
 import {ProveedorProductosComponent} from "./Admin/Insumos/ProveedorProducto/ProveedorProducto.component";
+import {UDireccionesComponent} from "./Cliente/Usuario/Direccion/Direccion.component";
+import {UTelefonoComponent} from "./Cliente/Usuario/Telefono/Telefono.component";
 
 /**
  * Declaraciones donde se agregan los componentes que va a tener la barra de menu
@@ -78,6 +80,8 @@ import {ProveedorProductosComponent} from "./Admin/Insumos/ProveedorProducto/Pro
     TelefonoComponent,
     GerentesComponent,
     ProveedorProductosComponent,
+    UDireccionesComponent,
+    UTelefonoComponent
 
 
   ],

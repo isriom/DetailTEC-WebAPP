@@ -76,14 +76,8 @@ public class LoginController : Controller
             {
                 var user = this._context.Clientes
                     .FirstOrDefault(u => u.Usuario == id && u.Password == password);
-                if (user != null)
-                {
-                    var role = user.Usuario;
-                    return Task.FromResult(role);
-                }
-                return Task.FromResult<string>("No Found");
+                return user != null ? Task.FromResult("Cliente") : Task.FromResult("No Found");
                 break;
-
             }
         }
     }

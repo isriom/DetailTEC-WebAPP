@@ -35,8 +35,6 @@ export class EditarUsuarioComponent implements OnInit {
   set cliente(value: clienteElement) {
     this._cliente = value;
     this._Cliente.controls.Nombre.setValue(this._cliente.nombre)
-    this._Cliente.controls.Apellido_1.setValue(this._cliente.apellido_1)
-    this._Cliente.controls.Apellido_2.setValue(this._cliente.apellido_2)
     this._Cliente.controls.Usuario.setValue(this._cliente.usuario)
     this._Cliente.controls.Password.setValue(this._cliente.password)
     this._Cliente.controls.Correo.setValue(this._cliente.correo)
@@ -45,8 +43,6 @@ export class EditarUsuarioComponent implements OnInit {
   private _Cliente = new FormGroup({
     Password: new FormControl(),
     Nombre: new FormControl(),
-    Apellido_1: new FormControl(),
-    Apellido_2: new FormControl(),
     Usuario: new FormControl(),
     Correo: new FormControl(),
   });
@@ -69,9 +65,7 @@ export class EditarUsuarioComponent implements OnInit {
       return;
     }
     this._cliente.nombre = this._Cliente.controls.Nombre.value
-    this._cliente.apellido_1 = this._Cliente.controls.Apellido_1.value
     this._cliente.usuario = this._Cliente.controls.Usuario.value
-    this._cliente.apellido_2 = this._Cliente.controls.Apellido_2.value
     this._cliente.password = this._Cliente.controls.Password.value
     this._cliente.correo = this._Cliente.controls.Correo.value
 

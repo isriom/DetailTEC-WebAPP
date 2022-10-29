@@ -32,8 +32,8 @@
       <td *matCellDef="let cita" mat-cell>{{cita.tipo}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <mat-form-field>
-        <mat-select class="" id="ATipo">
-          <mat-option *ngFor="let kind of kinds" [value]="kind">{{kind}}</mat-option>
+        <mat-select class="" id="ATipo" (selectionChange)="selectTipo($event)">
+          <mat-option *ngFor="let kind of kinds"  [value]="kind">{{kind}}</mat-option>
         </mat-select>
       </mat-form-field>
       </tfoot>
@@ -42,9 +42,9 @@
       <th *matHeaderCellDef mat-header-cell>Sucursal</th>
       <td *matCellDef="let cita" mat-cell>{{cita.sucursal}}</td>
       <tfoot *matFooterCellDef class="d-table-cell ">
-      <mat-form-field>
-        <mat-select class="" id="ASucursal">
-          <mat-option *ngFor="let branch of branchs" [value]="branch">{{branch}}</mat-option>
+      <mat-form-field >
+        <mat-select class="" id="ASucursal" (selectionChange)="selectSucursal($event)" >
+          <mat-option *ngFor="let branch of branchs"  [value]="branch">{{branch}}</mat-option>
         </mat-select>
       </mat-form-field>
       </tfoot>
@@ -65,7 +65,7 @@
     <ng-container matColumnDef="eliminar">
       <th *matHeaderCellDef mat-header-cell>Eliminar</th>
       <td *matCellDef="let cita" mat-cell>
-        <button (click)="Delete_Button(cita.nombre)"
+        <button (click)="Delete_Button(cita)"
                 class="btn btn-danger btn-outline-secondary bg-danger text-dark"
                 mat-button>Eliminar
         </button>

@@ -6,6 +6,7 @@ import {EditarRCitasComponent} from "./EditarRCitas/EditarRCitas.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 import {citaElement} from "../../Admin/Citas/Citas.component";
+import {MatSelectChange} from "@angular/material/select";
 
 
 @Component({
@@ -44,6 +45,8 @@ export class RCitasComponent {
   Cita = new FormGroup({});
   public kinds: string[] = ["Prueba", "Prueba2"];
   public branchs: string[] = ["SJ", "Cartago"];
+  Sucursal: any;
+  Lavado: any;
 
 
   /**
@@ -87,8 +90,8 @@ export class RCitasComponent {
     const data = {
       "placa": (<HTMLInputElement>document.getElementById("APlaca")).value,
       "fecha": (<HTMLInputElement>document.getElementById("AFecha")).value,
-      "tipo": (<HTMLInputElement>document.getElementById("ATipo")).value,
-      "sucursal": (<HTMLInputElement>document.getElementById("ASucursal")).value,
+      "tipo": this.Lavado,
+      "sucursal": this.Sucursal,
       "puntos": (<HTMLInputElement>document.getElementById("APuntos")).checked,
     };
     console.log(this.respuesta);
@@ -101,6 +104,7 @@ export class RCitasComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_Citas();
 
     }, error => console.error(error));
   }
@@ -173,5 +177,14 @@ export class RCitasComponent {
       console.log(this.branchs);
 
     }, error => console.error(error));
+  }
+
+
+  selectSucursal($event: MatSelectChange) {
+    this.Sucursal = $event.value;
+  }
+
+  selectTipo($event: MatSelectChange) {
+    this.Lavado = $event.value;
   }
 }

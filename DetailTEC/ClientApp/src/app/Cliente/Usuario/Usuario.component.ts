@@ -4,9 +4,9 @@ import {Router} from "@angular/router";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
 import {clienteElement} from "../../Admin/Clientes/Clientes.component";
-import {EditarClientesComponent} from "../../Admin/Clientes/EditarClientes/EditarClientes.component";
-import {TablaRelacionesComponent} from "../../TablaRelaciones/TablaRelaciones.component";
 import {EditarUsuarioComponent} from "./EditarUsuario/EditarUsuario.component";
+import {UDireccionesComponent} from "./Direccion/Direccion.component";
+import {UTelefonoComponent} from "./Telefono/Telefono.component";
 
 
 @Component({
@@ -37,8 +37,6 @@ export class UsuarioComponent {
   displayedColumns: string[] = [
     "nombre",
     "cedula",
-    "apellido_1",
-    "apellido_2",
     "usuario",
     "password",
     "correo", "direccion", "telefono",
@@ -67,7 +65,7 @@ export class UsuarioComponent {
    * @constructor called in
    */
   get_Usuario() {
-    var res = this.http.get<string>("https://localhost:7274/api/client/Usuario/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Client/Usuario/list", {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
@@ -99,17 +97,26 @@ export class UsuarioComponent {
   }
 
 
-  Phone() {
-    this.actualEditor = this._modal.open(TablaRelacionesComponent)
-    this.actualEditor.componentInstance.table1 = "Cliente"
-    this.actualEditor.componentInstance.table2 = "Telefono"
-    this.actualEditor.componentInstance.get_Package();
+  Direccion(cliente: clienteElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(UDireccionesComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cedula = cliente.cedula
+    this.actualEditor.componentInstance.get_Direccions()
+
+
   }
 
-  Directions() {
-    this.actualEditor = this._modal.open(TablaRelacionesComponent)
-    this.actualEditor.componentInstance.table1 = "Cliente"
-    this.actualEditor.componentInstance.table2 = "Direcciones"
-    this.actualEditor.componentInstance.get_Package();
+  Telefono(cliente: clienteElement) {
+    if (this.actualEditor != undefined) {
+      this.actualEditor.close()
+    }
+    this.actualEditor = this._modal.open(UTelefonoComponent)
+    this.actualEditor.componentInstance.padre = this
+    this.actualEditor.componentInstance.cedula = cliente.cedula
+    this.actualEditor.componentInstance.get_Telefono()
+
   }
 }

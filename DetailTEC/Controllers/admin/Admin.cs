@@ -435,7 +435,7 @@ public class Admin : Controller
                 _context.Sucursals.Remove(toDeleteBranch);
                 _context.SaveChanges();
                 return new OkResult();
-            case "Dirreccion":
+            case "Direccion":
                 //logica de Direccion
                 var toDeleteAddres = _context.ClienteDireccions.Find(element);
                 _context.ClienteDireccions.Remove(toDeleteAddres);
