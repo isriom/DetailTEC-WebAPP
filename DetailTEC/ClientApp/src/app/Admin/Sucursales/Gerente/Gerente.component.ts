@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Popup} from "../../../Popup/Popup.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {sucursalElement} from "../Sucursales.component";
 
 /*
 Client class
@@ -11,16 +12,16 @@ Client class
 export class gerenteElement {
   constructor(public nombre: string,
               public cedula: string,
-              public fechaInicio: string) {
+              public fechaDeInicio: string) {
     this.cedula = cedula;
     this.nombre = nombre;
-    this.fechaInicio = fechaInicio;
+    this.fechaDeInicio = fechaDeInicio;
   }
 
   static clone(client: gerenteElement) {
     return new gerenteElement(client.nombre,
       client.cedula,
-      client.fechaInicio);
+      client.fechaDeInicio);
   }
 }
 
@@ -49,13 +50,12 @@ export class GerentesComponent {
     })
   };
   elseBlock: any;
-  displayedColumns: string[] = [
-    "nombre",
-    "cedula",
+  displayedColumns: string[] = ["cedula",
     "fechaInicio", "eliminar"]
-  Gerentes: gerenteElement[] = [new gerenteElement("isaac", "105040201", "Barrios")];
+  Gerentes: gerenteElement[] = [];
   actualEditor: NgbModalRef | undefined;
   Gerente = new FormGroup({});
+  Sucursal: sucursalElement = new sucursalElement("", "", "", "", 0, "", 0);
 
 
   /**
@@ -69,7 +69,6 @@ export class GerentesComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_Gerentes();
   }
 
   /**
@@ -77,13 +76,13 @@ export class GerentesComponent {
    * @constructor called in
    */
   get_Gerentes() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/Gerente/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/Gerente/list/"+this.Sucursal.nombre, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.Gerentes = <gerenteElement[]><unknown>result;
-
+      this.Gerentes = <gerenteElement[]><unknown>result;
+      console.log(this.Gerentes);
     }, error => console.error(error));
     console.log(this.respuesta);
   }
@@ -95,9 +94,9 @@ export class GerentesComponent {
   async Add() {
 
     const answer = {
-      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      nombre: this.Sucursal.nombre,
       cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
-      fechaInicio: (<HTMLInputElement>document.getElementById("AFechaInicio")).value
+      fechaDeInicio: (<HTMLInputElement>document.getElementById("AFechaInicio")).value
     };
 
     console.log(this.respuesta);
@@ -110,6 +109,7 @@ export class GerentesComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_Gerentes();
 
     }, error => console.error(error));
     console.log(res)
@@ -121,7 +121,7 @@ export class GerentesComponent {
   async Delete_Button(Client: gerenteElement
   ) {
     Popup.open("Eliminar Gerente", "Desea Eliminar este Gerente?", "Sí",
-      (context: GerentesComponent = this) => () => context.delete_Worker([String(Client.cedula),String(Client.nombre)]))
+      (context: GerentesComponent = this) => () => context.delete_Worker([String(Client.cedula), String(Client.nombre)]))
   }
 
   async delete_Worker(key: string[]

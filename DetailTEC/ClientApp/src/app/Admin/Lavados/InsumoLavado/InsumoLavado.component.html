@@ -5,14 +5,15 @@
     </form>
     <ng-container matColumnDef="nombre">
       <th *matHeaderCellDef mat-header-cell>Nombre</th>
-      <td *matCellDef="let insumoLavado" mat-cell> {{insumoLavado.nombre}} </td>
+      <td *matCellDef="let insumoLavado" mat-cell> {{insumoLavado.nombreIP}} </td>
       <tfoot *matFooterCellDef class="d-table-cell ">
       <input
         class="d-table-cell form-control"
         form="AInsumoLavado"
-        id="ANombre"
+        id="ANombreIP"
         required
-        type="text">
+        type="text"
+      />
       </tfoot>
     </ng-container>
     <ng-container matColumnDef="marca">

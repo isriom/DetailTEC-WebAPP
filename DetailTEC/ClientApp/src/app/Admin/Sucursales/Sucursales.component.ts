@@ -5,6 +5,7 @@ import {Popup} from "../../Popup/Popup.component";
 import {EditarSucursalesComponent} from "./EditarSucursale/EditarSucursales.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {GerentesComponent} from "./Gerente/Gerente.component";
 
 /*
 Branch class
@@ -182,11 +183,10 @@ export class SucursalesComponent {
     if (this.actualEditor != undefined) {
       this.actualEditor.close()
     }
-    this.actualEditor = this._modal.open(EditarSucursalesComponent)
+    this.actualEditor = this._modal.open(GerentesComponent)
     this.actualEditor.componentInstance.padre = this
-    this.actualEditor.componentInstance.sucursal = (sucursalElement.clone(sucursal))
-    console.log(this.actualEditor.componentInstance)
-    console.log(this.actualEditor)
+    this.actualEditor.componentInstance.Sucursal = (sucursalElement.clone(sucursal))
+    this.actualEditor.componentInstance.get_Gerentes()
 
   }
 

@@ -4,21 +4,22 @@ import {Router} from "@angular/router";
 import {Popup} from "../../../Popup/Popup.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup} from "@angular/forms";
+import {lavadoElement} from "../Lavados.component";
 
 /*
 Client class
  */
 export class insumoLavadoElement {
-  constructor(public nombre: string,
+  constructor(public nombreIP: string,
               public tipo: string,
               public marca: string) {
     this.tipo = tipo;
-    this.nombre = nombre;
+    this.nombreIP = nombreIP;
     this.marca = marca;
   }
 
   static clone(client: insumoLavadoElement) {
-    return new insumoLavadoElement(client.nombre,
+    return new insumoLavadoElement(client.nombreIP,
       client.tipo,
       client.marca,);
   }
@@ -49,13 +50,12 @@ export class InsumoLavadosComponent {
     })
   };
   elseBlock: any;
-  displayedColumns: string[] = [
-    "nombre",
-    "tipo",
+  displayedColumns: string[] = ["nombre",
     "marca", "eliminar"]
-  InsumoLavados: insumoLavadoElement[] = [new insumoLavadoElement("isaac", "105040201", "Barrios")];
+  InsumoLavados: insumoLavadoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   InsumoLavado = new FormGroup({});
+  Lavado: lavadoElement = new lavadoElement("a", 1, 1, 15, "1", true, true, 15, "11");
 
 
   /**
@@ -69,7 +69,6 @@ export class InsumoLavadosComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_InsumoLavados();
   }
 
   /**
@@ -77,13 +76,13 @@ export class InsumoLavadosComponent {
    * @constructor called in
    */
   get_InsumoLavados() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/InsumoLavado/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/InsumoLavado/list/"+this.Lavado.nombre, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.InsumoLavados = <insumoLavadoElement[]><unknown>result;
-
+      this.InsumoLavados = <insumoLavadoElement[]><unknown>result;
+      console.log(this.InsumoLavados);
     }, error => console.error(error));
     console.log(this.respuesta);
   }
@@ -95,12 +94,13 @@ export class InsumoLavadosComponent {
   async Add() {
 
     const answer = {
-      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
-      tipo: (<HTMLInputElement>document.getElementById("ATipo")).value,
+      nombreIP: (<HTMLInputElement>document.getElementById("ANombreIP")).value,
+      tipo: this.Lavado.nombre,
       marca: (<HTMLInputElement>document.getElementById("AMarca")).value
     };
 
     console.log(this.respuesta);
+    console.log((<HTMLInputElement>document.getElementById("ANombre")).value);
     console.log(answer);
     let res = await this.http.put("https://localhost:7274/api/Admin/InsumoLavado/add", JSON.stringify(answer), {
         headers: this.httpOptions.headers,
@@ -110,6 +110,7 @@ export class InsumoLavadosComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_InsumoLavados();
 
     }, error => console.error(error));
     console.log(res)
@@ -121,7 +122,7 @@ export class InsumoLavadosComponent {
   async Delete_Button(Client: insumoLavadoElement
   ) {
     Popup.open("Eliminar InsumoLavado", "Desea Eliminar este InsumoLavado?", "Sí",
-      (context: InsumoLavadosComponent = this) => () => context.delete_Worker([String(Client.tipo), Client.nombre, Client.marca]))
+      (context: InsumoLavadosComponent = this) => () => context.delete_Worker([String(Client.tipo), Client.nombreIP, Client.marca]))
   }
 
   async delete_Worker(key: string[]
@@ -135,6 +136,7 @@ export class InsumoLavadosComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_InsumoLavados();
 
     }, error => console.error(error));
   }

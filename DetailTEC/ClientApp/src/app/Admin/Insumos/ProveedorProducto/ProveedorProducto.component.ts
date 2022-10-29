@@ -49,9 +49,7 @@ export class ProveedorProductosComponent {
     })
   };
   elseBlock: any;
-  displayedColumns: string[] = [
-    "nombre",
-    "cedula", "marca", "eliminar"]
+  displayedColumns: string[] = ["cedula", "eliminar"]
   ProveedorProductos: proveedorProductoElement[] = [];
   actualEditor: NgbModalRef | undefined;
   ProveedorProducto = new FormGroup({});
@@ -82,7 +80,7 @@ export class ProveedorProductosComponent {
     }).subscribe(result => {
       console.log(this.respuesta);
       this.ProveedorProductos = <proveedorProductoElement[]><unknown>result;
-
+      console.log(this.ProveedorProductos);
     }, error => console.error(error));
     console.log(this.respuesta);
   }
@@ -94,9 +92,9 @@ export class ProveedorProductosComponent {
   async Add() {
 
     const answer = {
-      nombre: (<HTMLInputElement>document.getElementById("ANombre")).value,
+      nombre: this.Insumo.nombre,
       cedula: (<HTMLInputElement>document.getElementById("ACedula")).value,
-      marca: (<HTMLInputElement>document.getElementById("AMarca")).value,
+      marca: this.Insumo.marca,
     };
 
     console.log(this.respuesta);

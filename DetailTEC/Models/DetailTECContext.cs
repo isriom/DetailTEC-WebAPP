@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DetailTEC.Models
 {
@@ -30,7 +33,7 @@ namespace DetailTEC.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=localhost; database=DetailTEC; integrated security=true;");
+                optionsBuilder.UseSqlServer("server=localhost; database=DetailTEC;  integrated security=true;");
             }
         }
 
@@ -39,7 +42,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<CitaProductoConsumido>(entity =>
             {
                 entity.HasKey(e => new { e.Placa, e.Fecha, e.Sucursal, e.NombreIP, e.Marca })
-                    .HasName("PK__CITA_PRO__CDCFE027BC14A8D7");
+                    .HasName("PK__CITA_PRO__CDCFE0277BE61A22");
 
                 entity.ToTable("CITA_PRODUCTO_CONSUMIDO");
 
@@ -124,7 +127,7 @@ namespace DetailTEC.Models
                         r => r.HasOne<Citum>().WithMany().HasForeignKey("PlacaAuto", "FechaCita", "Sucursal").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("cita_trabajador_fk"),
                         j =>
                         {
-                            j.HasKey("PlacaAuto", "FechaCita", "Sucursal", "Cedula").HasName("PK__CITA_TRA__088F04F86C18711E");
+                            j.HasKey("PlacaAuto", "FechaCita", "Sucursal", "Cedula").HasName("PK__CITA_TRA__088F04F8232CBD3D");
 
                             j.ToTable("CITA_TRABAJADOR");
 
@@ -141,7 +144,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__CLIENTE__B4ADFE398439DD15");
+                    .HasName("PK__CLIENTE__B4ADFE3917975875");
 
                 entity.ToTable("CLIENTE");
 
@@ -174,7 +177,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<ClienteDireccion>(entity =>
             {
                 entity.HasKey(e => new { e.Cedula, e.Direccion })
-                    .HasName("PK__CLIENTE___FAB5712D7DD15C11");
+                    .HasName("PK__CLIENTE___FAB5712DEF7BC8B7");
 
                 entity.ToTable("CLIENTE_DIRECCION");
 
@@ -196,7 +199,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<ClienteTelefono>(entity =>
             {
                 entity.HasKey(e => new { e.Cedula, e.Telefono })
-                    .HasName("PK__CLIENTE___B041AE71FFE67D34");
+                    .HasName("PK__CLIENTE___B041AE71A8679220");
 
                 entity.ToTable("CLIENTE_TELEFONO");
 
@@ -218,7 +221,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<InsumoProducto>(entity =>
             {
                 entity.HasKey(e => new { e.NombreIP, e.Marca })
-                    .HasName("PK__INSUMO_P__A626C04D2C94D6EB");
+                    .HasName("PK__INSUMO_P__A626C04D9AD32BA2");
 
                 entity.ToTable("INSUMO_PRODUCTO");
 
@@ -236,14 +239,14 @@ namespace DetailTEC.Models
                     .UsingEntity<Dictionary<string, object>>(
                         "InsumoProductoLavado",
                         l => l.HasOne<Lavado>().WithMany().HasForeignKey("Tipo").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("inpro_Lavado_fk"),
-                        r => r.HasOne<InsumoProducto>().WithMany().HasForeignKey("NombreIP", "Marca").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Lavado_inpro_fk"),
+                        r => r.HasOne<InsumoProducto>().WithMany().HasForeignKey("nombre", "Marca").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Lavado_inpro_fk"),
                         j =>
                         {
-                            j.HasKey("NombreIP", "Marca", "Tipo").HasName("PK__INSUMO_P__12A8B6610646E3BC");
+                            j.HasKey("nombre", "Marca", "Tipo").HasName("PK__INSUMO_P__12A8B66119D25434");
 
                             j.ToTable("INSUMO_PRODUCTO_LAVADO");
 
-                            j.IndexerProperty<string>("NombreIP").HasMaxLength(50).IsUnicode(false).HasColumnName("NombreI_P");
+                            j.IndexerProperty<string>("nombre").HasMaxLength(50).IsUnicode(false).HasColumnName("NombreI_P");
 
                             j.IndexerProperty<string>("Marca").HasMaxLength(30).IsUnicode(false);
 
@@ -254,7 +257,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<Lavado>(entity =>
             {
                 entity.HasKey(e => e.Tipo)
-                    .HasName("PK__LAVADO__8E762CB5486BFAE9");
+                    .HasName("PK__LAVADO__8E762CB56B297A59");
 
                 entity.ToTable("LAVADO");
 
@@ -270,7 +273,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<Proveedor>(entity =>
             {
                 entity.HasKey(e => e.CedulaJuridica)
-                    .HasName("PK__PROVEEDO__D2F7F5427B1374C3");
+                    .HasName("PK__PROVEEDO__D2F7F5428A89E5F9");
 
                 entity.ToTable("PROVEEDOR");
 
@@ -300,17 +303,17 @@ namespace DetailTEC.Models
                     .WithMany(p => p.CedulaJuridicas)
                     .UsingEntity<Dictionary<string, object>>(
                         "ProveedorInsumoProducto",
-                        l => l.HasOne<InsumoProducto>().WithMany().HasForeignKey("NombreIP", "Marca").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("inpro_pr_fk"),
+                        l => l.HasOne<InsumoProducto>().WithMany().HasForeignKey("nombre", "Marca").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("inpro_pr_fk"),
                         r => r.HasOne<Proveedor>().WithMany().HasForeignKey("CedulaJuridica").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("pr_inpro_fk"),
                         j =>
                         {
-                            j.HasKey("CedulaJuridica", "NombreIP", "Marca").HasName("PK__PROVEEDO__189599467B37FE08");
+                            j.HasKey("CedulaJuridica", "nombre", "Marca").HasName("PK__PROVEEDO__189599465FF5A613");
 
                             j.ToTable("PROVEEDOR_INSUMO_PRODUCTO");
 
                             j.IndexerProperty<string>("CedulaJuridica").HasMaxLength(15).IsUnicode(false).HasColumnName("Cedula_Juridica");
 
-                            j.IndexerProperty<string>("NombreIP").HasMaxLength(50).IsUnicode(false).HasColumnName("NombreI_P");
+                            j.IndexerProperty<string>("nombre").HasMaxLength(50).IsUnicode(false).HasColumnName("NombreI_P");
 
                             j.IndexerProperty<string>("Marca").HasMaxLength(30).IsUnicode(false);
                         });
@@ -319,7 +322,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<Sucursal>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__SUCURSAL__75E3EFCE8080285F");
+                    .HasName("PK__SUCURSAL__75E3EFCE8EF8E8E5");
 
                 entity.ToTable("SUCURSAL");
 
@@ -351,7 +354,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<Trabajador>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__TRABAJAD__B4ADFE39C6667416");
+                    .HasName("PK__TRABAJAD__B4ADFE3926830164");
 
                 entity.ToTable("TRABAJADOR");
 
@@ -397,7 +400,7 @@ namespace DetailTEC.Models
             modelBuilder.Entity<TrabajadorSucursal>(entity =>
             {
                 entity.HasKey(e => new { e.Cedula, e.Nombre })
-                    .HasName("PK__TRABAJAD__43F3C0C5A3B694D6");
+                    .HasName("PK__TRABAJAD__43F3C0C559528D82");
 
                 entity.ToTable("TRABAJADOR_SUCURSAL");
 

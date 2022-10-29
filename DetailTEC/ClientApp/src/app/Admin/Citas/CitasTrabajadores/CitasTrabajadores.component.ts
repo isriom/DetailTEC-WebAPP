@@ -54,9 +54,6 @@ export class CitasTrabajadoresComponent {
   };
   elseBlock: any;
   displayedColumns: string[] = [
-    "placa",
-    "fecha",
-    "sucursal",
     "cedula", "eliminar"]
   citasTrabajadores: citasTrabajadoresElement[] = [];
   actualEditor: NgbModalRef | undefined;
@@ -75,7 +72,6 @@ export class CitasTrabajadoresComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_CitasTrabajadoress();
   }
 
   /**
@@ -83,12 +79,13 @@ export class CitasTrabajadoresComponent {
    * @constructor called in
    */
   get_CitasTrabajadoress() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/CitasTrabajadores/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/CitasTrabajadores/list/"+this.cita.placa+"/"+Date.parse(this.cita.fecha).toString()+"/"+this.cita.sucursal, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.CitasTrabajadoress = <citasTrabajadoresElement[]><unknown>result;
+      this.citasTrabajadores = <citasTrabajadoresElement[]><unknown>result;
+      console.log(this.citasTrabajadores);
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -101,9 +98,9 @@ export class CitasTrabajadoresComponent {
   async Add() {
 
     const answer = {
-      placa: (<HTMLInputElement>document.getElementById("APlaca")).value,
-      fecha: (<HTMLInputElement>document.getElementById("AFecha")).value,
-      sucursal: (<HTMLInputElement>document.getElementById("ASucursal")).value,
+      placa: this.cita.placa,
+      fecha: this.cita.fecha,
+      sucursal: this.cita.sucursal,
       cedula: (<HTMLInputElement>document.getElementById("ACedula")).value
     };
 
@@ -117,6 +114,7 @@ export class CitasTrabajadoresComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_CitasTrabajadoress();
 
     }, error => console.error(error));
     console.log(res)
@@ -142,6 +140,7 @@ export class CitasTrabajadoresComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_CitasTrabajadoress();
 
     }, error => console.error(error));
   }

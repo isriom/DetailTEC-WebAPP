@@ -55,12 +55,9 @@ export class CitasInsumosComponent {
   };
   elseBlock: any;
   displayedColumns: string[] = [
-    "placa",
-    "fecha",
     "producto",
     "marca",
     "cantidad",
-    "sucursal",
     "eliminar"]
   CitasInsumos: citasInsumoElement[] = [];
   actualEditor: NgbModalRef | undefined;
@@ -79,7 +76,6 @@ export class CitasInsumosComponent {
   ) {
     this.http = http;
     this.baseurl = baseUrl;
-    this.get_CitasInsumos();
   }
 
   /**
@@ -87,12 +83,13 @@ export class CitasInsumosComponent {
    * @constructor called in
    */
   get_CitasInsumos() {
-    var res = this.http.get<string>("https://localhost:7274/api/Admin/CitasInsumos/list", {
+    var res = this.http.get<string>("https://localhost:7274/api/Admin/CitasInsumos/list/"+this.cita.placa+"/"+Date.parse(this.cita.fecha).toString()+"/"+this.cita.sucursal, {
       headers: this.httpOptions.headers,
       withCredentials: true
     }).subscribe(result => {
       console.log(this.respuesta);
-      // this.CitasInsumos = <citasInsumoElement[]><unknown>result;
+      this.CitasInsumos = <citasInsumoElement[]><unknown>result;
+      console.log(this.CitasInsumos);
 
     }, error => console.error(error));
     console.log(this.respuesta);
@@ -105,12 +102,12 @@ export class CitasInsumosComponent {
   async Add() {
 
     const answer = {
-      placa: (<HTMLInputElement>document.getElementById("APlaca")).value,
-      fecha: (<HTMLInputElement>document.getElementById("AFecha")).value,
+      placa: this.cita.placa,
+      fecha: this.cita.fecha,
       producto: (<HTMLInputElement>document.getElementById("AProducto")).value,
       marca: (<HTMLInputElement>document.getElementById("AMarca")).value,
       cantidad: (<HTMLInputElement>document.getElementById("ACantidad")).value,
-      sucursal: (<HTMLInputElement>document.getElementById("ASucursal")).value,
+      sucursal: this.cita.sucursal,
     };
 
     console.log(this.respuesta);
@@ -123,6 +120,7 @@ export class CitasInsumosComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
+      this.get_CitasInsumos()
 
     }, error => console.error(error));
     console.log(res)
@@ -148,7 +146,7 @@ export class CitasInsumosComponent {
     res.subscribe(result => {
       this.respuesta = result;
       console.log(this.respuesta);
-
+      this.get_CitasInsumos()
     }, error => console.error(error));
   }
 

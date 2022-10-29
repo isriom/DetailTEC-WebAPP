@@ -184,7 +184,8 @@ export class LavadosComponent {
     }
     this.actualEditor = this._modal.open(InsumoLavadosComponent)
     this.actualEditor.componentInstance.padre = this
-    this.actualEditor.componentInstance.lavado = (lavadoElement.clone(lavado))
+    this.actualEditor.componentInstance.Lavado = lavado
+    this.actualEditor.componentInstance.get_InsumoLavados();
 
 
   }

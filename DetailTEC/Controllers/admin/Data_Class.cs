@@ -402,7 +402,7 @@ public class AdminData
             trabajador.Apellido2 = apellido2;
             trabajador.FechaDeIngreso = DateTime.Parse(fecha_de_ingreso);
             trabajador.FechaDeNacimiento = DateTime.Parse(fecha_de_nacimiento);
-            trabajador.Edad = (int)((DateTime.Now-trabajador.FechaDeNacimiento).TotalDays/365);
+            trabajador.Edad = (int)((DateTime.Now - trabajador.FechaDeNacimiento).TotalDays / 365);
             trabajador.PasswordT = password;
             trabajador.Rol = rol;
             trabajador.TipoDePago = pago;
@@ -610,10 +610,10 @@ public class AdminData
 
     public class ProveedorProducto : Element
     {
-        public ProveedorProducto(int cedulaJurica, string nombreIp, string marca)
+        public ProveedorProducto(string cedula, string nombre, string marca)
         {
-            CedulaJurica = cedulaJurica;
-            NombreIP = nombreIp;
+            this.cedula = cedula;
+            this.nombre = nombre;
             Marca = marca;
         }
 
@@ -621,30 +621,17 @@ public class AdminData
         {
         }
 
-        public ProveedorProducto(ProveedorInsumoProducto proveedorProducto)
+        public ProveedorProducto(Models.Proveedor proveedorProducto, Models.InsumoProducto Producto)
         {
-            CedulaJurica = proveedorProducto.CedulaJurica;
-            NombreIP = proveedorProducto.NombreIP;
-            Marca = proveedorProducto.Marca;
+            cedula = proveedorProducto.CedulaJuridica;
+            nombre = Producto.NombreIP;
+            Marca = Producto.Marca;
         }
 
-        public ProveedorInsumoProducto Model()
-        {
-            var proveedorProducto = new ProveedorInsumoProducto();
-            UpdateModel(proveedorProducto);
-            return proveedorProducto;
-        }
+        
+        public string cedula { get; set; }
 
-        public void UpdateModel(ProveedorInsumoProducto proveedorProducto)
-        {
-            proveedorProducto.CedulaJurica = CedulaJurica;
-            proveedorProducto.NombreIP = NombreIP;
-            proveedorProducto.Marca = Marca;
-        }
-
-        public int CedulaJurica { get; set; }
-
-        public string NombreIP { get; set; }
+        public string nombre { get; set; }
 
         public string Marca { get; set; }
     }

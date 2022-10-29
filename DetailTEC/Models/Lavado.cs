@@ -1,4 +1,7 @@
-﻿namespace DetailTEC.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace DetailTEC.Models
 {
     public partial class Lavado
     {

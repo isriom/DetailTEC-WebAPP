@@ -15,7 +15,7 @@ export class citaElement {
   constructor(public nombre: string, public placa: number, public fecha: string, public cedula: string, public tipo: string, public sucursal: string, public puntos: boolean, public monto: number, public iva: number) {
     this.nombre = nombre;
     this.placa = placa;
-    this.fecha = fecha;
+    this.fecha =  fecha;
     this.cedula = cedula;
     this.tipo = tipo;
     this.sucursal = sucursal;
@@ -181,6 +181,7 @@ export class CitasComponent {
     this.actualEditor = this._modal.open(CitasInsumosComponent)
     this.actualEditor.componentInstance.padre = this
     this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
+    this.actualEditor.componentInstance.get_CitasInsumos()
   }
 
   Trabajador(cita: citaElement) {
@@ -190,5 +191,6 @@ export class CitasComponent {
     this.actualEditor = this._modal.open(CitasTrabajadoresComponent)
     this.actualEditor.componentInstance.padre = this
     this.actualEditor.componentInstance.cita = (citaElement.clone2(cita))
+    this.actualEditor.componentInstance.get_CitasTrabajadoress()
   }
 }
